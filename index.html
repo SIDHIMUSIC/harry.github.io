@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>𓆩◕🇭𝐀𝐑𝐑𝐘◕𓆪 | Links</title>
+<title>Harry | Official Links</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Official social links">
+<meta name="description" content="Official social links of Harry">
 
 <style>
 @keyframes neonGlow {
@@ -56,11 +56,7 @@ h1{
   word-break:break-word;
 }
 
-.tagline{
-  color:#a5b4fc;
-  font-size:13px;
-  margin-bottom:22px;
-}
+.tagline{color:#a5b4fc;font-size:14px;margin-bottom:18px;}
 
 .btn{
   display:flex;
@@ -68,18 +64,18 @@ h1{
   justify-content:center;
   gap:12px;
   margin:14px 0;
-  padding:16px;
-  border-radius:18px;
+  padding:15px;
+  border-radius:16px;
   text-decoration:none;
   color:white;
   font-weight:600;
-  background:#020617;
+  background:linear-gradient(135deg,#1e293b,#020617);
   border:1px solid #334155;
   transition:.25s;
 }
 .btn:hover{
   transform:scale(1.05);
-  box-shadow:0 0 22px currentColor;
+  box-shadow:0 0 18px currentColor;
 }
 
 .icon{
@@ -88,25 +84,16 @@ h1{
   fill:currentColor;
 }
 
-/* Instagram official gradient */
-.instagram{
-  background:linear-gradient(
-    45deg,
-    #feda75,
-    #fa7e1e,
-    #d62976,
-    #962fbf,
-    #4f5bd5
-  );
-  color:white;
-  border:none;
+.instagram{color:#f472b6;}
+.telegram{color:#38bdf8;}
+.github{color:#e5e7eb;}
+.whatsapp{color:#4ade80;}
+
+.counter{
+  margin-top:18px;
+  font-size:14px;
+  color:#22d3ee;
 }
-
-/* Telegram */
-.telegram{ color:#38bdf8; }
-
-/* GitHub */
-.github{ color:#e5e7eb; }
 
 footer{
   margin-top:18px;
@@ -122,17 +109,18 @@ footer{
 
   <!-- PROFILE IMAGE -->
   <div class="profile">
-    <img src="profile.jpg" alt="profile">
+    <img src="profile.jpg" alt="Harry">
   </div>
 
-  <!-- UPDATED NAME -->
+  <!-- ✅ UPDATED NAME (AS GIVEN) -->
   <h1>𓆩◕🇭𝐀𝐑𝐑𝐘◕𓆪 =‌𐏓 𝄗⃝🇮🇳</h1>
+
   <div class="tagline">Student • Creator • Developer</div>
 
   <!-- INSTAGRAM -->
   <a class="btn instagram" href="https://www.instagram.com/harryashu_/" target="_blank">
     <svg class="icon" viewBox="0 0 24 24">
-      <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.65 0 3 1.35 3 3v10c0 1.65-1.35 3-3 3H7c-1.65 0-3-1.35-3-3V7c0-1.65 1.35-3 3-3h10z"/>
+      <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7z"/>
     </svg>
     Instagram
   </a>
@@ -148,14 +136,34 @@ footer{
   <!-- GITHUB -->
   <a class="btn github" href="https://github.com/SIDHIMUSIC" target="_blank">
     <svg class="icon" viewBox="0 0 24 24">
-      <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.36 6.84 9.72.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.9-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.85.36-1.12.63-1.38-2.22-1.38z"/>
+      <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.36 6.84 9.72.5.1.68-.22.68-.48v-1.7z"/>
     </svg>
     GitHub
   </a>
 
+  <!-- WHATSAPP -->
+  <a class="btn whatsapp" href="https://wa.me/919135909782" target="_blank">
+    <svg class="icon" viewBox="0 0 24 24">
+      <path d="M20.52 3.48A11.82 11.82 0 0012.04 0z"/>
+    </svg>
+    WhatsApp
+  </a>
+
+  <!-- VISITOR COUNTER -->
+  <div class="counter">
+    👀 Visitors: <span id="count">0</span>
+  </div>
+
   <footer>⚡ Powered by Harry • Neon Mode</footer>
 
 </div>
+
+<script>
+let count = localStorage.getItem("visitCount");
+count = count ? parseInt(count) + 1 : 1;
+localStorage.setItem("visitCount", count);
+document.getElementById("count").innerText = count;
+</script>
 
 </body>
 </html>
