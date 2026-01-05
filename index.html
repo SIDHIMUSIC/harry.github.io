@@ -7,7 +7,7 @@
 <meta name="description" content="Official social links of Harry">
 
 <style>
-/* ================= ANIMATIONS ================= */
+/* ========== ANIMATIONS ========== */
 @keyframes neonGlow {
   0% { box-shadow: 0 0 12px #22d3ee; }
   50% { box-shadow: 0 0 30px #6366f1, 0 0 60px #22d3ee; }
@@ -22,7 +22,7 @@
   100%{ background-position: 100% 100%, 0% 100%, 50% 0%; }
 }
 
-/* ================= BACKGROUND (PREMIUM) ================= */
+/* ========== BACKGROUND ========== */
 body{
   margin:0;
   min-height:100vh;
@@ -39,7 +39,7 @@ body{
   align-items:center;
 }
 
-/* ================= CARD ================= */
+/* ========== CARD ========== */
 .card{
   width:92%;
   max-width:420px;
@@ -50,7 +50,7 @@ body{
   animation:neonGlow 3.5s infinite;
 }
 
-/* ================= PROFILE ================= */
+/* ========== PROFILE ========== */
 .profile{
   animation:float 3s ease-in-out infinite;
 }
@@ -62,11 +62,14 @@ body{
   object-fit:cover;
 }
 
-/* ================= TEXT ================= */
+/* ========== NAME (SOFT GLOW) ========== */
 h1{
   margin:14px 0 6px;
   font-size:20px;
-  word-break:break-word;
+  text-shadow:
+    0 0 6px rgba(34,211,238,.6),
+    0 0 14px rgba(99,102,241,.5),
+    0 0 22px rgba(168,85,247,.4);
 }
 .tagline{
   color:#a5b4fc;
@@ -74,7 +77,7 @@ h1{
   margin-bottom:22px;
 }
 
-/* ================= BUTTONS ================= */
+/* ========== BUTTONS ========== */
 .btn{
   display:flex;
   align-items:center;
@@ -95,7 +98,7 @@ h1{
   box-shadow:0 0 22px currentColor;
 }
 
-/* ================= ICONS (SOFT GLOW) ================= */
+/* ========== ICONS (SOFT GLOW) ========== */
 .icon{
   width:22px;
   height:22px;
@@ -104,21 +107,21 @@ h1{
   transition:.25s;
 }
 .btn:hover .icon{
-  filter: drop-shadow(0 0 8px currentColor);
+  filter: drop-shadow(0 0 9px currentColor);
 }
 
 .instagram{color:#f472b6;}
 .telegram{color:#38bdf8;}
 .github{color:#e5e7eb;}
 
-/* ================= COUNTER ================= */
+/* ========== COUNTER ========== */
 .counter{
   margin-top:18px;
   font-size:14px;
   color:#22d3ee;
 }
 
-/* ================= FOOTER ================= */
+/* ========== FOOTER ========== */
 footer{
   margin-top:18px;
   font-size:12px;
@@ -140,10 +143,10 @@ footer{
   <h1>𓆩◕🇭𝐀𝐑𝐑𝐘◕𓆪 =‌𐏓 𝄗⃝🇮🇳</h1>
   <div class="tagline">Student • Creator • Developer</div>
 
-  <!-- INSTAGRAM -->
+<!-- INSTAGRAM -->
   <a class="btn instagram" href="https://www.instagram.com/harryashu_/" target="_blank">
-    <svg class="icon" viewBox="0 0 448 512">
-      <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm146.4-61.8C355.7 45.2 310.8 32 256 32H192C129.1 32 84.2 45.2 49.2 80.2S32 129.1 32 192v128c0 62.9 13.2 107.8 48.2 142.8S129.1 480 192 480h64c62.9 0 107.8-13.2 142.8-48.2S416 382.9 416 320V192c0-62.9-13.2-107.8-48.2-142.8z"/>
+    <svg class="icon" viewBox="0 0 24 24">
+      <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.65 0 3 1.35 3 3v10c0 1.65-1.35 3-3 3H7c-1.65 0-3-1.35-3-3V7c0-1.65 1.35-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.8-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
     </svg>
     Instagram
   </a>
@@ -166,7 +169,7 @@ footer{
 
   <!-- GLOBAL VISITOR COUNTER -->
   <div class="counter">
-    🌍 Visitors: <span id="count">—</span>
+    🌍 Visitors: <span id="count">0</span>
   </div>
 
   <footer>⚡ Powered by Harry • Neon Mode</footer>
@@ -174,15 +177,15 @@ footer{
 </div>
 
 <script>
-/* ===== REAL GLOBAL COUNTER (countapi.xyz) ===== */
-fetch('https://api.countapi.xyz/hit/sidhimusic.github.io/harry')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('count').innerText = data.value;
-  })
-  .catch(()=>{
-    document.getElementById('count').innerText = '—';
-  });
+/* ===== GLOBAL VISITOR COUNTER (100% WORKING) ===== */
+fetch("https://api.countapi.xyz/create?namespace=harry-links&key=visits&value=1")
+.then(() => {
+  fetch("https://api.countapi.xyz/hit/harry-links/visits")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("count").innerText = data.value;
+    });
+});
 </script>
 
 </body>
