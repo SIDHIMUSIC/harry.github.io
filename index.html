@@ -48,6 +48,13 @@ body::before{
 }
 
 /* ========== CARD ========== */
+.wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:18px;
+  z-index:1;
+}
 .card{
   width:92%;
   max-width:420px;
@@ -56,8 +63,15 @@ body::before{
   padding:32px;
   text-align:center;
   animation:neonGlow 3.5s infinite;
-  position:relative;
-  z-index:1;
+}
+  /* ===== BIO OUTSIDE CARD ===== */
+.bio{
+  max-width:420px;
+  text-align:center;
+  font-size:13px;
+  color:#a5b4fc;
+  line-height:1.6;
+  opacity:.9;
 }
 
 /* ========== PROFILE ========== */
@@ -112,7 +126,7 @@ h1{
 .ɪɴsᴛᴀɢʀᴀᴍ{color:#f472b6}
 .ᴛᴇʟᴇɢʀᴀᴍ{color:#38bdf8}
 .ɢɪᴛʜᴜʙ{color:#e5e7eb}
-
+.notify{color:#22d3ee}
 /* ========== FREE FIRE BUTTON ========== */
 .freefire{
   color:#facc15;
@@ -154,7 +168,16 @@ h1{
   color:#000;
   font-weight:700;
 }
+/* ===== INSTAGRAM FOLLOW POPUP ===== */
+#instaPopup .popup-box{color:#f472b6}
 
+/* ===== COPYRIGHT ===== */
+.copyright{
+  margin-top:6px;
+  font-size:12px;
+  text-shadow:0 0 8px #22d3ee;
+}
+  
 /* ========== COUNTER ========== */
 .counter{margin-top:18px;color:#22d3ee;font-size:14px}
 footer{margin-top:18px;font-size:12px;color:#94a3b8}
@@ -162,7 +185,15 @@ footer{margin-top:18px;font-size:12px;color:#94a3b8}
 </head>
 
 <body>
+<div class="wrapper">
 
+  <!-- BIO OUTSIDE CARD -->
+  <div class="bio">
+    👋 Hey, I’m Harry — coder, gamer & creator.  
+    I build cool web stuff and play Free Fire.  
+    Connect with me below 👇
+  </div>
+  
 <div class="card">
 
   <div class="profile">
@@ -205,10 +236,14 @@ footer{margin-top:18px;font-size:12px;color:#94a3b8}
       d="M224 32C100.3 32 0 125.1 0 240c0 92.8 66.2 171.3 157.2 197.7 12.5 2.3 17.1-5.4 17.1-12v-42.1c-63.9 13.9-77.4-30.8-77.4-30.8-10.5-26.6-25.7-33.7-25.7-33.7-21-14.3 1.6-14 1.6-14 23.3 1.6 35.6 23.9 35.6 23.9 20.7 35.4 54.3 25.2 67.6 19.3 2.1-15 8.1-25.2 14.8-31-51-5.7-104.6-25.5-104.6-113.5 0-25.1 8.9-45.6 23.5-61.7-2.3-5.7-10.2-28.7 2.3-59.8 0 0 19.1-6.1 62.6 23.6 18.2-4.9 37.6-7.4 56.9-7.5 19.3.1 38.7 2.6 56.9 7.5 43.5-29.7 62.5-23.6 62.5-23.6 12.6 31.1 4.7 54.1 2.3 59.8 14.6 16.1 23.4 36.6 23.4 61.7 0 88.2-53.7 107.7-104.8 113.3 8.3 7.1 15.7 21.2 15.7 42.7v63.3c0 6.7 4.5 14.4 17.3 11.9C317.9 411.2 384 332.7 384 240 384 125.1 283.7 32 160 32z"/>
   </svg>
   Garena • Free Fire
-</div>
+</a>
 
-  <div class="counter">🌍 Visitors: <span id="count">0</span></div>
-  <footer>⚡ Powered by ʜᴀʀʀʏ ᴀsʜᴜ •</footer>
+    <div class="btn notify" onclick="openNotify()">🔔 ɴᴏᴛɪғʏ ᴍᴇ</div>
+
+    <div class="counter">🌍 Visitors: <span id="count">0</span></div>
+
+    <div class="copyright">© 2026 ʜᴀʀʀʏ ᴀsʜᴜ</div>
+  </div>
 </div>
 
 <!-- POPUP -->
@@ -220,16 +255,50 @@ footer{margin-top:18px;font-size:12px;color:#94a3b8}
     <button class="close" onclick="closeFF()">Close</button>
   </div>
 </div>
+<!-- NOTIFY POPUP -->
+<div class="popup" id="notifyPopup">
+  <div class="popup-box" style="color:#22d3ee">
+    <h3>📩 Send Message</h3>
+    <form action="https://formsubmit.co/YOUR_EMAIL@gmail.com" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message"></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <button onclick="closeNotify()">Close</button>
+  </div>
+</div>
 
+<!-- INSTAGRAM FOLLOW POPUP -->
+<div class="popup" id="instaPopup">
+  <div class="popup-box">
+    <h3>📸 Follow on Instagram</h3>
+    <p>@harryashu_</p>
+    <a class="btn instagram" href="https://www.instagram.com/harryashu_" target="_blank">Follow Now</a>
+    <button onclick="closeInsta()">Later</button>
+  </div>
+</div>
 <script>
 function openFF(){document.getElementById("ffPopup").style.display="flex"}
 function closeFF(){document.getElementById("ffPopup").style.display="none"}
+function openNotify(){notifyPopup.style.display="flex"}
+function closeNotify(){notifyPopup.style.display="none"}
+function closeInsta(){instaPopup.style.display="none"}
 
+setTimeout(()=>{instaPopup.style.display="flex"},2000)
+  
 /* GLOBAL VISITOR COUNTER */
-fetch("https://api.countapi.xyz/create?namespace=harry-links&key=visits&value=1")
-.then(()=>fetch("https://api.countapi.xyz/hit/harry-links/visits"))
-.then(res=>res.json())
-.then(d=>document.getElementById("count").innerText=d.value);
+<script>
+let visits = localStorage.getItem("harry_visits");
+
+if (!visits) {
+  visits = 1;
+  localStorage.setItem("harry_visits", visits);
+} else {
+  visits = parseInt(visits);
+}
+
+document.getElementById("count").innerText = visits;
 </script>
 
 </body>
