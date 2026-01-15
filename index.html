@@ -78,7 +78,58 @@ body::before{
   text-align:center;
   animation:neonGlow 3.5s infinite;
 }
+.followers{
+  font-size:14px;
+  font-weight:700;
+  color:#c7d2fe;
+  margin-bottom:14px;
+  letter-spacing:1px;
+  text-shadow:0 0 10px #6366f1;
+   }
+.social-row{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-bottom:16px;
+}
 
+.social-row img{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  padding:10px;
+  background:#020617;
+  border:2px solid #22d3ee;
+  box-shadow:0 0 20px rgba(34,211,238,.6);
+  transition:.25s;
+}
+
+.social-row img:hover{
+  transform:scale(1.1);
+}
+.collab{
+  margin:16px auto 22px;
+  padding:14px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:600;
+  color:#fde68a;
+  border:1px solid rgba(250,204,21,.4);
+  background:linear-gradient(135deg,rgba(250,204,21,.08),rgba(99,102,241,.08));
+}
+/* search */
+.search{
+  width:100%;
+  padding:14px 16px;
+  margin:12px 0 22px;
+  border-radius:16px;
+  border:none;
+  outline:none;
+  font-size:14px;
+  background:#020617;
+  color:#fff;
+  box-shadow:inset 0 0 10px rgba(99,102,241,.4);
+   }
 /* =====================================================
    PROFILE FLOAT
    ===================================================== */
@@ -156,7 +207,34 @@ h1{
   background:linear-gradient(135deg,#7c2d12,#1f1300);
 }
 .notify{color:#22d3ee}
+   
+/* LIST ITEMS */
+.list-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  margin-top:14px;
+  border-radius:16px;
+  background:rgba(15,23,42,.7);
+  border:1px solid #1e293b;
+}
 
+.list-item img{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+}
+
+.list-item b{
+  display:block;
+  font-size:14px;
+}
+
+.list-item span{
+  font-size:12px;
+  color:#94a3b8;
+}
 /* =====================================================
    COUNTER + COPYRIGHT
    ===================================================== */
