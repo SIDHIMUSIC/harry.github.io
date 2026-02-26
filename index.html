@@ -455,7 +455,44 @@ body::before{
   background: #22d3ee;
   color: #000;
 }
+.skeleton-card {
+  height: 220px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: 20px;
+}
 
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+   .neon-text {
+  color: #22d3ee;
+  text-shadow: 
+    0 0 5px #22d3ee,
+    0 0 10px #22d3ee,
+    0 0 20px #6366f1,
+    0 0 40px #6366f1;
+  font-weight: 800;
+  letter-spacing: 1px;
+   }
+   .project-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: #22d3ee;
+  box-shadow: 
+    0 0 20px rgba(34,211,238,0.3),
+    0 0 40px rgba(99,102,241,0.2);
+   }
+   .project-live, .project-code {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-live:hover, .project-code:hover {
+  box-shadow: 0 0 15px #22d3ee;
+}
 </style>
 </head>
 
@@ -721,99 +758,10 @@ Keep everything exactly the same — only enhance quality..</div>
     <h2>💻 My Projects</h2>
     <button class="close-project-btn" onclick="closeProjects()">✖ Close</button>
   </div>
-
-  <div class="project-grid">
-
-    <!-- PROJECT 1 -->
-    <div class="project-card">
-      <img src="https://i.postimg.cc/QNmcKLWY/file-000000006ff871faa823ec62ebcb3db7.png" class="project-img">
-      <div class="project-info">
-        <h3 class="project-title">Static Web App</h3>
-        <p class="project-desc">
-          This is a romantic static web app designed for Valentine’s Week. It features a 7 Days of Love concept where each day’s surprise is locked and unlocked using a password. The app uses an attractive UI with cards, icons, and date-based sections. 
-        </p>
-
-        <div class="project-tags">
-          <span>Python</span>
-          <span>Web App</span>
-          <span>Automation</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://sidhimusic.github.io/Valentine-s-gift-/" class="project-live">Live Demo</a>
-          <a href="https://www.instagram.com/harryashu_/" class="project-code">Source Code</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJECT 2 -->
-    <div class="project-card">
-      <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=1000" class="project-img">
-      <div class="project-info">
-        <h3 class="project-title">Ai chatbot</h3>
-        <p class="project-desc">
-          An AI-powered chatbot that delivers instant, intelligent, and interactive responses through a simple web interface.
-        </p>
-
-        <div class="project-tags">
-          <span>HTML</span>
-          <span>CSS</span>
-          <span>JavaScript</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://t.me/JULIET_MUSUCBOT" class="project-live">Live Demo</a>
-          <a href="https://www.instagram.com/harryashu_/" class="project-code">Source Code</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJECT 3 -->
-    <div class="project-card">
-      <img src="https://i.postimg.cc/ZYM1SQ5T/file-00000000f10471faa8198af6b1e3fdfa.png" class="project-img">
-      <div class="project-info">
-        <h3 class="project-title">Gaming Community Hub</h3>
-        <p class="project-desc">
-          A dedicated community platform for Free Fire gamers
-          to connect, collaborate and grow together.
-        </p>
-
-        <div class="project-tags">
-          <span>Gaming</span>
-          <span>Community</span>
-          <span>Web</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://sidhimusic.github.io/gaminghub/" class="project-live">Live Demo</a>
-          <a href="https://www.instagram.com/harryashu_/" class="project-code">Source Code</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- PROJECT 4 -->
-    <div class="project-card">
-      <img src="https://i.postimg.cc/rpyDksf5/file-000000009be871faa8a2c1e13915758f.pngZAk" class="project-img">
-      <div class="project-info">
-        <h3 class="project-title">ᴍᴏᴅᴇʀɴ ᴇ-sʜᴏᴘᴘɪɴɢ ᴡᴇʙ ᴀᴘᴘʟɪᴄᴀᴛɪᴏɴ</h3>
-        <p class="project-desc">
-          A ᴍᴏᴅᴇʀɴ ᴇ-sʜᴏᴘᴘɪɴɢ ᴡᴇʙ ᴀᴘᴘʟɪᴄᴀᴛɪᴏɴ ғᴇᴀᴛᴜʀɪɴɢ sᴇᴄᴜʀᴇ ᴀᴜᴛʜᴇɴᴛɪᴄᴀᴛɪᴏɴ, ᴅʏɴᴀᴍɪᴄ ᴘʀᴏᴅᴜᴄᴛ ʟɪsᴛɪɴɢ, ᴄᴀʀᴛ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ, ʀᴇᴀʟ-ᴛɪᴍᴇ ᴜᴘᴅᴀᴛᴇs, ᴀɴᴅ ᴀ ʀᴇsᴘᴏɴsɪᴠᴇ ᴜsᴇʀ ɪɴᴛᴇʀғᴀᴄᴇ ᴅᴇsɪɢɴᴇᴅ ғᴏʀ sᴇᴀᴍʟᴇss ᴏɴʟɪɴᴇ sʜᴏᴘᴘɪɴɢ ᴇxᴘᴇʀɪᴇɴᴄᴇs.
-        </p>
-
-        <div class="project-tags">
-          <span>React</span>
-          <span>Charts</span>
-          <span>Analytics</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://harryshopping.netlify.app/" class="project-live">Live Demo</a>
-          <a href="https://www.instagram.com/harryashu_/" class="project-code">Source Code</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
+<div class="project-grid" id="projectGrid">
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
 </div>
 
   </div>
@@ -918,20 +866,87 @@ function openNotify(){ document.getElementById("notifyPopup").style.display="fle
 function closeNotify(){ document.getElementById("notifyPopup").style.display="none"; }
 
 /* =====================================================
-   🔥 NEW: PROJECT POPUP LOGIC
+   🔥 NEW: PROJECT POPUP LOGIC yaha hha h
    ===================================================== */
+   let projectsLoaded = false;
+
 function openProjects() {
   document.getElementById("projectOverlay").classList.add("open");
+
+  // 🔥 load GitHub projects only once
+  if (!projectsLoaded) {
+    loadGitHubProjects();
+    projectsLoaded = true;
+  }
 }
+
 function closeProjects() {
   document.getElementById("projectOverlay").classList.remove("open");
 }
 
+/* ================= VISITOR COUNTER ================= */
+
 let visits = localStorage.getItem("harry_visits");
-if(visits === null) visits = 1;
+
+if (visits === null) visits = 1;
 else visits = parseInt(visits) + 1;
+
 localStorage.setItem("harry_visits", visits);
+
 document.getElementById("count").innerText = visits;
+
+   /* ================= AUTO FETCH GITHUB ================= */
+
+async function loadGitHubProjects() {
+  const username = "SIDHIMUSIC";
+  const grid = document.getElementById("projectGrid");
+
+  try {
+    const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated`);
+    const repos = await res.json();
+
+    grid.innerHTML = "";
+     const filteredRepos = repos.filter(repo => 
+  !repo.fork && repo.name !== username.toLowerCase() + ".github.io"
+);
+
+    filteredRepos.forEach(repo => {
+      const card = document.createElement("div");
+      card.className = "project-card";
+
+      card.innerHTML = `
+        <img src="https://opengraph.githubassets.com/1/${username}/${repo.name}" 
+     class="project-img"
+     onerror="this.src='https://via.placeholder.com/400x200/020617/22d3ee?text=No+Preview'">
+
+        <div class="project-info">
+          <h3 class="project-title neon-text">${repo.name.replace(/-/g, " ")}</h3>
+          <p class="project-desc">${repo.description || "No description"}</p>
+
+          <div class="project-tags">
+            <span>${repo.language || "Code"}</span>
+            <span>⭐ ${repo.stargazers_count}</span>
+          </div>
+
+          <div class="project-actions">
+            <a href="${repo.html_url}" target="_blank" class="project-code">Code</a>
+            ${
+              repo.homepage
+                ? `<a href="${repo.homepage}" target="_blank" class="project-live">Live</a>`
+                : ""
+            }
+          </div>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+  } catch (error) {
+    grid.innerHTML = "<p style='color:red;'>Failed to load</p>";
+  }
+}
+   
 
 /* =====================================================
    TYPEWRITER EFFECT SCRIPT
