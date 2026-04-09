@@ -25,10 +25,7 @@ body {
   font-family: Segoe UI, sans-serif;
   background: #020617;
   color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 0;
+  padding: 20px 0 40px;
   overflow-x: hidden;
 }
 
@@ -210,10 +207,15 @@ body::before{
   gap:18px;
   z-index:1;
   width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 12px;
+  box-sizing: border-box;
 }
 
 .bio{
-  max-width:420px;
+  width:100%;
+  max-width:none;
   text-align:center;
   font-size:13px;
   color:#a5b4fc;
@@ -230,8 +232,8 @@ body::before{
   100%{box-shadow:0 0 12px #22d3ee}
 }
 .card{
-  width:92%;
-  max-width:420px;
+  width:100%;
+  max-width:none;
   background:rgba(2,6,23,.95);
   border-radius:26px;
   padding:32px 20px;
@@ -547,6 +549,53 @@ body::before{
 .prompt-box { display: none !important; }
 .copy-btn { display: none; }
 
+/* AI Trending Wrap */
+.ai-trending-wrap {
+  background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(239,68,68,0.07));
+  border: 1px solid rgba(249,115,22,0.35);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.ai-trend-card {
+  background: rgba(15,23,42,0.8);
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+}
+.ai-trend-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.ai-trend-text {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.5;
+  max-height: 44px;
+  overflow: hidden;
+  transition: max-height 0.4s;
+  margin-bottom: 8px;
+}
+.ai-trend-text.expanded { max-height: 400px; color: #94a3b8; }
+.ai-trend-footer { display:flex; gap:8px; }
+.ai-trend-footer button {
+  flex:1; padding:8px; border-radius:8px; font-size:11px; font-weight:700;
+  cursor:pointer; font-family:inherit; transition:0.2s; border:none;
+}
+.at-expand { background:rgba(249,115,22,0.15);color:#f97316;border:1px solid rgba(249,115,22,0.3)!important; }
+.at-copy { background:linear-gradient(90deg,#f97316,#ef4444);color:#fff; }
+.ai-trend-skeleton {
+  height:80px; border-radius:12px;
+  background:linear-gradient(90deg,#0f172a 25%,#1e293b 50%,#0f172a 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+}
+
 /* Profile Image */
 .profile-img{
   width:120px;
@@ -637,8 +686,8 @@ body::before{
 }
 
 .project-btn-container {
-  width: 92%;
-  max-width: 420px;
+  width: 100%;
+  max-width: none;
   z-index: 10;
   margin-bottom: 10px;
 }
@@ -1213,6 +1262,18 @@ body::before{
 
         <div id="prompts-section" class="content-section">
 
+      <!-- AI TRENDING PROMPTS SECTION -->
+      <div class="ai-trending-wrap" id="ai-trending-wrap">
+        <div class="daily-badge" style="background:linear-gradient(90deg,#f97316,#ef4444);">🔥 AI Trending Today</div>
+        <div style="font-size:12px;color:#64748b;margin-bottom:10px;">Claude AI se live fetch kiya gaya 🤖</div>
+        <div id="ai-trending-cards" style="display:flex;flex-direction:column;gap:10px;">
+          <div class="ai-trend-skeleton"></div>
+          <div class="ai-trend-skeleton"></div>
+          <div class="ai-trend-skeleton"></div>
+        </div>
+        <button class="btn-copy-daily" style="margin-top:12px;width:100%;padding:10px;font-size:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-family:inherit;" onclick="fetchTrendingPrompts()">🔄 Refresh Trending</button>
+      </div>
+
       <!-- DAILY PROMPT OF THE DAY -->
       <div class="daily-prompt-wrap" id="daily-prompt-wrap">
         <div class="daily-badge">⚡ Daily Prompt</div>
@@ -1746,6 +1807,10 @@ function showTab(tabName) {
   } else if(tabName === 'prompts') {
     document.getElementById('prompts-section').classList.add('active');
     buttons[1].classList.add('active');
+    if (!window._trendingLoaded) {
+      window._trendingLoaded = true;
+      fetchTrendingPrompts();
+    }
   } else {
     document.getElementById('tools-section').classList.add('active');
     buttons[2].classList.add('active');
@@ -2465,6 +2530,12 @@ const dailyPrompts = [
     text: "You are an expert full-stack developer. Build a complete React app with Tailwind CSS that includes: user authentication, a real-time dashboard with charts, dark mode toggle, and mobile responsiveness. Provide full working code with comments.",
     cat: "ai"
   },
+  {
+    title: "🌌 Milky Way Galaxy Portrait",
+    img: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80",
+    text: "Cinematic astrophotography-style portrait of a lone figure standing in a vast open field at night, arms stretched wide, silhouetted against the full Milky Way galaxy stretching across the sky. Stunning star trails, nebula colors in deep purple and blue. Ultra sharp stars, ISO-high look, 8K quality, wide angle lens feel.",
+    cat: "creative"
+  },
 ];
 
 function loadDailyPrompt() {
@@ -2483,6 +2554,73 @@ function loadDailyPrompt() {
 }
 
 loadDailyPrompt();
+
+/* =====================================================
+   🔥 AI TRENDING PROMPTS — Daily Rotating Curated List
+   ===================================================== */
+const trendingPromptPool = [
+  { title:"🪄 Ghibli Style Portrait", text:"Transform this photo into a Studio Ghibli anime style illustration. Soft watercolor textures, warm gentle lighting, large expressive eyes, detailed background with nature elements. Keep the person's face recognizable. Miyazaki art style, high quality digital art.", cat:"edit" },
+  { title:"🕹️ Action Figure — Box Art", text:"Turn me into a realistic collector's action figure inside a retail box. The box should say 'LIMITED EDITION' at the top. Include small accessories related to my personality. Hyper-detailed plastic texture, studio lighting, product photography style.", cat:"creative" },
+  { title:"🌆 Cyberpunk City Self Portrait", text:"Place the uploaded photo's subject in a hyper-detailed cyberpunk city at night. Neon signs reflecting on wet streets, flying cars in the background, holographic ads. Keep the person's face exact. Cinematic 8K quality, Blade Runner aesthetic.", cat:"photo" },
+  { title:"🎭 Dramatic Villain Transformation", text:"Transform the subject into a cinematic movie villain. Dark dramatic lighting, intense expression, villain-style costume with flowing cape. Moody atmosphere, deep shadow contrast, Hollywood poster quality, 8K.", cat:"creative" },
+  { title:"🤖 Build Me a SaaS App", text:"You are an expert full-stack developer. Create a complete SaaS landing page with: hero section, features grid, pricing table, FAQ accordion, and footer. Use React + Tailwind CSS. Make it dark themed, modern, and mobile responsive. Provide full clean code.", cat:"ai" },
+  { title:"🔥 Lava God — Epic Fantasy", text:"The subject stands as an ancient lava god on a volcanic mountain. Molten rock flows around them, armor made of obsidian and magma, eyes glowing orange. Dramatic god-rays through smoke, epic cinematic composition, 8K fantasy art style.", cat:"creative" },
+  { title:"📸 Film Grain Vintage Edit", text:"Apply a professional vintage film grain edit to this photo. Use Kodak Portra 400 color grading: lifted shadows, muted highlights, warm skin tones, slight halation effect on highlights. Add authentic film grain noise. No face changes — pure color and texture transformation.", cat:"edit" },
+  { title:"🎮 Free Fire Lobby Art", text:"Create a cinematic Free Fire game lobby wallpaper. Show 4 players in tactical formation, dramatic storm circle in background, weapons visible. Each character has unique military outfit. Game poster quality, epic lighting, 4K resolution.", cat:"gaming" },
+  { title:"🌸 Manga Panel Portrait", text:"Convert this photo into a professional black and white manga panel style illustration. Sharp ink lines, dramatic screentone shading, dynamic composition. Large expressive anime eyes, detailed hair linework. Authentic Shonen manga art quality.", cat:"edit" },
+  { title:"🦸 Marvel Superhero Version", text:"Reimagine this person as a Marvel-style superhero. Create a unique power set based on their personality. Design a striking costume with a symbol. Show them in an iconic power pose with energy effects. Comic book art style meets cinematic realism, 8K.", cat:"creative" },
+  { title:"🎨 Instagram Reels Hook Generator", text:"Write 10 viral Instagram Reels hook lines for the topic: [YOUR TOPIC]. Each hook must stop the scroll in the first 2 seconds. Use pattern interrupts, curiosity gaps, and emotional triggers. Format: numbered list with hook + why it works.", cat:"ai" },
+  { title:"🌊 Underwater Kingdom Scene", text:"The subject is shown as the ruler of an underwater kingdom. Bioluminescent sea creatures surrounding them, coral throne, rays of light piercing deep blue water. Detailed fabric flowing underwater, realistic water physics, epic fantasy digital art, 8K.", cat:"creative" },
+  { title:"💀 Skeleton X-Ray Portrait", text:"Create an artistic X-ray style portrait overlay on this photo. The skeleton should be perfectly aligned to the person's body, glowing in blue-white on dark background. Medical illustration meets fine art. Keep the person's silhouette recognizable.", cat:"edit" },
+  { title:"⚡ Study Plan Generator", text:"Create a detailed 30-day study plan for [SUBJECT/EXAM]. Include: daily schedule (time-blocked), topic priority order, resource list, weekly revision days, and tips to avoid burnout. Format it as a clean table. Make it realistic for a student with 4 hours/day.", cat:"ai" },
+  { title:"🏯 Samurai Era Portrait", text:"Transform this portrait into a feudal Japan setting. The subject is dressed as a high-ranking samurai or noble lady with kimono. Cherry blossom trees, traditional Japanese architecture background. Painterly style meets photography realism, 8K quality.", cat:"creative" },
+  { title:"✨ Neon Glow Double Exposure", text:"Create a double exposure effect combining this portrait with a neon cityscape. The city glows through the subject's silhouette. Use cyan, magenta and purple neon tones. Blend edges seamlessly. Dark background with glowing light trails. Artistic photo manipulation quality.", cat:"edit" },
+  { title:"🎯 Viral YouTube Title Writer", text:"You are a YouTube SEO expert. Write 15 viral video titles for the topic: [YOUR TOPIC]. Include: curiosity-based titles, number titles, how-to titles, and controversy titles. For each title give a CTR score out of 10 and explain why it works.", cat:"ai" },
+  { title:"🌌 Space Explorer Portrait", text:"Place the subject in a stunning interstellar space scene. They wear a next-gen spacesuit with their name on it, floating near a colorful nebula with a ringed planet in the background. Stars and cosmic dust surrounding them. Cinematic sci-fi movie quality, 8K.", cat:"photo" },
+];
+
+function fetchTrendingPrompts() {
+  const container = document.getElementById('ai-trending-cards');
+  container.innerHTML = `
+    <div class="ai-trend-skeleton"></div>
+    <div class="ai-trend-skeleton"></div>
+    <div class="ai-trend-skeleton"></div>
+  `;
+
+  // Pick 3 prompts based on current date+hour so they feel "fresh"
+  setTimeout(() => {
+    const now = new Date();
+    const seed = now.getFullYear() * 1000000 + (now.getMonth()+1) * 10000 + now.getDate() * 100 + Math.floor(now.getHours() / 8);
+    const total = trendingPromptPool.length;
+    const picks = [
+      trendingPromptPool[seed % total],
+      trendingPromptPool[(seed + 5) % total],
+      trendingPromptPool[(seed + 11) % total],
+    ];
+    renderTrendingCards(picks);
+  }, 900);
+}
+
+function renderTrendingCards(prompts) {
+  const container = document.getElementById('ai-trending-cards');
+  container.innerHTML = '';
+  prompts.forEach((p, i) => {
+    const id = 'at-text-' + i;
+    const catClass = 'cat-' + (p.cat || 'creative');
+    const div = document.createElement('div');
+    div.className = 'ai-trend-card';
+    div.innerHTML = `
+      <div class="prompt-cat-tag ${catClass}" style="display:inline-block;margin-bottom:8px;">${p.cat}</div>
+      <div class="ai-trend-title">${p.title}</div>
+      <div class="ai-trend-text" id="${id}">${p.text}</div>
+      <div class="ai-trend-footer">
+        <button class="at-expand" onclick="toggleExpand('${id}',this)">👁 Read More</button>
+        <button class="at-copy" onclick="copyPromptCard(this,'${id}')">📋 Copy</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
 
 </script>
 
