@@ -332,43 +332,220 @@ body::before{
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
 /* PROMPT BOX STYLE */
-.prompt-box {
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  border: 1px solid #334155;
-  padding: 15px;
-  border-radius: 16px;
-  margin-bottom: 15px;
-  text-align: left;
+/* =====================================================
+   ✨ PROMPT CARDS - NEW STYLISH DESIGN
+   ===================================================== */
+/* Daily Prompt of the Day */
+.daily-prompt-wrap {
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(34,211,238,0.08));
+  border: 1px solid rgba(34,211,238,0.35);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
 }
-.prompt-title {
+.daily-prompt-wrap::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 60% 40%, rgba(99,102,241,0.08), transparent 60%);
+  pointer-events: none;
+}
+.daily-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 99px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.daily-prompt-title {
   font-size: 14px;
-  color: #22d3ee;
-  font-weight: bold;
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 8px;
 }
-.prompt-content {
-  font-size: 12px;
-  color: #cbd5e1;
-  margin-bottom: 12px;
-  line-height: 1.5;
-  background: #020617;
-  padding: 10px;
-  border-radius: 8px;
-  word-wrap: break-word;
-}
-.copy-btn {
+.daily-prompt-img {
   width: 100%;
-  padding: 10px;
-  background: #334155;
-  border: none;
-  color: #fff;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: 0.2s;
-  font-weight: 600;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(34,211,238,0.2);
 }
-.copy-btn:active { transform: scale(0.98); }
+.daily-prompt-text {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.6;
+  background: rgba(2,6,23,0.6);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border-left: 3px solid #6366f1;
+  margin-bottom: 10px;
+  max-height: 80px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.daily-prompt-text.expanded { max-height: 800px; }
+.daily-prompt-actions {
+  display: flex;
+  gap: 8px;
+}
+.daily-prompt-actions button {
+  flex: 1;
+  padding: 9px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: 0.2s;
+}
+.btn-expand { background: rgba(99,102,241,0.2); color: #a78bfa; border: 1px solid rgba(99,102,241,0.3) !important; }
+.btn-copy-daily { background: linear-gradient(90deg,#6366f1,#22d3ee); color: #fff; }
+.btn-expand:hover { background: rgba(99,102,241,0.35); }
+.btn-copy-daily:hover { filter: brightness(1.15); }
+
+/* Category Filter Chips */
+.prompt-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
+  scrollbar-width: none;
+}
+.prompt-filters::-webkit-scrollbar { display: none; }
+.pf-chip {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #1e293b;
+  background: transparent;
+  color: #64748b;
+  font-family: inherit;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+.pf-chip.active, .pf-chip:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+/* New Prompt Card */
+.prompt-card {
+  background: linear-gradient(145deg, #0f172a, #020617);
+  border: 1px solid #1e293b;
+  border-radius: 18px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+.prompt-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.prompt-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid #1e293b;
+}
+.prompt-card-body { padding: 14px; }
+.prompt-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.prompt-cat-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cat-photo    { background: rgba(244,114,182,0.15); color: #f472b6; border: 1px solid rgba(244,114,182,0.3); }
+.cat-ai       { background: rgba(34,211,238,0.1);  color: #22d3ee; border: 1px solid rgba(34,211,238,0.3); }
+.cat-edit     { background: rgba(251,191,36,0.1);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+.cat-gaming   { background: rgba(239,68,68,0.1);   color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.cat-creative { background: rgba(167,139,250,0.1); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+
+.prompt-card-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.prompt-card-text {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+  max-height: 56px;
+  overflow: hidden;
+  transition: max-height 0.4s;
+  margin-bottom: 12px;
+}
+.prompt-card-text.expanded { max-height: 600px; color: #94a3b8; }
+.prompt-card-footer {
+  display: flex;
+  gap: 8px;
+}
+.pc-expand-btn, .pc-copy-btn {
+  flex: 1;
+  padding: 9px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.2s;
+}
+.pc-expand-btn {
+  background: rgba(30,41,59,0.8);
+  border: 1px solid #334155;
+  color: #94a3b8;
+}
+.pc-expand-btn:hover { background: #1e293b; color: #fff; }
+.pc-copy-btn {
+  background: var(--accent);
+  border: none;
+  color: #000;
+  font-weight: 800;
+}
+.pc-copy-btn:hover { filter: brightness(1.1); }
+.pc-copy-btn.copied { background: #22c55e; }
+
+/* Prompt counter */
+.prompt-count-label {
+  font-size: 11px;
+  color: #475569;
+  text-align: center;
+  margin: -8px 0 14px;
+  letter-spacing: 0.5px;
+}
+
+/* OLD COMPAT - hide old style */
+.prompt-box { display: none !important; }
+.copy-btn { display: none; }
 
 /* Profile Image */
 .profile-img{
@@ -1035,112 +1212,175 @@ body::before{
     </div>
 
         <div id="prompts-section" class="content-section">
-      
-      <h3 style="color:#fde68a; margin-top:0; margin-bottom:15px; font-size:15px; text-align:center; border-bottom: 1px solid #334155; padding-bottom: 10px;">
-        ✨ Best Prompts Collection (2026)
-      </h3>
 
-      <div class="prompt-box filter-item">
-        <div class="prompt-title">👫 Future Duo (Boy & Girl 2026)</div>
-        <div class="prompt-content">A young cyberpunk couple sitting on a skyscraper rooftop overlooking a neon-soaked futuristic city in the year 2026. The boy has a glowing bionic arm, and the girl wears smart-tech streetwear. They are sharing a holographic data interface. Highly detailed, cinematic lighting, 8k resolution, Unreal Engine 5 render style.</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
+      <!-- DAILY PROMPT OF THE DAY -->
+      <div class="daily-prompt-wrap" id="daily-prompt-wrap">
+        <div class="daily-badge">⚡ Daily Prompt</div>
+        <div class="daily-prompt-title" id="daily-title">Loading today's prompt...</div>
+        <img class="daily-prompt-img" id="daily-img" src="" alt="Daily Prompt" onerror="this.style.display='none'">
+        <div class="daily-prompt-text" id="daily-text">Fetching fresh AI prompt for you...</div>
+        <div class="daily-prompt-actions">
+          <button class="btn-expand" onclick="toggleExpand('daily-text', this)">👁 Read More</button>
+          <button class="btn-copy-daily" onclick="copyPromptCard(this,'daily-text')">📋 Copy Prompt</button>
+        </div>
       </div>
 
-      <div class="prompt-box filter-item">
-        <div class="prompt-title">📸 Ultimate Gamer Portrait (Solo)</div>
-        <div class="prompt-content">Hyper-realistic close-up portrait of a young professional E-sports gamer (boy or girl) in 2026. They are wearing a tactical headset with LED accents. The reflection of a intense game screen is visible in their eyes. Sweat and sharp focus on face details. Neon rim lighting from side, dark background, 8k quality.</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
+      <!-- CATEGORY FILTERS -->
+      <div class="prompt-filters">
+        <button class="pf-chip active" onclick="filterPrompts('all', this)">🌟 All</button>
+        <button class="pf-chip" onclick="filterPrompts('photo', this)">📸 Photo</button>
+        <button class="pf-chip" onclick="filterPrompts('edit', this)">🎨 Edit</button>
+        <button class="pf-chip" onclick="filterPrompts('gaming', this)">🎮 Gaming</button>
+        <button class="pf-chip" onclick="filterPrompts('ai', this)">🤖 AI/Code</button>
+        <button class="pf-chip" onclick="filterPrompts('creative', this)">✨ Creative</button>
+      </div>
+      <div class="prompt-count-label" id="prompt-count">10 prompts</div>
+
+      <!-- PROMPT CARDS -->
+      <div id="prompt-cards-container">
+      <div class="prompt-card filter-item" data-cat="photo" data-id="p1">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&q=80" alt="Future Duo — Cyberpunk Couple" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-photo">📸 Photo</span>
+          </div>
+          <div class="prompt-card-title">Future Duo — Cyberpunk Couple</div>
+          <div class="prompt-card-text" id="pct-p1">A young cyberpunk couple sitting on a skyscraper rooftop overlooking a neon-soaked futuristic city in the year 2026. The boy has a glowing bionic arm, and the girl wears smart-tech streetwear. They are sharing a holographic data interface. Highly detailed, cinematic lighting, 8k resolution, Unreal Engine 5 render style.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p1', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p1')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="gaming" data-id="p2">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&q=80" alt="Ultimate Gamer Portrait" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-gaming">🎮 Gaming</span>
+          </div>
+          <div class="prompt-card-title">Ultimate Gamer Portrait</div>
+          <div class="prompt-card-text" id="pct-p2">Hyper-realistic close-up portrait of a young professional E-sports gamer in 2026. Wearing a tactical headset with LED accents. The reflection of an intense game screen is visible in their eyes. Sweat and sharp focus on face details. Neon rim lighting from side, dark background, 8k quality.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p2', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p2')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="photo" data-id="p3">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80" alt="Sky Hero Shot — Cinematic Portrait" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-photo">📸 Photo</span>
+          </div>
+          <div class="prompt-card-title">Sky Hero Shot — Cinematic Portrait</div>
+          <div class="prompt-card-text" id="pct-p3">A low-angle, cinematic portrait of a young man with a focused, contemplative gaze. Voluminous, messy dark hair catching natural light. Dramatic worm's-eye view, charcoal black linen shirt. A wide, expansive blue sky with soft wispy clouds. 35mm film photography style with slight noise and high dynamic range.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p3', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p3')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="ai" data-id="p4">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80" alt="Pro Coder Automation Task" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-ai">🤖 AI/Code</span>
+          </div>
+          <div class="prompt-card-title">Pro Coder Automation Task</div>
+          <div class="prompt-card-text" id="pct-p4">Write a Python script using the OpenAI API and YouTube Data API. The script should take a YouTube video URL as input, generate a concise 5-bullet point summary of the video content, and automatically create a Twitter thread draft with relevant hashtags.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p4', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p4')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="gaming" data-id="p5">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=600&q=80" alt="Free Fire — Bio Template" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-gaming">🎮 Gaming</span>
+          </div>
+          <div class="prompt-card-title">Free Fire — Bio Template</div>
+          <div class="prompt-card-text" id="pct-p5">Headshot King 👑 | No Love 💔 | Push to Grandmaster | Respect ✊ — Ready to use Free Fire bio for your profile.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p5', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p5')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="creative" data-id="p6">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Stylish Animated Emoji Stickers" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-creative">✨ Creative</span>
+          </div>
+          <div class="prompt-card-title">Stylish Animated Emoji Stickers</div>
+          <div class="prompt-card-text" id="pct-p6">Using my uploaded photo as exact identity reference, create high-quality 2D cartoon sticker animation. Keep original face structure unchanged. Convert to Bitmoji-style 2D illustration with bold outlines, soft shading. Create 9 animated sticker poses: Happy, Blush, Angry, Sad, Excited, Hungry, Dead, Laugh, Cry — all high FPS with consistent design.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p6', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p6')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="edit" data-id="p7">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1514912885225-5c9ec8507d64?w=600&q=80" alt="Sunset HDR Transformation" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-edit">🎨 Edit</span>
+          </div>
+          <div class="prompt-card-title">Sunset HDR Transformation</div>
+          <div class="prompt-card-text" id="pct-p7">Transform this image into a dramatic sunset HDR style while preserving 100% of the original content. Do NOT change any object, subject, building, tree, or background. Colors must look realistic, not oversaturated. No fantasy effects, no extra clouds, no extra sun. Strict color and lighting transformation only. Original image must remain perfectly recognizable.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p7', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p7')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="edit" data-id="p8">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=600&q=80" alt="Ethereal Night Mode — Sunbeam Glow" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-edit">🎨 Edit</span>
+          </div>
+          <div class="prompt-card-title">Ethereal Night Mode — Sunbeam Glow</div>
+          <div class="prompt-card-text" id="pct-p8">Apply an ethereal lighting filter to the uploaded photo. Add diffused sunbeams striking the subject's skin, creating a glowing highlight on cheekbones, nose bridge, lips, and hair strands. Inject subtle lens bloom, light haze, atmospheric glow. Render skin with luminous translucency. Color-grade with slightly lowered saturation and gentle film-like grain. Hard rule: Do not change the face and hair of the subject.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p8', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p8')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="edit" data-id="p9">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=600&q=80" alt="Night Flash — Bold Dark Aesthetic" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-edit">🎨 Edit</span>
+          </div>
+          <div class="prompt-card-title">Night Flash — Bold Dark Aesthetic</div>
+          <div class="prompt-card-text" id="pct-p9">Apply a bold night-flash aesthetic to the uploaded photo while preserving original details except for lighting, glow, and color mood. Keep the night-time environment dark and unlit. Illuminate the subject with a strong, warm, direct front-facing flash focused near the face and upper body. Add diffused highlights on cheekbones, nose bridge, lips, and hair strands. Maintain separation between bright areas and deep shadows for cinematic contrast.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p9', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p9')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-card filter-item" data-cat="edit" data-id="p10">
+        <img class="prompt-card-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=600&q=80" alt="Blurry Pic — Ultra HD Enhancer" loading="lazy" onerror="this.style.display='none'">
+        <div class="prompt-card-body">
+          <div class="prompt-card-header">
+            <span class="prompt-cat-tag cat-edit">🎨 Edit</span>
+          </div>
+          <div class="prompt-card-title">Blurry Pic — Ultra HD Enhancer</div>
+          <div class="prompt-card-text" id="pct-p10">Ultra-premium professional image enhancement. Transform the uploaded low-quality, blurry image into extreme high-detail cinematic quality. Preserve 100% original identity, face structure, expression, pose, clothing, accessories, background. Recover micro-details: sharp facial features, natural skin texture, visible pores, realistic hair strands, crisp eyes, clean refined edges. Output in 8K resolution, ProRes quality, studio-level sharpness.</div>
+          <div class="prompt-card-footer">
+            <button class="pc-expand-btn" onclick="toggleExpand('pct-p10', this)">👁 Read More</button>
+            <button class="pc-copy-btn" onclick="copyPromptCard(this, 'pct-p10')">📋 Copy</button>
+          </div>
+        </div>
+      </div>
       </div>
 
-      <div class="prompt-box filter-item">
-        <div class="prompt-title">🎮 Sky pic </div>
-        <div class="prompt-content">A low-angle, cinematic portrait of a young man with a focused, contemplative gaze looking toward the upper right. He has voluminous, messy dark hair with textured curls that catch the natural light. His expression is serene yet determined, captured in a "hero" perspective that emphasizes the vastness of the sky above him.
-Technical Details
-• Pose: A dramatic worm's-eye view looking up at the subject. The man is slightly turned,
-showcasing a sharp jawline and a thoughtful upward gaze.
-· Attire: He wears a charcoal black button-down linen shirt with a visible chest pocket. The fabric has a soft, organic texture, and the top button is left open for a relaxed, effortless look • Color Palette: A moody, muted aesthetic featuring desaturated blues, slate greys, and warm skin tones. The image has a subtle filmic grain and a vintage "indie-film" color grade
-• Background: A wide, expansive blue sky filled with soft, wispy white clouds. The lighting is diffused, suggesting an overcast day or the "blue hour,'casting soft shadows without harsh highlights.
-Style Note: Aim for a 35mm film photography style with slight noise and high dynamic range to
-maintain detail in both the dark shirt and the bright clouds</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-      </div>
-
-      <div class="prompt-box filter-item">
-        <div class="prompt-title">💻 Pro Coder Automation Task</div>
-        <div class="prompt-content">Write a Python script using the OpenAI API and YouTube Data API. The script should take a YouTube video URL as input, generate a concise 5-bullet point summary of the video content, and automatically create a Twitter thread draft with relevant hashtags.</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-      </div>
-
-      <div class="prompt-box filter-item">
-        <div class="prompt-title">🔥 Free Fire Bio</div>
-        <div class="prompt-content">Headshot King 👑 | No Love 💔 | Push to Grandmaster | Respect ✊</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-      </div>
-           <div class="prompt-box filter-item">
-        <div class="prompt-title">🔥 Stylish emoji</div>
-        <div class="prompt-content">Using my uploaded photo as the exact identity reference, create a high-quality 2D cartoon sticker animation. Keep my original face structure, jawline, nose, eyes, lips, skin tone, hairstyle, age, and facial proportions unchanged. Convert me into a clean Bitmoji-style 2D illustration with bold outlines, soft shading, vibrant colors, and a transparent background. Create 9 smooth animated sticker poses high FPS with consistent design: Happy - bright smile, sparkling eyes, soft bounce. Blush -shy smile, rosy cheeks, head scratch. Angry furrowed brows, clenched teeth, steam puff. Sad droopy eyes, tear roll, slow head drop. Excited wide eyes, big grin, star sparkles. Hungry tired eyes, tongue out, floating food icons. Dead - X eyes, pale tone, soul floating out. Laugh eyes closed, wide laugh, shoulder shake. Cry big watery eyes, heavy tears, trembling chin.</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-           </div>
-           <div class="prompt-box filter-item">
-        <div class="prompt-title">🔥 sunlight add sunset</div>
-        <div class="prompt-content">Transform this image into a dramatic
-sunset HDR style while preserving
-100% of the original content. Do NOT change, add, remove, replace, or distort any object, subject, animal, person, building, tree, road shadow, reflection, or background Maintain the exact same
-composition framing perspective
-camera angle subject positions
-shapes and proportions Colors must look realistic, not oversaturated, not artificial.
-No fantasy effects, no extra clouds, no extra sun, no lens flares, no fog, no rain unfess slready present. This is a strict color and lighting
-transformation only, Photorealistic
-sunset HDR edit. Original image
-must remain perfectly recognizable</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-           </div>
-           <div class="prompt-box filter-item">
-        <div class="prompt-title">🔥 night mode light </div>
-        <div class="prompt-content">Apply An Ethereal Lighting Filter To The Uploaded Photo While Fully Preserving Every Original Detail Of The Photo Unchanged Except For Lighting, Glow, And Color Mood. Add Diffused Sunbeams Striking The Subject's Skin, Creating A Glowing Highlight On Cheekbones, Nose Bridge, Lips, And Hair Strands. Maintain Clear Separation Between Bright Sunlit Areas And Soft, Deep Shadows To Create A Cinematic High-Contrast Mood. Inject Subtle Lens Bloom, Light Haze, And A Thin Layer Of Atmospheric Glow Around The Face And Shoulders. Render Skin With Luminous Translucency And Gentle Peachy Tones. Enhance Stray Hair Strands Backlit By Sunlight. Color-Grade With Slightly Lowered Saturation, And Gentle Film -Like Grain. Keep The Overall Background Intact But Allow Sunlight Flares And Soft Bokeh To Wrap Naturally Around The Subject. The Result Should Look Like A Soft, Ethereal Daydream-Sunlit, Delicate, And Cinematic. Hard Rule: Do Not Change The Face And Hairs Of The Subject.</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-           </div>
-           <div class="prompt-box filter-item">
-        <div class="prompt-title">Boaring pic </div>
-        <div class="prompt-content">Apply a bold night-fl@sh aesthetic to the upl0aded ph0to while preserving original detaiIs except for Iighting, gIow, and c0lor m00d.
-
-Keep the night-time enviroment dark and unIit, maintaining existing shad0ws and siIhouettes.
-Do n0t brighten the backgrounnd except for sIight enhancement of p0int lights.
-
-Illuminate the subject with a strong, warm, direct fr0nt-facing fIash,
-focused near the f@ce and upper b0dy (primary br1ght area).
-
-Add diffused sun-be@m style highlights on cheekb0nes, n0se bridge, lips and hair str@nds.
-
-Maintain separation between br1ght areas and deep shad0ws for cinematic contrast.</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-           </div>
-         <div class="prompt-box filter-item">
-        <div class="prompt-title">ғᴏʀ ʙʟᴜʀʀᴇᴅ ᴘɪᴄ</div>
-        <div class="prompt-content">Ultra-premium professional image enhancement.
-
-Transform the uploaded low-quality, blurry image into extreme high-detail cinematic quality.
-
-Preserve 100% original identity, face structure, expression, pose, clothing, accessories, background, framing, and composition.
-Do NOT alter, redesign, replace, or add anything.
-
-Recover micro-details:
-
-sharp facial features
-natural skin texture
-visible pores
-realistic hair strands
-crisp eyes
-clean refined edges
-High-contrast clarity, deep depth, and balanced cinematic lighting.
-Poster-grade realism with dramatic but accurate detail.
-
-Output in 8K resolution, ProRes quality, studio-level sharpness.
-Photorealistic textures only. True-to-source enhancement only.
-Keep everything exactly the same — only enhance quality..</div>
-        <button class="copy-btn" onclick="copyText(this)">📋 Copy Prompt</button>
-      </div>
-
+    </div>
     </div>
 
 
@@ -1443,8 +1683,11 @@ function filterContent() {
   let visibleCount = 0;
 
   items.forEach(item => {
-    if (item.innerText.toLowerCase().includes(input)) {
-      if(item.classList.contains('prompt-box')){
+    const matches = item.innerText.toLowerCase().includes(input);
+    if (matches) {
+      if(item.classList.contains('prompt-card')) {
+        item.style.display = "block";
+      } else if(item.classList.contains('prompt-box')){
         item.style.display = "block";
       } else {
         item.style.display = "flex";
@@ -2138,6 +2381,108 @@ function renderWorldClock() {
 }
 renderWorldClock();
 setInterval(renderWorldClock, 1000);
+
+/* =====================================================
+   ✨ NEW PROMPT SECTION JS
+   ===================================================== */
+
+/* --- TOGGLE EXPAND/COLLAPSE --- */
+function toggleExpand(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('expanded');
+  btn.textContent = el.classList.contains('expanded') ? '🔼 Collapse' : '👁 Read More';
+}
+
+/* --- COPY PROMPT CARD --- */
+function copyPromptCard(btn, textId) {
+  const el = document.getElementById(textId);
+  if (!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* --- CATEGORY FILTER --- */
+function filterPrompts(cat, btn) {
+  document.querySelectorAll('.pf-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('.prompt-card');
+  let count = 0;
+  cards.forEach(card => {
+    const match = cat === 'all' || card.dataset.cat === cat;
+    card.style.display = match ? 'block' : 'none';
+    if (match) count++;
+  });
+  const lbl = document.getElementById('prompt-count');
+  if (lbl) lbl.textContent = count + ' prompt' + (count !== 1 ? 's' : '');
+}
+
+/* --- DAILY PROMPT OF THE DAY --- */
+const dailyPrompts = [
+  {
+    title: "✨ Neon Warrior — Cyberpunk Portrait",
+    img: "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1d?w=600&q=80",
+    text: "Hyper-realistic portrait of a young neon-lit warrior standing in a rain-soaked cyberpunk alley at midnight. Glowing tattoos on arms, futuristic armor with LED strips. Reflections of neon signs in puddles. Cinematic depth-of-field, Unreal Engine 5 quality, 8K resolution.",
+    cat: "photo"
+  },
+  {
+    title: "🌊 Ocean Throne — Royal Aesthetic",
+    img: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&q=80",
+    text: "A powerful king sitting on a throne made of crashing waves and sea coral, wearing a crown of bioluminescent sea creatures. Underwater and overwater world merged seamlessly. Epic cinematic lighting, hyper-detailed, photorealistic, 8K.",
+    cat: "creative"
+  },
+  {
+    title: "🔥 Dramatic Fire Portrait — Male",
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80",
+    text: "Dramatic cinematic close-up portrait of a young man with intense eyes, half his face illuminated by fire glow, half in deep shadow. Embers floating around him. Sharp details on skin texture, eyebrows, and jawline. Dark background, HDR quality, 8K cinematic grade.",
+    cat: "photo"
+  },
+  {
+    title: "🌸 Soft Glow — Golden Hour Edit",
+    img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80",
+    text: "Apply a soft golden hour glow to the uploaded portrait. Warm orange-peach tones. Backlit by sunlight with sun flares around the edges. Skin glowing with soft bokeh background. Film grain texture. No face changes — only lighting and color transformation.",
+    cat: "edit"
+  },
+  {
+    title: "🚀 Astronaut in Tokyo Streets",
+    img: "https://images.unsplash.com/photo-1446776858070-70c3d5ed6758?w=600&q=80",
+    text: "An astronaut in a white NASA spacesuit walking through the neon-lit streets of Tokyo at night. Crowds parting around them. Reflection of city lights on the helmet visor. Photorealistic, street photography style, cinematic grain, 8K resolution.",
+    cat: "creative"
+  },
+  {
+    title: "🎮 Free Fire — Winner Circle Render",
+    img: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=600&q=80",
+    text: "Create a cinematic 3D render of a Free Fire character standing victorious in the Winner Winner Chicken Dinner circle. Dramatic back-lighting, golden particles floating, intense expression, weapon held up high. Game-poster quality with depth-of-field blur.",
+    cat: "gaming"
+  },
+  {
+    title: "🤖 AI Agent — Smart App Builder",
+    img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&q=80",
+    text: "You are an expert full-stack developer. Build a complete React app with Tailwind CSS that includes: user authentication, a real-time dashboard with charts, dark mode toggle, and mobile responsiveness. Provide full working code with comments.",
+    cat: "ai"
+  },
+];
+
+function loadDailyPrompt() {
+  const today = new Date();
+  const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+  const idx = seed % dailyPrompts.length;
+  const p = dailyPrompts[idx];
+
+  const titleEl = document.getElementById('daily-title');
+  const imgEl = document.getElementById('daily-img');
+  const textEl = document.getElementById('daily-text');
+
+  if (titleEl) titleEl.textContent = p.title;
+  if (imgEl) { imgEl.src = p.img; imgEl.style.display = 'block'; }
+  if (textEl) textEl.textContent = p.text;
+}
+
+loadDailyPrompt();
 
 </script>
 
