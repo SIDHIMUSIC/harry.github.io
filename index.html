@@ -1143,6 +1143,50 @@ body::before{
   text-align: right;
 }
 
+/* =====================================================
+   🎨 CREATOR + 📚 STUDENT NEW TOOLS CSS
+   ===================================================== */
+
+/* Todo List */
+.todo-input-row { display:flex; gap:8px; margin-bottom:12px; }
+.todo-add-btn { padding:11px 16px; border-radius:10px; background:var(--accent); border:none; color:#000; font-weight:800; cursor:pointer; font-size:18px; flex-shrink:0; }
+.todo-list { display:flex; flex-direction:column; gap:8px; max-height:260px; overflow-y:auto; }
+.todo-item { display:flex; align-items:center; gap:10px; background:rgba(15,23,42,0.8); border:1px solid #1e293b; border-radius:10px; padding:10px 12px; transition:0.2s; }
+.todo-item.done { opacity:0.45; }
+.todo-item.done .todo-text { text-decoration:line-through; color:#475569; }
+.todo-check { width:18px; height:18px; accent-color:var(--accent); cursor:pointer; flex-shrink:0; }
+.todo-text { flex:1; font-size:13px; color:#e2e8f0; }
+.todo-del { background:transparent; border:none; color:#ef4444; font-size:16px; cursor:pointer; padding:2px 6px; border-radius:6px; }
+.todo-del:hover { background:rgba(239,68,68,0.15); }
+.todo-empty { text-align:center; color:#334155; font-size:13px; padding:20px 0; }
+.todo-footer { display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:11px; color:#475569; }
+
+/* Timetable */
+.tt-grid { display:grid; grid-template-columns:70px repeat(6,1fr); gap:2px; font-size:10px; overflow-x:auto; }
+.tt-head { background:#0f172a; border:1px solid #1e293b; border-radius:6px; padding:6px 4px; text-align:center; font-weight:700; color:var(--accent); }
+.tt-slot { background:#020617; border:1px solid #1e293b; border-radius:6px; padding:5px 4px; text-align:center; min-height:34px; font-size:9px; color:#64748b; cursor:pointer; transition:0.2s; word-break:break-word; }
+.tt-slot:hover { border-color:var(--accent); color:#fff; }
+.tt-slot.filled { background:rgba(99,102,241,0.15); color:#a78bfa; border-color:rgba(99,102,241,0.4); font-size:9px; }
+.tt-slot.filled:hover { background:rgba(239,68,68,0.15); border-color:#ef4444; }
+.tt-modal { position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:99999; display:none; align-items:center; justify-content:center; }
+.tt-modal.open { display:flex; }
+.tt-modal-box { background:#0f172a; border:1px solid #334155; border-radius:18px; padding:20px; width:88%; max-width:340px; }
+.tt-modal-box h4 { color:var(--accent); margin:0 0 12px; font-size:15px; }
+
+/* AI Caption/Hook Tool */
+.ai-output-box { background:#020617; border:1px solid #1e293b; border-radius:10px; padding:14px; margin-top:10px; font-size:12px; color:#94a3b8; line-height:1.7; min-height:60px; white-space:pre-wrap; display:none; }
+.ai-output-box.show { display:block; }
+.ai-gen-btn { width:100%; padding:12px; border-radius:10px; border:none; background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#000; font-weight:900; font-size:13px; cursor:pointer; margin-top:10px; font-family:inherit; transition:0.2s; }
+.ai-gen-btn:hover { filter:brightness(1.1); }
+.ai-gen-btn:disabled { opacity:0.6; cursor:not-allowed; }
+.ai-copy-output { margin-top:8px; width:100%; padding:9px; border-radius:9px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; display:none; }
+.ai-copy-output.show { display:block; }
+
+/* Thumbnail Idea */
+.thumb-tag-row { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+.thumb-tag { padding:5px 12px; border-radius:99px; font-size:11px; font-weight:700; cursor:pointer; border:1px solid #1e293b; background:transparent; color:#64748b; font-family:inherit; transition:0.2s; }
+.thumb-tag.active { background:var(--accent); color:#000; border-color:var(--accent); }
+
 </style>
 </head>
 
@@ -1271,7 +1315,7 @@ body::before{
           <div class="ai-trend-skeleton"></div>
           <div class="ai-trend-skeleton"></div>
         </div>
-        <button class="btn-copy-daily" style="margin-top:12px;width:100%;padding:10px;font-size:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-family:inherit;" onclick="fetchTrendingPrompts()">🔄 Refresh Trending</button>
+        <button class="btn-copy-daily" id="trend-refresh-btn" style="margin-top:12px;width:100%;padding:10px;font-size:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-family:inherit;" onclick="(async(btn)=>{btn.textContent='⏳ AI Generate kar raha hai...';btn.disabled=true;await fetchTrendingPrompts();btn.textContent='🔄 Refresh Trending';btn.disabled=false;})(this)">🔄 Refresh Trending</button>
       </div>
 
       <!-- DAILY PROMPT OF THE DAY -->
@@ -1634,8 +1678,89 @@ body::before{
         <div id="world-clocks"></div>
       </div>
 
+      <!-- ====== ✅ SMART TODO LIST ====== -->
+      <div class="tool-card">
+        <div class="tool-header">✅ Smart To-Do List</div>
+        <div class="todo-input-row">
+          <input class="tool-input" id="todo-input" type="text" placeholder="Kya karna hai aaj? Add karo..." style="margin:0" onkeydown="if(event.key==='Enter')addTodo()">
+          <button class="todo-add-btn" onclick="addTodo()">+</button>
+        </div>
+        <div class="todo-list" id="todo-list">
+          <div class="todo-empty" id="todo-empty">📭 Koi task nahi. Likho upar! 👆</div>
+        </div>
+        <div class="todo-footer">
+          <span id="todo-stats">0 tasks</span>
+          <button class="tool-btn" onclick="clearDoneTodos()" style="padding:6px 12px;font-size:11px;">🗑 Done Clear</button>
+        </div>
+      </div>
+
+      <!-- ====== 📅 TIMETABLE MAKER ====== -->
+      <div class="tool-card">
+        <div class="tool-header">📅 Weekly Timetable</div>
+        <div style="font-size:11px;color:#475569;margin-bottom:10px;">Slot pe tap karo → subject likho 📝</div>
+        <div class="tt-grid" id="tt-grid"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="tool-btn" style="flex:1" onclick="clearTimetable()">🗑 Clear All</button>
+          <button class="tool-btn" style="flex:2;background:var(--accent);color:#000;font-weight:800;border:none;" onclick="downloadTimetable()">⬇ Save PNG</button>
+        </div>
+      </div>
+
+      <!-- ====== 🎨 AI THUMBNAIL IDEA GENERATOR ====== -->
+      <div class="tool-card">
+        <div class="tool-header">🎨 AI Thumbnail Idea Generator</div>
+        <div class="tool-label">Video Topic likho</div>
+        <input class="tool-input" id="thumb-topic" type="text" placeholder="e.g. Free Fire tips, Study hacks...">
+        <div class="tool-label">Style choose karo</div>
+        <div class="thumb-tag-row" id="thumb-style-tags">
+          <button class="thumb-tag active" onclick="selectThumbStyle(this,'Cinematic')">🎬 Cinematic</button>
+          <button class="thumb-tag" onclick="selectThumbStyle(this,'Minimal')">⬜ Minimal</button>
+          <button class="thumb-tag" onclick="selectThumbStyle(this,'Bold & Bright')">🔥 Bold</button>
+          <button class="thumb-tag" onclick="selectThumbStyle(this,'Gaming')">🎮 Gaming</button>
+          <button class="thumb-tag" onclick="selectThumbStyle(this,'Vlog')">📸 Vlog</button>
+        </div>
+        <button class="ai-gen-btn" id="thumb-gen-btn" onclick="generateThumbnailIdea()">✨ AI se Idea Generate Karo</button>
+        <div class="ai-output-box" id="thumb-output"></div>
+        <button class="ai-copy-output" id="thumb-copy-btn" onclick="copyAIOutput('thumb-output','thumb-copy-btn')">📋 Copy Idea</button>
+      </div>
+
+      <!-- ====== 🪝 AI HOOK / CAPTION WRITER ====== -->
+      <div class="tool-card">
+        <div class="tool-header">🪝 AI Hook & Caption Writer</div>
+        <div class="tool-label">Kis platform ke liye?</div>
+        <div class="thumb-tag-row" id="hook-platform-tags">
+          <button class="thumb-tag active" onclick="selectHookPlatform(this,'Instagram Reels')">📸 Reels</button>
+          <button class="thumb-tag" onclick="selectHookPlatform(this,'YouTube Shorts')">▶ YT Shorts</button>
+          <button class="thumb-tag" onclick="selectHookPlatform(this,'Instagram Post')">🖼 Post</button>
+          <button class="thumb-tag" onclick="selectHookPlatform(this,'Telegram')">✈ Telegram</button>
+        </div>
+        <div class="tool-label">Topic kya hai?</div>
+        <input class="tool-input" id="hook-topic" type="text" placeholder="e.g. AI tools, Gaming tips, Study...">
+        <div class="tool-label">Tone?</div>
+        <div class="thumb-tag-row" id="hook-tone-tags">
+          <button class="thumb-tag active" onclick="selectHookTone(this,'Viral & Catchy')">🔥 Viral</button>
+          <button class="thumb-tag" onclick="selectHookTone(this,'Funny')">😂 Funny</button>
+          <button class="thumb-tag" onclick="selectHookTone(this,'Motivational')">💪 Motivation</button>
+          <button class="thumb-tag" onclick="selectHookTone(this,'Informative')">📚 Info</button>
+        </div>
+        <button class="ai-gen-btn" id="hook-gen-btn" onclick="generateHook()">🚀 Hook + Caption Generate Karo</button>
+        <div class="ai-output-box" id="hook-output"></div>
+        <button class="ai-copy-output" id="hook-copy-btn" onclick="copyAIOutput('hook-output','hook-copy-btn')">📋 Copy</button>
+      </div>
+
     </div>
     <!-- ============ END TOOLS SECTION ============ -->
+
+    <!-- Timetable Edit Modal -->
+    <div class="tt-modal" id="tt-modal">
+      <div class="tt-modal-box">
+        <h4>✏️ Subject likho</h4>
+        <input class="tool-input" id="tt-modal-input" type="text" placeholder="e.g. Math, Physics, Free..." style="margin-bottom:10px;">
+        <div style="display:flex;gap:8px;">
+          <button class="tool-btn" style="flex:1" onclick="closeTTModal()">Cancel</button>
+          <button class="tool-btn" style="flex:2;background:var(--accent);color:#000;border:none;font-weight:800;" onclick="saveTTSlot()">✅ Save</button>
+        </div>
+      </div>
+    </div>
 
     <div id="noResults" class="no-results">No matches found...</div>
 
@@ -2579,26 +2704,29 @@ const trendingPromptPool = [
   { title:"🌌 Space Explorer Portrait", text:"Place the subject in a stunning interstellar space scene. They wear a next-gen spacesuit with their name on it, floating near a colorful nebula with a ringed planet in the background. Stars and cosmic dust surrounding them. Cinematic sci-fi movie quality, 8K.", cat:"photo" },
 ];
 
-function fetchTrendingPrompts() {
+async function fetchTrendingPrompts() {
   const container = document.getElementById('ai-trending-cards');
   container.innerHTML = `
     <div class="ai-trend-skeleton"></div>
     <div class="ai-trend-skeleton"></div>
     <div class="ai-trend-skeleton"></div>
   `;
-
-  // Pick 3 prompts based on current date+hour so they feel "fresh"
-  setTimeout(() => {
-    const now = new Date();
-    const seed = now.getFullYear() * 1000000 + (now.getMonth()+1) * 10000 + now.getDate() * 100 + Math.floor(now.getHours() / 8);
-    const total = trendingPromptPool.length;
-    const picks = [
-      trendingPromptPool[seed % total],
-      trendingPromptPool[(seed + 5) % total],
-      trendingPromptPool[(seed + 11) % total],
-    ];
-    renderTrendingCards(picks);
-  }, 900);
+  try {
+    const prompt = encodeURIComponent('Generate exactly 3 trending AI image/creative prompts popular in 2025. Return ONLY a raw JSON array, no markdown:\n[{"title":"emoji + short name","text":"detailed prompt","cat":"photo"},{"title":"emoji + name","text":"detailed prompt","cat":"edit"},{"title":"emoji + name","text":"detailed prompt","cat":"creative"}]\nCategories allowed: photo, edit, creative, ai, gaming. Make them unique and viral.');
+    const seed = Math.floor(Math.random() * 999999);
+    const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&seed=${seed}&json=true`);
+    if (!res.ok) throw new Error('fail');
+    const raw = await res.text();
+    let clean = raw.replace(/```json|```/g, '').trim();
+    const s = clean.indexOf('['), e = clean.lastIndexOf(']');
+    if (s === -1 || e === -1) throw new Error('no array');
+    const prompts = JSON.parse(clean.slice(s, e + 1));
+    if (!Array.isArray(prompts) || prompts.length === 0) throw new Error('empty');
+    renderTrendingCards(prompts.slice(0, 3));
+  } catch (err) {
+    const shuffled = [...fallbackPool].sort(() => Math.random() - 0.5);
+    renderTrendingCards(shuffled.slice(0, 3));
+  }
 }
 
 function renderTrendingCards(prompts) {
@@ -2619,6 +2747,207 @@ function renderTrendingCards(prompts) {
       </div>
     `;
     container.appendChild(div);
+  });
+}
+
+/* =====================================================
+   ✅ SMART TODO LIST
+   ===================================================== */
+let todos = JSON.parse(localStorage.getItem('harry_todos') || '[]');
+
+function saveTodos() { localStorage.setItem('harry_todos', JSON.stringify(todos)); }
+
+function renderTodos() {
+  const list = document.getElementById('todo-list');
+  const empty = document.getElementById('todo-empty');
+  const stats = document.getElementById('todo-stats');
+  if (!list) return;
+  const items = list.querySelectorAll('.todo-item');
+  items.forEach(el => el.remove());
+  if (todos.length === 0) { empty.style.display='block'; stats.textContent='0 tasks'; return; }
+  empty.style.display = 'none';
+  const done = todos.filter(t => t.done).length;
+  stats.textContent = `${done}/${todos.length} done ✅`;
+  todos.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'todo-item' + (t.done ? ' done' : '');
+    div.innerHTML = `
+      <input type="checkbox" class="todo-check" ${t.done ? 'checked' : ''} onchange="toggleTodo(${i})">
+      <span class="todo-text">${t.text}</span>
+      <button class="todo-del" onclick="deleteTodo(${i})">✕</button>
+    `;
+    list.insertBefore(div, list.lastElementChild);
+  });
+}
+
+function addTodo() {
+  const inp = document.getElementById('todo-input');
+  const val = inp.value.trim();
+  if (!val) { showToast('Kuch to likho! 😅'); return; }
+  todos.unshift({ text: val, done: false });
+  inp.value = '';
+  saveTodos(); renderTodos();
+  showToast('Task add ho gaya! ✅');
+}
+
+function toggleTodo(i) { todos[i].done = !todos[i].done; saveTodos(); renderTodos(); }
+function deleteTodo(i) { todos.splice(i, 1); saveTodos(); renderTodos(); }
+function clearDoneTodos() {
+  const before = todos.length;
+  todos = todos.filter(t => !t.done);
+  saveTodos(); renderTodos();
+  showToast(`${before - todos.length} done tasks hataaye! 🗑`);
+}
+
+renderTodos();
+
+/* =====================================================
+   📅 TIMETABLE MAKER
+   ===================================================== */
+const TT_DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat'];
+const TT_SLOTS = ['9-10','10-11','11-12','12-1','2-3','3-4','4-5'];
+let ttData = JSON.parse(localStorage.getItem('harry_tt') || '{}');
+let ttEditing = null;
+
+function buildTimetable() {
+  const grid = document.getElementById('tt-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  // Corner
+  const corner = document.createElement('div');
+  corner.className = 'tt-head'; corner.textContent = '⏰';
+  grid.appendChild(corner);
+  // Day headers
+  TT_DAYS.forEach(d => {
+    const h = document.createElement('div');
+    h.className = 'tt-head'; h.textContent = d;
+    grid.appendChild(h);
+  });
+  // Rows
+  TT_SLOTS.forEach(slot => {
+    const slotEl = document.createElement('div');
+    slotEl.className = 'tt-head'; slotEl.style.cssText = 'font-size:9px;color:#64748b;font-weight:600;';
+    slotEl.textContent = slot;
+    grid.appendChild(slotEl);
+    TT_DAYS.forEach(day => {
+      const key = day + '_' + slot;
+      const val = ttData[key] || '';
+      const cell = document.createElement('div');
+      cell.className = 'tt-slot' + (val ? ' filled' : '');
+      cell.textContent = val || '+';
+      cell.title = val ? 'Click to edit/delete' : 'Click to add';
+      cell.onclick = () => openTTModal(key, val);
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function openTTModal(key, current) {
+  ttEditing = key;
+  document.getElementById('tt-modal-input').value = current;
+  document.getElementById('tt-modal').classList.add('open');
+  setTimeout(() => document.getElementById('tt-modal-input').focus(), 100);
+}
+function closeTTModal() { document.getElementById('tt-modal').classList.remove('open'); ttEditing = null; }
+function saveTTSlot() {
+  if (!ttEditing) return;
+  const val = document.getElementById('tt-modal-input').value.trim();
+  if (val) ttData[ttEditing] = val; else delete ttData[ttEditing];
+  localStorage.setItem('harry_tt', JSON.stringify(ttData));
+  closeTTModal(); buildTimetable();
+  showToast(val ? '📅 Subject save ho gaya!' : '🗑 Slot clear ho gaya!');
+}
+document.getElementById('tt-modal-input') && document.getElementById('tt-modal-input').addEventListener('keydown', e => { if(e.key === 'Enter') saveTTSlot(); if(e.key === 'Escape') closeTTModal(); });
+function clearTimetable() { ttData = {}; localStorage.setItem('harry_tt', '{}'); buildTimetable(); showToast('Timetable clear ho gaya!'); }
+function downloadTimetable() { showToast('Screenshot lo phone se — Ctrl+Shift+S 📸'); }
+
+buildTimetable();
+
+/* =====================================================
+   🎨 AI THUMBNAIL IDEA GENERATOR
+   ===================================================== */
+let thumbStyle = 'Cinematic';
+function selectThumbStyle(btn, style) {
+  document.querySelectorAll('#thumb-style-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); thumbStyle = style;
+}
+
+async function generateThumbnailIdea() {
+  const topic = document.getElementById('thumb-topic').value.trim();
+  if (!topic) { showToast('Topic toh likho pehle! 😅'); return; }
+  const btn = document.getElementById('thumb-gen-btn');
+  const out = document.getElementById('thumb-output');
+  const copyBtn = document.getElementById('thumb-copy-btn');
+  btn.textContent = '⏳ AI soch raha hai...'; btn.disabled = true;
+  out.classList.remove('show'); copyBtn.classList.remove('show');
+  try {
+    const prompt = encodeURIComponent(
+      `Give me 3 viral YouTube thumbnail ideas for topic: "${topic}". Style: ${thumbStyle}. For each idea include: 🎨 Visual layout description, 📝 Text overlay to use, 🎭 Subject expression/pose, 🎨 Color scheme. Be specific and creative. Format with clear numbering.`
+    );
+    const seed = Math.floor(Math.random() * 999999);
+    const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&seed=${seed}`, {
+      method: 'GET'
+    });
+    if (!res.ok) throw new Error('fail');
+    const text = await res.text();
+    out.textContent = text;
+    out.classList.add('show'); copyBtn.classList.add('show');
+  } catch(e) {
+    out.textContent = '⚠️ AI unavailable. Site pe deploy karke try karo ya internet check karo.';
+    out.classList.add('show');
+  }
+  btn.textContent = '✨ AI se Idea Generate Karo'; btn.disabled = false;
+}
+
+/* =====================================================
+   🪝 AI HOOK & CAPTION WRITER
+   ===================================================== */
+let hookPlatform = 'Instagram Reels';
+let hookTone = 'Viral & Catchy';
+
+function selectHookPlatform(btn, val) {
+  document.querySelectorAll('#hook-platform-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); hookPlatform = val;
+}
+function selectHookTone(btn, val) {
+  document.querySelectorAll('#hook-tone-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); hookTone = val;
+}
+
+async function generateHook() {
+  const topic = document.getElementById('hook-topic').value.trim();
+  if (!topic) { showToast('Topic likho pehle! 🎯'); return; }
+  const btn = document.getElementById('hook-gen-btn');
+  const out = document.getElementById('hook-output');
+  const copyBtn = document.getElementById('hook-copy-btn');
+  btn.textContent = '⏳ Likh raha hai AI...'; btn.disabled = true;
+  out.classList.remove('show'); copyBtn.classList.remove('show');
+  try {
+    const prompt = encodeURIComponent(
+      `You are a viral ${hookPlatform} content expert. Write in Hinglish (Hindi+English mix) for an Indian audience. Topic: "${topic}". Tone: ${hookTone}.\n\nGive me:\n🪝 3 Scroll-stopping Opening Hooks (first 2 seconds)\n📝 1 Full Caption with emojis and hashtags\n💡 1 Strong Call To Action\n\nMake it super engaging and viral!`
+    );
+    const seed = Math.floor(Math.random() * 999999);
+    const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&seed=${seed}`, {
+      method: 'GET'
+    });
+    if (!res.ok) throw new Error('fail');
+    const text = await res.text();
+    out.textContent = text;
+    out.classList.add('show'); copyBtn.classList.add('show');
+  } catch(e) {
+    out.textContent = '⚠️ AI unavailable. Site pe deploy karke try karo ya internet check karo.';
+    out.classList.add('show');
+  }
+  btn.textContent = '🚀 Hook + Caption Generate Karo'; btn.disabled = false;
+}
+
+function copyAIOutput(outId, btnId) {
+  const text = document.getElementById(outId).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy', 2000);
+    showToast('Copied! ✅');
   });
 }
 
