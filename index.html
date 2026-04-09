@@ -814,6 +814,109 @@ body::before{
   100% { transform: scale(1); opacity: 1; }
 }
 
+
+/* =====================================================
+   🆕 NEW TOOLS CSS
+   ===================================================== */
+/* EMI rows */
+.emi-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(15,23,42,0.8);
+  border: 1px solid #1e293b;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+.emi-val {
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+/* Password Generator */
+.pass-slider {
+  width: 100%;
+  margin: 8px 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.pass-options {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.pass-opt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #94a3b8;
+  cursor: pointer;
+}
+.pass-opt input { accent-color: var(--accent); cursor: pointer; }
+.pass-output-wrap {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.pass-output {
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--accent);
+  word-break: break-all;
+  letter-spacing: 1px;
+}
+.pass-strength-bar {
+  height: 4px;
+  background: #1e293b;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 6px 0 2px;
+}
+#pass-strength-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  transition: width 0.4s, background 0.4s;
+}
+
+/* World Clock */
+.clock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(15,23,42,0.7);
+  border: 1px solid #1e293b;
+  margin-bottom: 8px;
+}
+.clock-city {
+  font-size: 12px;
+  color: #64748b;
+}
+.clock-time {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: monospace;
+  text-shadow: 0 0 8px var(--accent);
+}
+.clock-date {
+  font-size: 10px;
+  color: #475569;
+  text-align: right;
+}
+
 </style>
 </head>
 
@@ -1125,6 +1228,109 @@ Keep everything exactly the same — only enhance quality..</div>
         <textarea class="tool-textarea" id="decision-options" style="height:100px" placeholder="Study&#10;Gaming&#10;Sleep&#10;Eat"></textarea>
         <button class="tool-btn full" onclick="spinDecision()" id="spin-btn">🎰 Decide For Me!</button>
         <div class="decision-result" id="decision-result" style="display:none"></div>
+      </div>
+
+      <!-- ====== AGE CALCULATOR ====== -->
+      <div class="tool-card">
+        <div class="tool-header">🎂 Age Calculator</div>
+        <div class="tool-label">Apni Date of Birth daalo</div>
+        <input class="tool-input" type="date" id="dob-input" max="">
+        <button class="tool-btn full" onclick="calcAge()">Calculate My Age</button>
+        <div class="calc-result" id="age-result" style="display:none"></div>
+        <div id="age-extra" style="display:none;margin-top:10px;padding:10px;border-radius:10px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);font-size:12px;color:#94a3b8;line-height:1.8;text-align:center"></div>
+      </div>
+
+      <!-- ====== EMI CALCULATOR ====== -->
+      <div class="tool-card">
+        <div class="tool-header">💸 EMI Calculator</div>
+        <div class="tool-label">Loan Amount (₹)</div>
+        <input class="tool-input" type="number" id="emi-loan" placeholder="e.g. 500000">
+        <div class="tool-label">Annual Interest Rate (%)</div>
+        <input class="tool-input" type="number" id="emi-rate" placeholder="e.g. 8.5">
+        <div class="tool-label">Loan Duration (Months)</div>
+        <input class="tool-input" type="number" id="emi-months" placeholder="e.g. 24">
+        <button class="tool-btn full" onclick="calcEMI()">Calculate EMI</button>
+        <div id="emi-result" style="display:none;margin-top:12px">
+          <div class="emi-row"><span>Monthly EMI</span><span id="emi-monthly" class="emi-val"></span></div>
+          <div class="emi-row"><span>Total Payment</span><span id="emi-total" class="emi-val"></span></div>
+          <div class="emi-row"><span>Total Interest</span><span id="emi-interest" class="emi-val" style="color:#f87171"></span></div>
+        </div>
+      </div>
+
+      <!-- ====== PASSWORD GENERATOR ====== -->
+      <div class="tool-card">
+        <div class="tool-header">🔐 Password Generator</div>
+        <div class="tool-label">Length: <span id="pass-len-display">16</span></div>
+        <input type="range" class="pass-slider" id="pass-length" min="8" max="32" value="16" oninput="document.getElementById('pass-len-display').textContent=this.value">
+        <div class="pass-options">
+          <label class="pass-opt"><input type="checkbox" id="opt-upper" checked> A-Z</label>
+          <label class="pass-opt"><input type="checkbox" id="opt-lower" checked> a-z</label>
+          <label class="pass-opt"><input type="checkbox" id="opt-num" checked> 0-9</label>
+          <label class="pass-opt"><input type="checkbox" id="opt-sym" checked> @#!</label>
+        </div>
+        <div class="pass-output-wrap">
+          <div class="pass-output" id="pass-output">Click generate 👇</div>
+        </div>
+        <div class="pass-strength-bar"><div id="pass-strength-fill"></div></div>
+        <div id="pass-strength-label" style="font-size:11px;color:#64748b;text-align:center;margin:4px 0 10px">—</div>
+        <div style="display:flex;gap:8px">
+          <button class="tool-btn" style="flex:1" onclick="generatePassword()">🔄 Generate</button>
+          <button class="tool-btn" style="flex:1" onclick="copyPassword()">📋 Copy</button>
+        </div>
+      </div>
+
+      <!-- ====== UNIT CONVERTER ====== -->
+      <div class="tool-card">
+        <div class="tool-header">📏 Unit Converter</div>
+        <div class="calc-tabs">
+          <button class="calc-tab active" onclick="showUnit('length',this)">📐 Length</button>
+          <button class="calc-tab" onclick="showUnit('weight',this)">⚖️ Weight</button>
+          <button class="calc-tab" onclick="showUnit('temp',this)">🌡️ Temp</button>
+        </div>
+
+        <div id="unit-length" class="calc-panel active">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1"><div class="tool-label">Kilometers</div><input class="tool-input" id="u-km" type="number" placeholder="km" oninput="convertLength('km')"></div>
+            <div style="color:var(--accent);font-size:18px;padding-top:18px">⇌</div>
+            <div style="flex:1"><div class="tool-label">Miles</div><input class="tool-input" id="u-mi" type="number" placeholder="mi" oninput="convertLength('mi')"></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <div style="flex:1"><div class="tool-label">Meters</div><input class="tool-input" id="u-m" type="number" placeholder="m" oninput="convertLength('m')"></div>
+            <div style="color:var(--accent);font-size:18px;padding-top:18px">⇌</div>
+            <div style="flex:1"><div class="tool-label">Feet</div><input class="tool-input" id="u-ft" type="number" placeholder="ft" oninput="convertLength('ft')"></div>
+          </div>
+        </div>
+
+        <div id="unit-weight" class="calc-panel">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1"><div class="tool-label">Kilograms</div><input class="tool-input" id="u-kg" type="number" placeholder="kg" oninput="convertWeight('kg')"></div>
+            <div style="color:var(--accent);font-size:18px;padding-top:18px">⇌</div>
+            <div style="flex:1"><div class="tool-label">Pounds</div><input class="tool-input" id="u-lb" type="number" placeholder="lb" oninput="convertWeight('lb')"></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <div style="flex:1"><div class="tool-label">Grams</div><input class="tool-input" id="u-g" type="number" placeholder="g" oninput="convertWeight('g')"></div>
+            <div style="color:var(--accent);font-size:18px;padding-top:18px">⇌</div>
+            <div style="flex:1"><div class="tool-label">Ounces</div><input class="tool-input" id="u-oz" type="number" placeholder="oz" oninput="convertWeight('oz')"></div>
+          </div>
+        </div>
+
+        <div id="unit-temp" class="calc-panel">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1"><div class="tool-label">Celsius °C</div><input class="tool-input" id="u-c" type="number" placeholder="°C" oninput="convertTemp('c')"></div>
+            <div style="color:var(--accent);font-size:18px;padding-top:18px">⇌</div>
+            <div style="flex:1"><div class="tool-label">Fahrenheit °F</div><input class="tool-input" id="u-f" type="number" placeholder="°F" oninput="convertTemp('f')"></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <div style="flex:1"><div class="tool-label">Kelvin K</div><input class="tool-input" id="u-k" type="number" placeholder="K" oninput="convertTemp('k')"></div>
+            <div style="flex:1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== WORLD CLOCK ====== -->
+      <div class="tool-card">
+        <div class="tool-header">🌍 World Clock</div>
+        <div id="world-clocks"></div>
       </div>
 
     </div>
@@ -1754,6 +1960,184 @@ function spinDecision() {
     }
   }, 80);
 }
+
+/* =====================================================
+   🆕 NEW TOOLS JS
+   ===================================================== */
+
+/* --- AGE CALCULATOR --- */
+document.addEventListener('DOMContentLoaded', () => {
+  const dobInput = document.getElementById('dob-input');
+  if (dobInput) dobInput.max = new Date().toISOString().split('T')[0];
+});
+
+function calcAge() {
+  const dob = document.getElementById('dob-input').value;
+  if (!dob) { showToast('Date daalo pehle! 📅'); return; }
+  const birth = new Date(dob);
+  const today = new Date();
+  let years = today.getFullYear() - birth.getFullYear();
+  let months = today.getMonth() - birth.getMonth();
+  let days = today.getDate() - birth.getDate();
+  if (days < 0) { months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
+  if (months < 0) { years--; months += 12; }
+  const nextBday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate());
+  if (nextBday <= today) nextBday.setFullYear(today.getFullYear() + 1);
+  const daysLeft = Math.ceil((nextBday - today) / (1000 * 60 * 60 * 24));
+  const totalDays = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
+
+  const res = document.getElementById('age-result');
+  res.style.display = 'block';
+  res.innerHTML = years + ' Saal ' + months + ' Mahine ' + days + ' Din 🎉';
+
+  const extra = document.getElementById('age-extra');
+  extra.style.display = 'block';
+  extra.innerHTML =
+    '📅 Total days alive: <b style="color:var(--accent)">' + totalDays.toLocaleString() + '</b><br>' +
+    '🎂 Next Birthday in: <b style="color:var(--accent)">' + daysLeft + ' days</b><br>' +
+    '⏰ Total hours: <b style="color:var(--accent)">' + (totalDays * 24).toLocaleString() + '</b>';
+}
+
+/* --- EMI CALCULATOR --- */
+function calcEMI() {
+  const P = parseFloat(document.getElementById('emi-loan').value);
+  const annualRate = parseFloat(document.getElementById('emi-rate').value);
+  const N = parseFloat(document.getElementById('emi-months').value);
+  const res = document.getElementById('emi-result');
+  if (!P || !annualRate || !N) { showToast('Sab fields bharo! 💸'); return; }
+  const r = annualRate / 12 / 100;
+  const emi = P * r * Math.pow(1 + r, N) / (Math.pow(1 + r, N) - 1);
+  const total = emi * N;
+  const interest = total - P;
+  const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
+  document.getElementById('emi-monthly').textContent = fmt(emi);
+  document.getElementById('emi-total').textContent = fmt(total);
+  document.getElementById('emi-interest').textContent = fmt(interest);
+  res.style.display = 'block';
+}
+
+/* --- PASSWORD GENERATOR --- */
+function generatePassword() {
+  const len = parseInt(document.getElementById('pass-length').value);
+  const upper = document.getElementById('opt-upper').checked;
+  const lower = document.getElementById('opt-lower').checked;
+  const num   = document.getElementById('opt-num').checked;
+  const sym   = document.getElementById('opt-sym').checked;
+  let chars = '';
+  if (upper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (lower) chars += 'abcdefghijklmnopqrstuvwxyz';
+  if (num)   chars += '0123456789';
+  if (sym)   chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+  if (!chars) { showToast('Koi option toh select karo! 😅'); return; }
+  let pass = '';
+  for (let i = 0; i < len; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+  document.getElementById('pass-output').textContent = pass;
+  // strength
+  let score = 0;
+  if (upper && /[A-Z]/.test(pass)) score++;
+  if (lower && /[a-z]/.test(pass)) score++;
+  if (num && /[0-9]/.test(pass)) score++;
+  if (sym && /[^A-Za-z0-9]/.test(pass)) score++;
+  if (len >= 16) score++;
+  const fill = document.getElementById('pass-strength-fill');
+  const label = document.getElementById('pass-strength-label');
+  const levels = [
+    {w:'20%', c:'#ef4444', t:'Weak 😟'},
+    {w:'40%', c:'#f97316', t:'Fair 😐'},
+    {w:'60%', c:'#eab308', t:'Good 🙂'},
+    {w:'80%', c:'#22c55e', t:'Strong 💪'},
+    {w:'100%',c:'#22d3ee', t:'Very Strong 🔥'}
+  ];
+  const lvl = levels[Math.min(score - 1, 4)] || levels[0];
+  fill.style.width = lvl.w; fill.style.background = lvl.c; label.textContent = lvl.t;
+}
+function copyPassword() {
+  const pass = document.getElementById('pass-output').textContent;
+  if (pass === 'Click generate 👇') { showToast('Pehle generate karo! 🔐'); return; }
+  navigator.clipboard.writeText(pass).then(() => showToast('Password copied! ✅'));
+}
+// Auto-generate on load
+generatePassword();
+
+/* --- UNIT CONVERTER --- */
+function showUnit(type, btn) {
+  document.querySelectorAll('[id^="unit-"]').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('unit-' + type).classList.add('active');
+  btn.classList.add('active');
+}
+function r(v, d=4) { return parseFloat(v.toFixed(d)) || ''; }
+function setVal(id, v) { const el = document.getElementById(id); if (el) el.value = v === '' ? '' : r(v); }
+
+function convertLength(from) {
+  const km = document.getElementById('u-km'), mi = document.getElementById('u-mi'),
+        m  = document.getElementById('u-m'),  ft = document.getElementById('u-ft');
+  let kmVal;
+  if (from === 'km') kmVal = parseFloat(km.value);
+  else if (from === 'mi') kmVal = parseFloat(mi.value) * 1.60934;
+  else if (from === 'm')  kmVal = parseFloat(m.value) / 1000;
+  else if (from === 'ft') kmVal = parseFloat(ft.value) * 0.0003048;
+  if (isNaN(kmVal)) return;
+  if (from !== 'km') km.value = r(kmVal);
+  if (from !== 'mi') mi.value = r(kmVal / 1.60934);
+  if (from !== 'm')  m.value  = r(kmVal * 1000);
+  if (from !== 'ft') ft.value = r(kmVal / 0.0003048);
+}
+function convertWeight(from) {
+  const kg = document.getElementById('u-kg'), lb = document.getElementById('u-lb'),
+        g  = document.getElementById('u-g'),  oz = document.getElementById('u-oz');
+  let kgVal;
+  if (from === 'kg') kgVal = parseFloat(kg.value);
+  else if (from === 'lb') kgVal = parseFloat(lb.value) * 0.453592;
+  else if (from === 'g')  kgVal = parseFloat(g.value) / 1000;
+  else if (from === 'oz') kgVal = parseFloat(oz.value) * 0.0283495;
+  if (isNaN(kgVal)) return;
+  if (from !== 'kg') kg.value = r(kgVal);
+  if (from !== 'lb') lb.value = r(kgVal / 0.453592);
+  if (from !== 'g')  g.value  = r(kgVal * 1000);
+  if (from !== 'oz') oz.value = r(kgVal / 0.0283495);
+}
+function convertTemp(from) {
+  let c;
+  if (from === 'c') c = parseFloat(document.getElementById('u-c').value);
+  else if (from === 'f') c = (parseFloat(document.getElementById('u-f').value) - 32) * 5/9;
+  else if (from === 'k') c = parseFloat(document.getElementById('u-k').value) - 273.15;
+  if (isNaN(c)) return;
+  if (from !== 'c') document.getElementById('u-c').value = r(c);
+  if (from !== 'f') document.getElementById('u-f').value = r(c * 9/5 + 32);
+  if (from !== 'k') document.getElementById('u-k').value = r(c + 273.15);
+}
+
+/* --- WORLD CLOCK --- */
+const worldCities = [
+  { name: '🇮🇳 India (IST)',     tz: 'Asia/Kolkata' },
+  { name: '🇺🇸 New York (EST)',  tz: 'America/New_York' },
+  { name: '🇬🇧 London (GMT)',    tz: 'Europe/London' },
+  { name: '🇯🇵 Tokyo (JST)',     tz: 'Asia/Tokyo' },
+  { name: '🇦🇺 Sydney (AEST)',   tz: 'Australia/Sydney' },
+  { name: '🇦🇪 Dubai (GST)',     tz: 'Asia/Dubai' },
+];
+
+function renderWorldClock() {
+  const container = document.getElementById('world-clocks');
+  if (!container) return;
+  const now = new Date();
+  container.innerHTML = worldCities.map(city => {
+    const timeStr = now.toLocaleTimeString('en-US', { timeZone: city.tz, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateStr = now.toLocaleDateString('en-IN', { timeZone: city.tz, weekday: 'short', day: 'numeric', month: 'short' });
+    return `<div class="clock-item">
+      <div>
+        <div class="clock-city">${city.name}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="clock-time">${timeStr}</div>
+        <div class="clock-date">${dateStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+renderWorldClock();
+setInterval(renderWorldClock, 1000);
 
 </script>
 
