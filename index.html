@@ -1182,6 +1182,18 @@ body::before{
 .ai-copy-output { margin-top:8px; width:100%; padding:9px; border-radius:9px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; display:none; }
 .ai-copy-output.show { display:block; }
 
+/* ====== AI IMAGE GENERATOR ====== */
+.imggen-spinner {
+  width: 44px; height: 44px;
+  border: 4px solid #1e293b;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#imggen-action-row { display: flex !important; }
+
 /* Thumbnail Idea */
 .thumb-tag-row { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
 .thumb-tag { padding:5px 12px; border-radius:99px; font-size:11px; font-weight:700; cursor:pointer; border:1px solid #1e293b; background:transparent; color:#64748b; font-family:inherit; transition:0.2s; }
@@ -1745,6 +1757,128 @@ body::before{
         <button class="ai-gen-btn" id="hook-gen-btn" onclick="generateHook()">🚀 Hook + Caption Generate Karo</button>
         <div class="ai-output-box" id="hook-output"></div>
         <button class="ai-copy-output" id="hook-copy-btn" onclick="copyAIOutput('hook-output','hook-copy-btn')">📋 Copy</button>
+      </div>
+
+      <!-- ====== 🪄 AI BIO GENERATOR ====== -->
+      <div class="tool-card">
+        <div class="tool-header">🪄 AI Bio Generator</div>
+        <div class="tool-label">Apna naam / topic likho</div>
+        <input class="tool-input" id="bio-name" type="text" placeholder="e.g. Harry, Gamer, Student...">
+        <div class="tool-label">Platform choose karo</div>
+        <div class="thumb-tag-row" id="bio-platform-tags">
+          <button class="thumb-tag active" onclick="selectBioPlatform(this,'Instagram')">📸 Insta</button>
+          <button class="thumb-tag" onclick="selectBioPlatform(this,'Free Fire')">🔥 Free Fire</button>
+          <button class="thumb-tag" onclick="selectBioPlatform(this,'YouTube')">▶ YouTube</button>
+          <button class="thumb-tag" onclick="selectBioPlatform(this,'Telegram')">✈ Telegram</button>
+        </div>
+        <div class="tool-label">Vibe kya hai?</div>
+        <div class="thumb-tag-row" id="bio-vibe-tags">
+          <button class="thumb-tag active" onclick="selectBioVibe(this,'Swag & Cool')">😎 Swag</button>
+          <button class="thumb-tag" onclick="selectBioVibe(this,'Sad & Broken')">💔 Sad</button>
+          <button class="thumb-tag" onclick="selectBioVibe(this,'Motivational')">💪 Motivation</button>
+          <button class="thumb-tag" onclick="selectBioVibe(this,'Funny')">😂 Funny</button>
+        </div>
+        <button class="ai-gen-btn" id="bio-gen-btn" onclick="generateBio()">✨ AI Bio Banao</button>
+        <div class="ai-output-box" id="bio-output"></div>
+        <button class="ai-copy-output" id="bio-copy-btn" onclick="copyAIOutput('bio-output','bio-copy-btn')">📋 Copy Bio</button>
+      </div>
+
+      <!-- ====== 😈 AI ROAST ME ====== -->
+      <div class="tool-card">
+        <div class="tool-header">😈 AI Roast Me</div>
+        <div class="tool-label">Apne baare mein kuch batao (optional)</div>
+        <input class="tool-input" id="roast-info" type="text" placeholder="e.g. Gamer hoon, late soata hoon, exam nahi pada...">
+        <div class="tool-label">Roast level?</div>
+        <div class="thumb-tag-row" id="roast-level-tags">
+          <button class="thumb-tag active" onclick="selectRoastLevel(this,'Light & Funny')">😂 Light</button>
+          <button class="thumb-tag" onclick="selectRoastLevel(this,'Medium Savage')">🔥 Savage</button>
+          <button class="thumb-tag" onclick="selectRoastLevel(this,'Ultra Brutal')">💀 Brutal</button>
+        </div>
+        <button class="ai-gen-btn" id="roast-gen-btn" onclick="generateRoast()">💀 Mujhe Roast Karo!</button>
+        <div class="ai-output-box" id="roast-output"></div>
+        <button class="ai-copy-output" id="roast-copy-btn" onclick="copyAIOutput('roast-output','roast-copy-btn')">📋 Copy Roast</button>
+      </div>
+
+      <!-- ====== 📖 AI STUDY EXPLAINER ====== -->
+      <div class="tool-card">
+        <div class="tool-header">📖 AI Study Explainer</div>
+        <div class="tool-label">Koi bhi topic / subject likho</div>
+        <input class="tool-input" id="study-topic" type="text" placeholder="e.g. Photosynthesis, Python loops, Newton's Laws...">
+        <div class="tool-label">Explain kaise kare?</div>
+        <div class="thumb-tag-row" id="study-style-tags">
+          <button class="thumb-tag active" onclick="selectStudyStyle(this,'Simple Hindi mein')">🇮🇳 Hindi</button>
+          <button class="thumb-tag" onclick="selectStudyStyle(this,'Story format mein')">📖 Story</button>
+          <button class="thumb-tag" onclick="selectStudyStyle(this,'Exam ke liye short notes')">📝 Short Notes</button>
+          <button class="thumb-tag" onclick="selectStudyStyle(this,'5 saal ke bache ko samjhao')">👦 Simple</button>
+        </div>
+        <button class="ai-gen-btn" id="study-gen-btn" onclick="generateStudyExplain()">🧠 Explain Karo AI!</button>
+        <div class="ai-output-box" id="study-output"></div>
+        <button class="ai-copy-output" id="study-copy-btn" onclick="copyAIOutput('study-output','study-copy-btn')">📋 Copy Notes</button>
+      </div>
+
+      <!-- ====== 🖼️ AI IMAGE GENERATOR ====== -->
+      <div class="tool-card" id="imggen-tool">
+        <div class="tool-header">🖼️ AI Image Generator</div>
+        <div style="font-size:11px;color:#475569;margin-bottom:12px;">Apna prompt likho → AI image ban jaayegi ✨ (Pollinations.ai powered)</div>
+
+        <!-- Quick Idea Chips -->
+        <div class="tool-label">⚡ Quick Ideas — tap karo</div>
+        <div class="thumb-tag-row" id="imggen-idea-chips">
+          <button class="thumb-tag" onclick="setImgPrompt('cinematic portrait of a young Indian boy with glowing neon lights, 8K, ultra realistic')">🧑 Profile Pic</button>
+          <button class="thumb-tag" onclick="setImgPrompt('dark futuristic cyberpunk city wallpaper, neon purple and cyan, ultra wide 4K')">🌆 Wallpaper</button>
+          <button class="thumb-tag" onclick="setImgPrompt('viral YouTube thumbnail background, bold red and black, dramatic lighting, empty space for text')">🎬 Thumbnail BG</button>
+          <button class="thumb-tag" onclick="setImgPrompt('minimalist logo design for a gaming channel, neon cyan, dark background, professional')">🎮 Gaming Logo</button>
+          <button class="thumb-tag" onclick="setImgPrompt('aesthetic study desk setup with books, lamp, and laptop, cozy warm lighting, photorealistic')">📚 Study Aesthetic</button>
+          <button class="thumb-tag" onclick="setImgPrompt('cute anime style avatar of an Indian student, big eyes, school uniform, colorful background')">🎌 Anime Avatar</button>
+          <button class="thumb-tag" onclick="setImgPrompt('Free Fire battle royale scene, jungle, dramatic fire explosion, cinematic game art')">🔥 FF Art</button>
+          <button class="thumb-tag" onclick="setImgPrompt('beautiful Indian village at golden hour, mustard fields, realistic photography style')">🌾 Village Scene</button>
+        </div>
+
+        <!-- Prompt Input -->
+        <div class="tool-label" style="margin-top:10px;">📝 Ya apna khud ka prompt likho</div>
+        <textarea class="tool-textarea" id="imggen-prompt" style="height:80px;" placeholder="e.g. A samurai standing on a rooftop at night, neon city lights, cinematic 8K..."></textarea>
+
+        <!-- Style Tags -->
+        <div class="tool-label">🎨 Style</div>
+        <div class="thumb-tag-row" id="imggen-style-tags">
+          <button class="thumb-tag active" onclick="selectImgStyle(this,'')">✨ Auto</button>
+          <button class="thumb-tag" onclick="selectImgStyle(this,', ultra realistic, photographic, 8K')">📸 Realistic</button>
+          <button class="thumb-tag" onclick="selectImgStyle(this,', anime style, studio ghibli, vibrant')">🎌 Anime</button>
+          <button class="thumb-tag" onclick="selectImgStyle(this,', cinematic movie still, dramatic lighting, anamorphic lens')">🎬 Cinematic</button>
+          <button class="thumb-tag" onclick="selectImgStyle(this,', pencil sketch, black and white, detailed linework')">✏️ Sketch</button>
+          <button class="thumb-tag" onclick="selectImgStyle(this,', watercolor painting, soft colors, artistic')">🎨 Watercolor</button>
+          <button class="thumb-tag" onclick="selectImgStyle(this,', neon glow, cyberpunk, dark background, vivid colors')">🌆 Cyberpunk</button>
+        </div>
+
+        <!-- Size Tags -->
+        <div class="tool-label">📐 Size</div>
+        <div class="thumb-tag-row" id="imggen-size-tags">
+          <button class="thumb-tag active" onclick="selectImgSize(this,1024,1024)">⬜ Square</button>
+          <button class="thumb-tag" onclick="selectImgSize(this,1280,720)">📺 Landscape</button>
+          <button class="thumb-tag" onclick="selectImgSize(this,720,1280)">📱 Portrait</button>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="ai-gen-btn" id="imggen-btn" onclick="generateAIImage()">🎨 Image Generate Karo!</button>
+
+        <!-- Image Output Area -->
+        <div id="imggen-output-wrap" style="display:none;margin-top:14px;">
+          <div id="imggen-loading" style="display:none;text-align:center;padding:30px 0;">
+            <div class="imggen-spinner"></div>
+            <div style="color:#64748b;font-size:12px;margin-top:10px;" id="imggen-loading-text">AI image bana raha hai... ⏳</div>
+          </div>
+          <img id="imggen-result" src="" alt="Generated Image"
+            style="width:100%;border-radius:12px;border:1px solid rgba(34,211,238,0.3);display:none;box-shadow:0 0 20px rgba(34,211,238,0.15);"
+            onload="imggenOnLoad()" onerror="imggenOnError()">
+          <div id="imggen-error" style="display:none;color:#f87171;font-size:12px;text-align:center;padding:20px;background:rgba(239,68,68,0.07);border-radius:10px;border:1px solid rgba(239,68,68,0.2);">
+            ⚠️ Image load nahi hui. Prompt thoda change karo ya dobara try karo.
+          </div>
+          <div id="imggen-action-row" style="display:none;display:flex;gap:8px;margin-top:10px;">
+            <a id="imggen-download" href="#" download="harry-ai-image.jpg" target="_blank"
+              style="flex:1;padding:10px;border-radius:9px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;font-weight:800;font-size:12px;text-align:center;text-decoration:none;">⬇️ Download</a>
+            <button onclick="generateAIImage()" style="flex:1;padding:10px;border-radius:9px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">🔄 Regenerate</button>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -2712,9 +2846,12 @@ async function fetchTrendingPrompts() {
     <div class="ai-trend-skeleton"></div>
   `;
   try {
-    const prompt = encodeURIComponent('Generate exactly 3 trending AI image/creative prompts popular in 2025. Return ONLY a raw JSON array, no markdown:\n[{"title":"emoji + short name","text":"detailed prompt","cat":"photo"},{"title":"emoji + name","text":"detailed prompt","cat":"edit"},{"title":"emoji + name","text":"detailed prompt","cat":"creative"}]\nCategories allowed: photo, edit, creative, ai, gaming. Make them unique and viral.');
+    const promptText = 'Generate exactly 3 trending AI image/creative prompts popular in 2025. Return ONLY a raw JSON array, no markdown, no extra text. Format: [{"title":"emoji + short name","text":"detailed prompt","cat":"photo"},{"title":"emoji + name","text":"detailed prompt","cat":"edit"},{"title":"emoji + name","text":"detailed prompt","cat":"creative"}]. Categories allowed: photo, edit, creative, ai, gaming.';
     const seed = Math.floor(Math.random() * 999999);
-    const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&seed=${seed}&json=true`);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 9000);
+    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=openai&seed=${seed}`, { signal: controller.signal });
+    clearTimeout(timeout);
     if (!res.ok) throw new Error('fail');
     const raw = await res.text();
     let clean = raw.replace(/```json|```/g, '').trim();
@@ -2724,7 +2861,7 @@ async function fetchTrendingPrompts() {
     if (!Array.isArray(prompts) || prompts.length === 0) throw new Error('empty');
     renderTrendingCards(prompts.slice(0, 3));
   } catch (err) {
-    const shuffled = [...fallbackPool].sort(() => Math.random() - 0.5);
+    const shuffled = [...trendingPromptPool].sort(() => Math.random() - 0.5);
     renderTrendingCards(shuffled.slice(0, 3));
   }
 }
@@ -2881,13 +3018,16 @@ async function generateThumbnailIdea() {
   btn.textContent = '⏳ AI soch raha hai...'; btn.disabled = true;
   out.classList.remove('show'); copyBtn.classList.remove('show');
   try {
-    const prompt = encodeURIComponent(
+    const promptStr = encodeURIComponent(
       `Give me 3 viral YouTube thumbnail ideas for topic: "${topic}". Style: ${thumbStyle}. For each idea include: 🎨 Visual layout description, 📝 Text overlay to use, 🎭 Subject expression/pose, 🎨 Color scheme. Be specific and creative. Format with clear numbering.`
     );
     const seed = Math.floor(Math.random() * 999999);
-    const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&seed=${seed}`, {
-      method: 'GET'
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch(`https://text.pollinations.ai/${promptStr}?model=openai&seed=${seed}`, {
+      method: 'GET', signal: controller.signal
     });
+    clearTimeout(timeout);
     if (!res.ok) throw new Error('fail');
     const text = await res.text();
     out.textContent = text;
@@ -2923,13 +3063,16 @@ async function generateHook() {
   btn.textContent = '⏳ Likh raha hai AI...'; btn.disabled = true;
   out.classList.remove('show'); copyBtn.classList.remove('show');
   try {
-    const prompt = encodeURIComponent(
+    const hookPrompt = encodeURIComponent(
       `You are a viral ${hookPlatform} content expert. Write in Hinglish (Hindi+English mix) for an Indian audience. Topic: "${topic}". Tone: ${hookTone}.\n\nGive me:\n🪝 3 Scroll-stopping Opening Hooks (first 2 seconds)\n📝 1 Full Caption with emojis and hashtags\n💡 1 Strong Call To Action\n\nMake it super engaging and viral!`
     );
     const seed = Math.floor(Math.random() * 999999);
-    const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&seed=${seed}`, {
-      method: 'GET'
+    const hController = new AbortController();
+    const hTimeout = setTimeout(() => hController.abort(), 10000);
+    const res = await fetch(`https://text.pollinations.ai/${hookPrompt}?model=openai&seed=${seed}`, {
+      method: 'GET', signal: hController.signal
     });
+    clearTimeout(hTimeout);
     if (!res.ok) throw new Error('fail');
     const text = await res.text();
     out.textContent = text;
@@ -2949,6 +3092,215 @@ function copyAIOutput(outId, btnId) {
     setTimeout(() => btn.textContent = '📋 Copy', 2000);
     showToast('Copied! ✅');
   });
+}
+/* =====================================================
+   🪄 AI BIO GENERATOR
+   ===================================================== */
+let bioPlatform = 'Instagram';
+let bioVibe = 'Swag & Cool';
+
+function selectBioPlatform(btn, val) {
+  document.querySelectorAll('#bio-platform-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); bioPlatform = val;
+}
+function selectBioVibe(btn, val) {
+  document.querySelectorAll('#bio-vibe-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); bioVibe = val;
+}
+
+async function generateBio() {
+  const name = document.getElementById('bio-name').value.trim();
+  const btn = document.getElementById('bio-gen-btn');
+  const out = document.getElementById('bio-output');
+  const copyBtn = document.getElementById('bio-copy-btn');
+  btn.textContent = '⏳ AI likh raha hai...'; btn.disabled = true;
+  out.classList.remove('show'); copyBtn.classList.remove('show');
+  try {
+    const p = encodeURIComponent(`Write 3 different stylish ${bioPlatform} bios${name ? ' for "' + name + '"' : ''}. Vibe: ${bioVibe}. Include emojis, special characters, line breaks. Write in Hinglish for Indian audience. Each bio max 4 lines. Separate each bio with ---`);
+    const seed = Math.floor(Math.random() * 999999);
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch(`https://text.pollinations.ai/${p}?model=openai&seed=${seed}`, { signal: controller.signal });
+    clearTimeout(t);
+    if (!res.ok) throw new Error('fail');
+    out.textContent = await res.text();
+    out.classList.add('show'); copyBtn.classList.add('show');
+  } catch(e) {
+    out.textContent = '⚠️ AI se connect nahi ho paaya. Thodi der baad try karo ya internet check karo.';
+    out.classList.add('show');
+  }
+  btn.textContent = '✨ AI Bio Banao'; btn.disabled = false;
+}
+
+/* =====================================================
+   😈 AI ROAST ME
+   ===================================================== */
+let roastLevel = 'Light & Funny';
+
+function selectRoastLevel(btn, val) {
+  document.querySelectorAll('#roast-level-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); roastLevel = val;
+}
+
+async function generateRoast() {
+  const info = document.getElementById('roast-info').value.trim();
+  const btn = document.getElementById('roast-gen-btn');
+  const out = document.getElementById('roast-output');
+  const copyBtn = document.getElementById('roast-copy-btn');
+  btn.textContent = '⏳ AI roast taiyyar kar raha hai...'; btn.disabled = true;
+  out.classList.remove('show'); copyBtn.classList.remove('show');
+  try {
+    const p = encodeURIComponent(`You are a savage Hinglish roast comedian. Roast this person: "${info || 'ek aam Indian student jo din raat phone chalata hai'}". Roast level: ${roastLevel}. Write 5 funny roast lines in Hinglish (Hindi+English mix). Make it hilarious and relatable. No offensive stuff, just fun roasting!`);
+    const seed = Math.floor(Math.random() * 999999);
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch(`https://text.pollinations.ai/${p}?model=openai&seed=${seed}`, { signal: controller.signal });
+    clearTimeout(t);
+    if (!res.ok) throw new Error('fail');
+    out.textContent = await res.text();
+    out.classList.add('show'); copyBtn.classList.add('show');
+  } catch(e) {
+    out.textContent = '⚠️ AI thoda busy hai. Wapas try karo! 😅';
+    out.classList.add('show');
+  }
+  btn.textContent = '💀 Mujhe Roast Karo!'; btn.disabled = false;
+}
+
+/* =====================================================
+   📖 AI STUDY EXPLAINER
+   ===================================================== */
+let studyStyle = 'Simple Hindi mein';
+
+function selectStudyStyle(btn, val) {
+  document.querySelectorAll('#study-style-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); studyStyle = val;
+}
+
+async function generateStudyExplain() {
+  const topic = document.getElementById('study-topic').value.trim();
+  if (!topic) { showToast('Topic toh likho! 📚'); return; }
+  const btn = document.getElementById('study-gen-btn');
+  const out = document.getElementById('study-output');
+  const copyBtn = document.getElementById('study-copy-btn');
+  btn.textContent = '⏳ AI padha raha hai...'; btn.disabled = true;
+  out.classList.remove('show'); copyBtn.classList.remove('show');
+  try {
+    const p = encodeURIComponent(`Explain "${topic}" in ${studyStyle}. Make it easy to understand, engaging, and memorable. Include examples. Format it clearly with key points.`);
+    const seed = Math.floor(Math.random() * 999999);
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 12000);
+    const res = await fetch(`https://text.pollinations.ai/${p}?model=openai&seed=${seed}`, { signal: controller.signal });
+    clearTimeout(t);
+    if (!res.ok) throw new Error('fail');
+    out.textContent = await res.text();
+    out.classList.add('show'); copyBtn.classList.add('show');
+  } catch(e) {
+    out.textContent = '⚠️ AI se response nahi aaya. Dobara try karo! 📖';
+    out.classList.add('show');
+  }
+  btn.textContent = '🧠 Explain Karo AI!'; btn.disabled = false;
+}
+
+/* =====================================================
+   🖼️ AI IMAGE GENERATOR — pollinations.ai
+   ===================================================== */
+let imgStyle = '';
+let imgWidth = 1024, imgHeight = 1024;
+
+function selectImgStyle(btn, val) {
+  document.querySelectorAll('#imggen-style-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  imgStyle = val;
+}
+
+function selectImgSize(btn, w, h) {
+  document.querySelectorAll('#imggen-size-tags .thumb-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  imgWidth = w; imgHeight = h;
+}
+
+function setImgPrompt(text) {
+  const ta = document.getElementById('imggen-prompt');
+  if (ta) ta.value = text;
+  showToast('Prompt set! ✨ Ab generate karo 🎨');
+}
+
+async function generateAIImage() {
+  const promptEl = document.getElementById('imggen-prompt');
+  const rawPrompt = (promptEl ? promptEl.value.trim() : '');
+  if (!rawPrompt) { showToast('Pehle prompt likho ya idea choose karo! 📝'); return; }
+
+  const finalPrompt = rawPrompt + imgStyle;
+  const btn = document.getElementById('imggen-btn');
+  const wrap = document.getElementById('imggen-output-wrap');
+  const loader = document.getElementById('imggen-loading');
+  const loadText = document.getElementById('imggen-loading-text');
+  const resultImg = document.getElementById('imggen-result');
+  const errorBox = document.getElementById('imggen-error');
+  const actionRow = document.getElementById('imggen-action-row');
+  const dlLink = document.getElementById('imggen-download');
+
+  // Reset UI
+  btn.textContent = '⏳ Generating...'; btn.disabled = true;
+  wrap.style.display = 'block';
+  loader.style.display = 'block';
+  resultImg.style.display = 'none';
+  errorBox.style.display = 'none';
+  actionRow.style.display = 'none';
+
+  // Rotate loading messages
+  const msgs = ['AI image bana raha hai... ⏳', 'Pixels arrange ho rahe hain 🎨', 'Almost ready! ✨', 'Bas thoda aur wait karo 🔥'];
+  let mi = 0;
+  const msgInterval = setInterval(() => { mi = (mi+1) % msgs.length; if(loadText) loadText.textContent = msgs[mi]; }, 2000);
+
+  try {
+    const seed = Math.floor(Math.random() * 9999999);
+    const encodedPrompt = encodeURIComponent(finalPrompt);
+    const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${imgWidth}&height=${imgHeight}&seed=${seed}&nologo=true&enhance=true`;
+
+    // Pre-load image
+    await new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        resultImg.src = url;
+        dlLink.href = url;
+        clearInterval(msgInterval);
+        loader.style.display = 'none';
+        resultImg.style.display = 'block';
+        actionRow.style.display = 'flex';
+        resolve();
+      };
+      img.onerror = () => { clearInterval(msgInterval); reject(new Error('load failed')); };
+      // Timeout: 30 seconds
+      setTimeout(() => { clearInterval(msgInterval); reject(new Error('timeout')); }, 30000);
+      img.src = url;
+    });
+
+    showToast('Image ready hai! ⬇️ Download karo');
+  } catch(e) {
+    clearInterval(msgInterval);
+    loader.style.display = 'none';
+    errorBox.style.display = 'block';
+    showToast('Image load nahi hui. Retry karo! 🔄');
+  }
+
+  btn.textContent = '🎨 Image Generate Karo!'; btn.disabled = false;
+}
+
+function imggenOnLoad() {
+  const loader = document.getElementById('imggen-loading');
+  const actionRow = document.getElementById('imggen-action-row');
+  if(loader) loader.style.display = 'none';
+  if(actionRow) actionRow.style.display = 'flex';
+}
+
+function imggenOnError() {
+  const loader = document.getElementById('imggen-loading');
+  const errorBox = document.getElementById('imggen-error');
+  const resultImg = document.getElementById('imggen-result');
+  if(loader) loader.style.display = 'none';
+  if(errorBox) errorBox.style.display = 'block';
+  if(resultImg) resultImg.style.display = 'none';
 }
 
 </script>
