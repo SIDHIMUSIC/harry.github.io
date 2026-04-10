@@ -2846,14 +2846,18 @@ async function fetchTrendingPrompts() {
     <div class="ai-trend-skeleton"></div>
   `;
   try {
-    const promptText = 'Generate exactly 3 trending AI image/creative prompts popular in 2025. Return ONLY a raw JSON array, no markdown, no extra text. Format: [{"title":"emoji + short name","text":"detailed prompt","cat":"photo"},{"title":"emoji + name","text":"detailed prompt","cat":"edit"},{"title":"emoji + name","text":"detailed prompt","cat":"creative"}]. Categories allowed: photo, edit, creative, ai, gaming.';
-    const seed = Math.floor(Math.random() * 999999);
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 9000);
-    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=openai&seed=${seed}`, { signal: controller.signal });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error('fail');
-    const raw = await res.text();
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        messages: [{ role: 'user', content: 'Generate exactly 3 trending AI image/creative prompts for 2025. Return ONLY a raw JSON array, no markdown, no extra text. Format exactly: [{"title":"emoji + short name","text":"detailed prompt","cat":"photo"},{"title":"emoji + name","text":"detailed prompt","cat":"edit"},{"title":"emoji + name","text":"detailed prompt","cat":"creative"}]. Categories allowed: photo, edit, creative, ai, gaming.' }]
+      })
+    });
+    if (!response.ok) throw new Error('fail');
+    const data = await response.json();
+    const raw = data.content.map(b => b.text || '').join('');
     let clean = raw.replace(/```json|```/g, '').trim();
     const s = clean.indexOf('['), e = clean.lastIndexOf(']');
     if (s === -1 || e === -1) throw new Error('no array');
@@ -3001,6 +3005,38 @@ function downloadTimetable() { showToast('Screenshot lo phone se — Ctrl+Shift+
 buildTimetable();
 
 /* =====================================================
+   🤖 ANTHROPIC API HELPER — Sab AI tools isme se chalenge
+   ===================================================== */
+async function callClaude(userPrompt, outId, copyBtnId) {
+  const out = document.getElementById(outId);
+  const copyBtn = document.getElementById(copyBtnId);
+  out.classList.remove('show');
+  if (copyBtn) copyBtn.classList.remove('show');
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+    if (!response.ok) throw new Error('api_fail');
+    const data = await response.json();
+    const text = data.content.map(b => b.text || '').join('');
+    out.textContent = text;
+    out.classList.add('show');
+    if (copyBtn) copyBtn.classList.add('show');
+    return true;
+  } catch(e) {
+    out.textContent = '❌ Error: ' + (e.message === 'api_fail' ? 'API se response nahi aaya. Dobara try karo!' : e.message);
+    out.classList.add('show');
+    return false;
+  }
+}
+
+/* =====================================================
    🎨 AI THUMBNAIL IDEA GENERATOR
    ===================================================== */
 let thumbStyle = 'Cinematic';
@@ -3013,29 +3049,9 @@ async function generateThumbnailIdea() {
   const topic = document.getElementById('thumb-topic').value.trim();
   if (!topic) { showToast('Topic toh likho pehle! 😅'); return; }
   const btn = document.getElementById('thumb-gen-btn');
-  const out = document.getElementById('thumb-output');
-  const copyBtn = document.getElementById('thumb-copy-btn');
   btn.textContent = '⏳ AI soch raha hai...'; btn.disabled = true;
-  out.classList.remove('show'); copyBtn.classList.remove('show');
-  try {
-    const promptStr = encodeURIComponent(
-      `Give me 3 viral YouTube thumbnail ideas for topic: "${topic}". Style: ${thumbStyle}. For each idea include: 🎨 Visual layout description, 📝 Text overlay to use, 🎭 Subject expression/pose, 🎨 Color scheme. Be specific and creative. Format with clear numbering.`
-    );
-    const seed = Math.floor(Math.random() * 999999);
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
-    const res = await fetch(`https://text.pollinations.ai/${promptStr}?model=openai&seed=${seed}`, {
-      method: 'GET', signal: controller.signal
-    });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error('fail');
-    const text = await res.text();
-    out.textContent = text;
-    out.classList.add('show'); copyBtn.classList.add('show');
-  } catch(e) {
-    out.textContent = '⚠️ AI unavailable. Site pe deploy karke try karo ya internet check karo.';
-    out.classList.add('show');
-  }
+  const prompt = `Give me 3 viral YouTube thumbnail ideas for topic: "${topic}". Style: ${thumbStyle}. For each idea include: 🎨 Visual layout description, 📝 Text overlay to use, 🎭 Subject expression/pose, 🎨 Color scheme. Be specific and creative. Format with clear numbering.`;
+  await callClaude(prompt, 'thumb-output', 'thumb-copy-btn');
   btn.textContent = '✨ AI se Idea Generate Karo'; btn.disabled = false;
 }
 
@@ -3058,29 +3074,9 @@ async function generateHook() {
   const topic = document.getElementById('hook-topic').value.trim();
   if (!topic) { showToast('Topic likho pehle! 🎯'); return; }
   const btn = document.getElementById('hook-gen-btn');
-  const out = document.getElementById('hook-output');
-  const copyBtn = document.getElementById('hook-copy-btn');
   btn.textContent = '⏳ Likh raha hai AI...'; btn.disabled = true;
-  out.classList.remove('show'); copyBtn.classList.remove('show');
-  try {
-    const hookPrompt = encodeURIComponent(
-      `You are a viral ${hookPlatform} content expert. Write in Hinglish (Hindi+English mix) for an Indian audience. Topic: "${topic}". Tone: ${hookTone}.\n\nGive me:\n🪝 3 Scroll-stopping Opening Hooks (first 2 seconds)\n📝 1 Full Caption with emojis and hashtags\n💡 1 Strong Call To Action\n\nMake it super engaging and viral!`
-    );
-    const seed = Math.floor(Math.random() * 999999);
-    const hController = new AbortController();
-    const hTimeout = setTimeout(() => hController.abort(), 10000);
-    const res = await fetch(`https://text.pollinations.ai/${hookPrompt}?model=openai&seed=${seed}`, {
-      method: 'GET', signal: hController.signal
-    });
-    clearTimeout(hTimeout);
-    if (!res.ok) throw new Error('fail');
-    const text = await res.text();
-    out.textContent = text;
-    out.classList.add('show'); copyBtn.classList.add('show');
-  } catch(e) {
-    out.textContent = '⚠️ AI unavailable. Site pe deploy karke try karo ya internet check karo.';
-    out.classList.add('show');
-  }
+  const prompt = `You are a viral ${hookPlatform} content expert. Write in Hinglish (Hindi+English mix) for an Indian audience. Topic: "${topic}". Tone: ${hookTone}.\n\nGive me:\n🪝 3 Scroll-stopping Opening Hooks (first 2 seconds)\n📝 1 Full Caption with emojis and hashtags\n💡 1 Strong Call To Action\n\nMake it super engaging and viral!`;
+  await callClaude(prompt, 'hook-output', 'hook-copy-btn');
   btn.textContent = '🚀 Hook + Caption Generate Karo'; btn.disabled = false;
 }
 
@@ -3093,6 +3089,7 @@ function copyAIOutput(outId, btnId) {
     showToast('Copied! ✅');
   });
 }
+
 /* =====================================================
    🪄 AI BIO GENERATOR
    ===================================================== */
@@ -3111,24 +3108,9 @@ function selectBioVibe(btn, val) {
 async function generateBio() {
   const name = document.getElementById('bio-name').value.trim();
   const btn = document.getElementById('bio-gen-btn');
-  const out = document.getElementById('bio-output');
-  const copyBtn = document.getElementById('bio-copy-btn');
   btn.textContent = '⏳ AI likh raha hai...'; btn.disabled = true;
-  out.classList.remove('show'); copyBtn.classList.remove('show');
-  try {
-    const p = encodeURIComponent(`Write 3 different stylish ${bioPlatform} bios${name ? ' for "' + name + '"' : ''}. Vibe: ${bioVibe}. Include emojis, special characters, line breaks. Write in Hinglish for Indian audience. Each bio max 4 lines. Separate each bio with ---`);
-    const seed = Math.floor(Math.random() * 999999);
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), 10000);
-    const res = await fetch(`https://text.pollinations.ai/${p}?model=openai&seed=${seed}`, { signal: controller.signal });
-    clearTimeout(t);
-    if (!res.ok) throw new Error('fail');
-    out.textContent = await res.text();
-    out.classList.add('show'); copyBtn.classList.add('show');
-  } catch(e) {
-    out.textContent = '⚠️ AI se connect nahi ho paaya. Thodi der baad try karo ya internet check karo.';
-    out.classList.add('show');
-  }
+  const prompt = `Write 3 different stylish ${bioPlatform} bios${name ? ' for "' + name + '"' : ''}. Vibe: ${bioVibe}. Include emojis, special Unicode characters, line breaks. Write in Hinglish for Indian audience. Each bio max 4 lines. Separate each bio with ---`;
+  await callClaude(prompt, 'bio-output', 'bio-copy-btn');
   btn.textContent = '✨ AI Bio Banao'; btn.disabled = false;
 }
 
@@ -3145,24 +3127,9 @@ function selectRoastLevel(btn, val) {
 async function generateRoast() {
   const info = document.getElementById('roast-info').value.trim();
   const btn = document.getElementById('roast-gen-btn');
-  const out = document.getElementById('roast-output');
-  const copyBtn = document.getElementById('roast-copy-btn');
   btn.textContent = '⏳ AI roast taiyyar kar raha hai...'; btn.disabled = true;
-  out.classList.remove('show'); copyBtn.classList.remove('show');
-  try {
-    const p = encodeURIComponent(`You are a savage Hinglish roast comedian. Roast this person: "${info || 'ek aam Indian student jo din raat phone chalata hai'}". Roast level: ${roastLevel}. Write 5 funny roast lines in Hinglish (Hindi+English mix). Make it hilarious and relatable. No offensive stuff, just fun roasting!`);
-    const seed = Math.floor(Math.random() * 999999);
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), 10000);
-    const res = await fetch(`https://text.pollinations.ai/${p}?model=openai&seed=${seed}`, { signal: controller.signal });
-    clearTimeout(t);
-    if (!res.ok) throw new Error('fail');
-    out.textContent = await res.text();
-    out.classList.add('show'); copyBtn.classList.add('show');
-  } catch(e) {
-    out.textContent = '⚠️ AI thoda busy hai. Wapas try karo! 😅';
-    out.classList.add('show');
-  }
+  const prompt = `You are a savage Hinglish roast comedian. Roast this person: "${info || 'ek aam Indian student jo din raat phone chalata hai'}". Roast level: ${roastLevel}. Write 5 funny roast lines in Hinglish (Hindi+English mix). Make it hilarious and relatable for Indian students. Keep it fun, no genuinely offensive content!`;
+  await callClaude(prompt, 'roast-output', 'roast-copy-btn');
   btn.textContent = '💀 Mujhe Roast Karo!'; btn.disabled = false;
 }
 
@@ -3180,24 +3147,9 @@ async function generateStudyExplain() {
   const topic = document.getElementById('study-topic').value.trim();
   if (!topic) { showToast('Topic toh likho! 📚'); return; }
   const btn = document.getElementById('study-gen-btn');
-  const out = document.getElementById('study-output');
-  const copyBtn = document.getElementById('study-copy-btn');
   btn.textContent = '⏳ AI padha raha hai...'; btn.disabled = true;
-  out.classList.remove('show'); copyBtn.classList.remove('show');
-  try {
-    const p = encodeURIComponent(`Explain "${topic}" in ${studyStyle}. Make it easy to understand, engaging, and memorable. Include examples. Format it clearly with key points.`);
-    const seed = Math.floor(Math.random() * 999999);
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), 12000);
-    const res = await fetch(`https://text.pollinations.ai/${p}?model=openai&seed=${seed}`, { signal: controller.signal });
-    clearTimeout(t);
-    if (!res.ok) throw new Error('fail');
-    out.textContent = await res.text();
-    out.classList.add('show'); copyBtn.classList.add('show');
-  } catch(e) {
-    out.textContent = '⚠️ AI se response nahi aaya. Dobara try karo! 📖';
-    out.classList.add('show');
-  }
+  const prompt = `Explain "${topic}" in ${studyStyle}. Make it easy to understand, engaging, and memorable. Include real-life examples. Format clearly with key points.`;
+  await callClaude(prompt, 'study-output', 'study-copy-btn');
   btn.textContent = '🧠 Explain Karo AI!'; btn.disabled = false;
 }
 
