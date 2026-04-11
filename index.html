@@ -2846,12 +2846,11 @@ async function fetchTrendingPrompts() {
     <div class="ai-trend-skeleton"></div>
   `;
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    if (!WORKER_URL || WORKER_URL.includes('TUMHARA_WORKER_URL')) throw new Error('no_worker');
+    const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 800,
         messages: [{ role: 'user', content: 'Generate exactly 3 trending AI image/creative prompts for 2025. Return ONLY a raw JSON array, no markdown, no extra text. Format exactly: [{"title":"emoji + short name","text":"detailed prompt","cat":"photo"},{"title":"emoji + name","text":"detailed prompt","cat":"edit"},{"title":"emoji + name","text":"detailed prompt","cat":"creative"}]. Categories allowed: photo, edit, creative, ai, gaming.' }]
       })
     });
@@ -3005,6 +3004,11 @@ function downloadTimetable() { showToast('Screenshot lo phone se — Ctrl+Shift+
 buildTimetable();
 
 /* =====================================================
+   🤖 AI CONFIG — Apna Worker URL yahan daalo
+   ===================================================== */
+const WORKER_URL = "https://young-dew-23d2.shumbham8870.workers.dev/"; // 👈 e.g. https://harry-ai.YOUR-NAME.workers.dev
+
+/* =====================================================
    🤖 ANTHROPIC API HELPER — Sab AI tools isme se chalenge
    ===================================================== */
 async function callClaude(userPrompt, outId, copyBtnId) {
@@ -3012,25 +3016,31 @@ async function callClaude(userPrompt, outId, copyBtnId) {
   const copyBtn = document.getElementById(copyBtnId);
   out.classList.remove('show');
   if (copyBtn) copyBtn.classList.remove('show');
+
+  if (!WORKER_URL || WORKER_URL.includes('TUMHARA_WORKER_URL')) {
+    out.textContent = '⚙️ Setup baaki hai! Worker URL daalo — README padho.';
+    out.classList.add('show');
+    return false;
+  }
+
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
         messages: [{ role: 'user', content: userPrompt }]
       })
     });
     if (!response.ok) throw new Error('api_fail');
     const data = await response.json();
+    if (data.error) throw new Error(data.error);
     const text = data.content.map(b => b.text || '').join('');
     out.textContent = text;
     out.classList.add('show');
     if (copyBtn) copyBtn.classList.add('show');
     return true;
   } catch(e) {
-    out.textContent = '❌ Error: ' + (e.message === 'api_fail' ? 'API se response nahi aaya. Dobara try karo!' : e.message);
+    out.textContent = '❌ AI se response nahi aaya. Worker URL check karo ya dobara try karo!';
     out.classList.add('show');
     return false;
   }
