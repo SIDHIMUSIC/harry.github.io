@@ -625,6 +625,9 @@ footer a { color:var(--p); text-decoration:none; }
     <button class="t-tab"     onclick="showT('t-study',this)">📖 AI Study</button>
     <button class="t-tab"     onclick="showT('t-bgmi',this)">🎮 BGMI</button>
     <button class="t-tab"     onclick="showT('t-math',this)">🧮 Math Solver</button>
+    <button class="t-tab"     onclick="showT('t-img64',this)">📸 Image→Base64</button>
+    <button class="t-tab"     onclick="showT('t-ipinfo',this)">🌐 IP Info</button>
+    <button class="t-tab"     onclick="showT('t-typing',this)">⌨️ Typing Speed</button>
   </div>
 
   <!-- STUDY TIMER -->
@@ -1201,6 +1204,69 @@ footer a { color:var(--p); text-decoration:none; }
     </div>
   </div>
 
+  <!-- IMAGE TO BASE64 -->
+  <div class="t-panel gc" id="t-img64">
+    <div class="t-head">📸 Image → Base64 Converter</div>
+    <div style="font-family:var(--fm);font-size:.68rem;color:var(--mt);margin-bottom:10px;">Image upload karo — Base64 string milegi + preview bhi 🖼️</div>
+    <label for="img64-inp" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--border);border-radius:12px;padding:1.6rem;cursor:pointer;transition:var(--tr);gap:.5rem;" onmouseover="this.style.borderColor='var(--p)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-size:2rem;">📁</span>
+      <span style="font-family:var(--fm);font-size:.7rem;color:var(--mt);">Click karo ya drag &amp; drop</span>
+      <span style="font-family:var(--fm);font-size:.6rem;color:var(--mt);opacity:.6;">PNG, JPG, GIF, WEBP, SVG</span>
+    </label>
+    <input type="file" id="img64-inp" accept="image/*" style="display:none;" onchange="img64Convert(this)">
+    <div id="img64-preview" style="display:none;margin-top:11px;">
+      <img id="img64-img" style="max-width:100%;max-height:160px;border-radius:10px;border:1px solid var(--border);object-fit:contain;display:block;margin:0 auto 10px;">
+      <div style="display:flex;gap:8px;margin-bottom:8px;font-family:var(--fm);font-size:.65rem;color:var(--mt);">
+        <span id="img64-info"></span>
+      </div>
+      <textarea id="img64-out" readonly style="width:100%;height:90px;padding:10px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.4);color:var(--p);font-family:var(--fm);font-size:.6rem;resize:vertical;outline:none;word-break:break-all;"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="t-btn" style="flex:1;" onclick="img64Copy()">📋 Copy Base64</button>
+        <button class="t-btn" style="flex:1;" onclick="img64CopyFull()">🔗 Copy with prefix</button>
+        <button class="t-btn" style="flex:1;" onclick="img64Clear()">🗑️ Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IP INFO -->
+  <div class="t-panel gc" id="t-ipinfo">
+    <div class="t-head">🌐 IP & Network Info</div>
+    <div style="font-family:var(--fm);font-size:.68rem;color:var(--mt);margin-bottom:12px;">Tera public IP, location aur network details 🔍</div>
+    <button class="t-btn fw" onclick="fetchIPInfo()" id="ip-fetch-btn">🔍 Fetch My Info</button>
+    <div id="ip-loading" style="display:none;text-align:center;padding:1rem;font-family:var(--fm);font-size:.72rem;color:var(--mt);">⏳ Fetching...</div>
+    <div id="ip-res" style="display:none;margin-top:11px;display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+      <div class="bmi-box" style="grid-column:1/-1;"><div class="bmi-bl">🌍 Public IP Address</div><div class="bmi-bv" id="ip-addr" style="font-size:1.1rem;letter-spacing:.08em;"></div></div>
+      <div class="bmi-box"><div class="bmi-bl">🏙️ City</div><div class="bmi-bv" id="ip-city"></div></div>
+      <div class="bmi-box"><div class="bmi-bl">🗺️ Region</div><div class="bmi-bv" id="ip-region"></div></div>
+      <div class="bmi-box"><div class="bmi-bl">🇮🇳 Country</div><div class="bmi-bv" id="ip-country"></div></div>
+      <div class="bmi-box"><div class="bmi-bl">📍 Coordinates</div><div class="bmi-bv" id="ip-loc" style="font-size:.7rem;"></div></div>
+      <div class="bmi-box"><div class="bmi-bl">🕐 Timezone</div><div class="bmi-bv" id="ip-tz" style="font-size:.7rem;"></div></div>
+      <div class="bmi-box"><div class="bmi-bl">🏢 ISP / Org</div><div class="bmi-bv" id="ip-org" style="font-size:.65rem;"></div></div>
+    </div>
+    <div style="margin-top:8px;font-family:var(--fm);font-size:.58rem;color:var(--mt);text-align:center;opacity:.6;">⚠️ Ye data publicly available hai — koi private info nahi</div>
+  </div>
+
+  <!-- TYPING SPEED TEST -->
+  <div class="t-panel gc" id="t-typing">
+    <div class="t-head">⌨️ Typing Speed Test — WPM</div>
+    <div style="display:flex;gap:8px;margin-bottom:11px;flex-wrap:wrap;">
+      <button class="pm-btn on" onclick="typingSetMode('easy',this)">🟢 Easy</button>
+      <button class="pm-btn" onclick="typingSetMode('medium',this)">🟡 Medium</button>
+      <button class="pm-btn" onclick="typingSetMode('hard',this)">🔴 Hard</button>
+      <button class="pm-btn" onclick="typingSetMode('code',this)">💻 Dev Mode</button>
+    </div>
+    <div id="typing-text" style="background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:var(--fm);font-size:.82rem;line-height:1.9;color:var(--mt);letter-spacing:.03em;min-height:70px;user-select:none;margin-bottom:10px;"></div>
+    <textarea id="typing-inp" placeholder="Yahan type karo — test shuru ho jaayega..." style="width:100%;height:80px;padding:11px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.4);color:var(--tx);font-family:var(--fm);font-size:.82rem;outline:none;resize:none;transition:var(--tr);" oninput="typingCheck()" onkeydown="typingKeyDown(event)"></textarea>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px;">
+      <div class="bmi-box" style="text-align:center;"><div class="bmi-bl">WPM</div><div class="bmi-bv" id="t-wpm" style="font-size:1.3rem;color:var(--p);">—</div></div>
+      <div class="bmi-box" style="text-align:center;"><div class="bmi-bl">Accuracy</div><div class="bmi-bv" id="t-acc" style="font-size:1.3rem;color:#00ff88;">—</div></div>
+      <div class="bmi-box" style="text-align:center;"><div class="bmi-bl">Time</div><div class="bmi-bv" id="t-elapsed" style="font-size:1.3rem;">—</div></div>
+      <div class="bmi-box" style="text-align:center;"><div class="bmi-bl">Errors</div><div class="bmi-bv" id="t-errs" style="font-size:1.3rem;color:var(--a);">—</div></div>
+    </div>
+    <div id="typing-result" style="display:none;margin-top:10px;padding:12px;border-radius:10px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);text-align:center;font-family:var(--fm);font-size:.78rem;color:var(--p);line-height:1.8;"></div>
+    <button class="t-btn fw" onclick="typingReset()" style="margin-top:9px;">🔄 New Test</button>
+  </div>
+
 </section>
 </main>
 
@@ -1481,15 +1547,27 @@ const LC={JavaScript:'#f1e05a',Python:'#3572A5',HTML:'#e34c26',CSS:'#563d7c',Typ
 // ================================================================
 //  PROMPTS
 // ================================================================
-[{t:'Ultra Dev Assistant',b:'You are an expert full-stack developer. Analyze the following code and provide:\n1. Bugs and fixes\n2. Performance improvements\n3. Best practices\n4. Security vulnerabilities\nBe direct, technical, and precise.'},
- {t:'Creative Brief Generator',b:'Generate a complete creative brief for a [PROJECT TYPE] targeted at [AUDIENCE]. Include: brand voice, color palette, typography, key messages, and content pillars.'},
- {t:'Music Prompt Master',b:'Create a detailed music production prompt for a [GENRE] track with [MOOD] energy. Specify: BPM, key, instruments, effects chain, mix references, and arrangement structure.'},
- {t:'SEO Content Blueprint',b:'Write an SEO-optimized article about [TOPIC]. Target keyword: [KEYWORD]. Include: meta description, H1-H3 structure, internal linking, FAQ section, and compelling CTA.'},
- {t:'Code Review Expert',b:'Review this code as a senior FAANG engineer. Check: time/space complexity, edge cases, naming, design patterns, scalability, test coverage. Provide score 1-10 with reasoning.'},
- {t:'Stoic Daily Journal',b:'I am facing [SITUATION]. Guide me through a Stoic reflection using Marcus Aurelius principles. Help me identify what is in my control and define one decisive action.'}
-].forEach((p,i)=>{const d=document.createElement('div');d.className='gc rv';d.innerHTML=`<div class="p-title">${p.t}<span style="font-size:.62rem;color:var(--mt)">#${String(i+1).padStart(2,'0')}</span></div><div class="p-body" id="pb${i}">${p.b}</div><div class="p-acts"><button class="b-sm" onclick="togPB(${i})"><i class="fas fa-chevron-down"></i> Expand</button><button class="b-sm" id="cp${i}" onclick="cpyPrompt(${i},'${encodeURIComponent(p.b)}')"><i class="fas fa-copy"></i> Copy</button></div>`;document.getElementById('p-grid').appendChild(d);ro.observe(d);});
-function togPB(i){document.getElementById('pb'+i).classList.toggle('ex');}
-function cpyPrompt(i,enc){navigator.clipboard.writeText(decodeURIComponent(enc));const b=document.getElementById('cp'+i);b.classList.add('cp');b.innerHTML='<i class="fas fa-check"></i> Copied!';setTimeout(()=>{b.classList.remove('cp');b.innerHTML='<i class="fas fa-copy"></i> Copy';},2000);}
+// Prompts section — button only
+(()=>{
+  const grid=document.getElementById('p-grid');
+  if(!grid)return;
+  const wrap=document.createElement('div');
+  wrap.style.cssText='grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1rem;gap:1.2rem;';
+  wrap.innerHTML=`
+    <div style="font-family:var(--fm);font-size:.8rem;color:var(--mt);text-align:center;letter-spacing:.06em;">🤖 Saare AI prompts ek jagah mila diye hain —</div>
+    <a href="http://harryprompt.online/" target="_blank"
+      style="display:inline-flex;align-items:center;gap:.7rem;padding:.85rem 2rem;border-radius:100px;
+             background:linear-gradient(135deg,var(--p),var(--s));color:var(--bg);
+             font-family:var(--fd);font-size:.85rem;font-weight:800;letter-spacing:.08em;
+             text-decoration:none;box-shadow:0 0 28px var(--glow);transition:transform .2s,box-shadow .2s;"
+      onmouseover="this.style.transform='translateY(-4px) scale(1.04)';this.style.boxShadow='0 8px 40px var(--glow)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 0 28px var(--glow)'">
+      🚀 <span>Harry's Prompt Vault kholo</span>
+    </a>
+    <div style="font-family:var(--fm);font-size:.65rem;color:var(--mt);">harryprompt.online</div>
+  `;
+  grid.appendChild(wrap);
+})();
 
 // ================================================================
 //  SKILLS
@@ -2280,6 +2358,195 @@ function ffCopyUID(){
     .catch(function(){showToast('UID: '+uid);});
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGamingWorld();});
+
+// ================================================================
+//  IMAGE TO BASE64
+// ================================================================
+function img64Convert(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const b64=e.target.result;
+    const pureB64=b64.split(',')[1];
+    document.getElementById('img64-img').src=b64;
+    document.getElementById('img64-out').value=pureB64;
+    const kb=(file.size/1024).toFixed(1);
+    const b64kb=(pureB64.length*0.75/1024).toFixed(1);
+    document.getElementById('img64-info').textContent=`📄 ${file.name} | ${kb} KB | Type: ${file.type} | Base64 size: ~${b64kb} KB`;
+    document.getElementById('img64-preview').style.display='block';
+    showToast('Base64 ready! ✅');
+  };
+  reader.readAsDataURL(file);
+}
+function img64Copy(){
+  const v=document.getElementById('img64-out').value;
+  if(!v){showToast('Pehle image upload karo! 📸');return;}
+  navigator.clipboard.writeText(v).then(()=>showToast('Base64 copied! ✅'));
+}
+function img64CopyFull(){
+  const img=document.getElementById('img64-img');
+  const v=img.src;
+  if(!v||v===window.location.href){showToast('Pehle image upload karo! 📸');return;}
+  navigator.clipboard.writeText(v).then(()=>showToast('Full Data URL copied! ✅'));
+}
+function img64Clear(){
+  document.getElementById('img64-inp').value='';
+  document.getElementById('img64-preview').style.display='none';
+  document.getElementById('img64-out').value='';
+  showToast('Cleared 🗑️');
+}
+
+// Drag & drop support
+(()=>{
+  const label=document.querySelector('label[for="img64-inp"]');
+  if(!label)return;
+  label.addEventListener('dragover',e=>{e.preventDefault();label.style.borderColor='var(--p)';label.style.background='rgba(0,212,255,.05)';});
+  label.addEventListener('dragleave',()=>{label.style.borderColor='';label.style.background='';});
+  label.addEventListener('drop',e=>{
+    e.preventDefault();label.style.borderColor='';label.style.background='';
+    const file=e.dataTransfer.files[0];
+    if(file&&file.type.startsWith('image/')){
+      const inp=document.getElementById('img64-inp');
+      const dt=new DataTransfer();dt.items.add(file);inp.files=dt.files;
+      img64Convert(inp);
+    }
+  });
+})();
+
+// ================================================================
+//  IP & NETWORK INFO
+// ================================================================
+async function fetchIPInfo(){
+  const btn=document.getElementById('ip-fetch-btn');
+  const loading=document.getElementById('ip-loading');
+  const res=document.getElementById('ip-res');
+  btn.style.display='none';
+  loading.style.display='block';
+  res.style.display='none';
+  try{
+    const r=await fetch('https://ipapi.co/json/');
+    const d=await r.json();
+    document.getElementById('ip-addr').textContent=d.ip||'—';
+    document.getElementById('ip-city').textContent=d.city||'—';
+    document.getElementById('ip-region').textContent=d.region||'—';
+    document.getElementById('ip-country').textContent=(d.country_name||'—')+' '+((d.country_code==='IN')?'🇮🇳':(d.country_code||''));
+    document.getElementById('ip-loc').textContent=d.latitude+', '+d.longitude;
+    document.getElementById('ip-tz').textContent=d.timezone||'—';
+    document.getElementById('ip-org').textContent=d.org||'—';
+    loading.style.display='none';
+    res.style.display='grid';
+    showToast('IP Info mila! 🌐');
+  }catch(e){
+    loading.style.display='none';
+    btn.style.display='block';
+    btn.textContent='❌ Failed — Dobara try karo';
+    showToast('Error aaya, try again 😅');
+  }
+}
+
+// ================================================================
+//  TYPING SPEED TEST
+// ================================================================
+const TYPING_TEXTS={
+  easy:['the quick brown fox jumps over the lazy dog','practice makes a man perfect and consistency is key','learning to type fast is a very useful skill in life','hard work and dedication always lead to great results','every day is a new chance to improve yourself and grow'],
+  medium:['success is not final failure is not fatal it is the courage to continue that counts','the only way to do great work is to love what you do and never stop learning new things','in the middle of every difficulty lies opportunity if you look hard enough for it','technology is best when it brings people together and makes their lives easier and better','discipline is choosing between what you want now and what you want most in life'],
+  hard:['asynchronous programming requires understanding of callbacks promises and async await patterns in javascript','the implementation of binary search algorithms requires careful consideration of edge cases and boundary conditions','cryptographic hash functions like SHA-256 produce fixed-length outputs regardless of input size or complexity','refactoring legacy codebases demands meticulous attention to unit tests regression testing and documentation standards','polymorphism encapsulation inheritance and abstraction are the four fundamental principles of object-oriented programming'],
+  code:['const arr = [1,2,3].map(x => x * 2).filter(n => n > 2);','async function fetchData(url) { const res = await fetch(url); return res.json(); }','document.querySelectorAll(".btn").forEach(el => el.addEventListener("click", handler));','const { name, age = 18 } = user ?? { name: "Guest", age: 0 };','git commit -m "feat: add typing speed test with WPM tracker" --no-verify']
+};
+
+let typingMode='easy', typingStart=null, typingTimer=null, typingDone=false, typingErrors=0, typingTarget='';
+
+function typingSetMode(mode,btn){
+  typingMode=mode;
+  document.querySelectorAll('#t-typing .pm-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  typingReset();
+}
+
+function typingReset(){
+  clearInterval(typingTimer);
+  typingStart=null; typingDone=false; typingErrors=0;
+  const pool=TYPING_TEXTS[typingMode];
+  typingTarget=pool[Math.floor(Math.random()*pool.length)];
+  renderTypingText('');
+  const inp=document.getElementById('typing-inp');
+  inp.value=''; inp.style.borderColor='var(--border)';
+  inp.disabled=false; inp.placeholder='Yahan type karo — test shuru ho jaayega...';
+  document.getElementById('t-wpm').textContent='—';
+  document.getElementById('t-acc').textContent='—';
+  document.getElementById('t-elapsed').textContent='—';
+  document.getElementById('t-errs').textContent='—';
+  document.getElementById('typing-result').style.display='none';
+}
+
+function renderTypingText(typed){
+  const el=document.getElementById('typing-text');
+  let html='';
+  for(let i=0;i<typingTarget.length;i++){
+    if(i<typed.length){
+      if(typed[i]===typingTarget[i]) html+=`<span style="color:var(--p)">${typingTarget[i]}</span>`;
+      else html+=`<span style="color:var(--a);text-decoration:underline;">${typingTarget[i]}</span>`;
+    } else if(i===typed.length){
+      html+=`<span style="background:var(--p);color:var(--bg);border-radius:2px;">${typingTarget[i]}</span>`;
+    } else {
+      html+=`<span>${typingTarget[i]}</span>`;
+    }
+  }
+  el.innerHTML=html;
+}
+
+function typingCheck(){
+  if(typingDone)return;
+  const inp=document.getElementById('typing-inp');
+  const typed=inp.value;
+  if(!typingStart&&typed.length>0){
+    typingStart=Date.now();
+    typingTimer=setInterval(()=>{
+      const sec=((Date.now()-typingStart)/1000).toFixed(1);
+      document.getElementById('t-elapsed').textContent=sec+'s';
+      const words=document.getElementById('typing-inp').value.trim().split(/\s+/).filter(Boolean).length;
+      const wpm=Math.round(words/(sec/60));
+      document.getElementById('t-wpm').textContent=wpm||0;
+    },200);
+  }
+  renderTypingText(typed);
+  let errs=0;
+  for(let i=0;i<typed.length;i++) if(typed[i]!==typingTarget[i]) errs++;
+  typingErrors=errs;
+  document.getElementById('t-errs').textContent=errs;
+  const correct=typed.split('').filter((c,i)=>c===typingTarget[i]).length;
+  const acc=typed.length>0?Math.round(correct/typed.length*100):100;
+  document.getElementById('t-acc').textContent=acc+'%';
+  inp.style.borderColor=errs>0?'var(--a)':'rgba(0,212,255,.4)';
+  if(typed===typingTarget) typingFinish(typed);
+}
+
+function typingKeyDown(e){
+  if(e.key==='Tab'){e.preventDefault();typingReset();}
+}
+
+function typingFinish(typed){
+  typingDone=true;
+  clearInterval(typingTimer);
+  const sec=(Date.now()-typingStart)/1000;
+  const words=typed.trim().split(/\s+/).length;
+  const wpm=Math.round(words/(sec/60));
+  const correct=typed.split('').filter((c,i)=>c===typingTarget[i]).length;
+  const acc=Math.round(correct/typed.length*100);
+  document.getElementById('t-wpm').textContent=wpm;
+  document.getElementById('t-acc').textContent=acc+'%';
+  document.getElementById('t-elapsed').textContent=sec.toFixed(1)+'s';
+  document.getElementById('t-errs').textContent=typingErrors;
+  const grade=wpm>=80?'🏆 Pro Typer!':wpm>=60?'🔥 Fast!':wpm>=40?'👍 Average':wpm>=20?'🙂 Keep Practicing':'💪 Beginner — Practice karo!';
+  const res=document.getElementById('typing-result');
+  res.style.display='block';
+  res.innerHTML=`✅ Done! &nbsp;|&nbsp; <b style="color:var(--p)">${wpm} WPM</b> &nbsp;|&nbsp; Accuracy: <b style="color:#00ff88">${acc}%</b> &nbsp;|&nbsp; ${grade}<br><span style="font-size:.65rem;color:var(--mt)">Tab dabao ya button se naya test shuru karo</span>`;
+  document.getElementById('typing-inp').disabled=true;
+  showToast(grade+' — '+wpm+' WPM 🎯');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{typingReset();});
 </script>
 
 </html>
