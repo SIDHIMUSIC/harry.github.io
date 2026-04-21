@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIDHI | Developer & Mathematics Educator | Full-Stack Web Developer</title>
+<title>HARRY| Developer & Mathematics Educator | Full-Stack Web Developer</title>
 <meta name="description" content="Portfolio of SIDHI — Developer & Mathematics Educator. Building Full-Stack Applications and Educational Tools. Aspiring Web Developer with B.Ed background and expertise in Scientific Math Problem Solving.">
 <meta name="keywords" content="SIDHI, Web Developer, Mathematics Educator, Full-Stack Developer, B.Ed, Scientific Math Solver, Educational Tools, India Developer">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -133,6 +133,7 @@ section { padding:5rem 1.5rem; max-width:1200px; margin:0 auto; }
 .btn-gh:hover svg path { fill:#e6edf3; }
 .btn-ig:hover { border-color:#d6249f!important; color:#fd5949!important; box-shadow:0 8px 30px rgba(214,36,159,.4)!important; }
 .btn-tg:hover { border-color:#26A5E4!important; color:#26A5E4!important; box-shadow:0 8px 28px rgba(38,165,228,.4)!important; }
+.btn-prompt:hover { transform:translateY(-3px) scale(1.04)!important; box-shadow:0 8px 35px rgba(255,45,120,.6)!important; }
 .ripple { position:absolute; border-radius:50%; background:rgba(255,255,255,.15); transform:scale(0); animation:rp .6s linear; pointer-events:none; }
 @keyframes rp { to{transform:scale(4);opacity:0} }
 
@@ -364,185 +365,6 @@ footer a { color:var(--p); text-decoration:none; }
 .tools-note { background:rgba(123,47,255,.08); border:1px solid rgba(123,47,255,.25); border-radius:12px; padding:.8rem 1.2rem; font-family:var(--fm); font-size:.7rem; color:var(--mt); margin-bottom:1.4rem; display:flex; align-items:center; gap:.6rem; }
 .tools-note b { color:var(--s); }
 
-/* =========================================
-   FREE FIRE PROFILE SECTION
-   ========================================= */
-#ff-section { scroll-margin-top:80px; }
-.ff-section-wrap {
-  display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start;
-}
-@media(max-width:860px){ .ff-section-wrap{grid-template-columns:1fr;} }
-
-/* FF Card base */
-.ffc {
-  background:linear-gradient(145deg,#1c0a00,#0e0400);
-  border:1px solid rgba(255,90,0,.22); border-radius:20px; padding:20px;
-  position:relative; overflow:hidden;
-  box-shadow:0 0 50px rgba(255,50,0,.12),inset 0 1px 0 rgba(255,140,50,.08);
-  margin-bottom:14px;
-}
-.ffc-stripe {
-  position:absolute; top:0; left:0; right:0; height:2.5px;
-  background:linear-gradient(90deg,transparent,#ff4500 30%,#ffd700 60%,#ff4500 80%,transparent);
-  border-radius:20px 20px 0 0;
-}
-.ffc::after {
-  content:''; position:absolute; top:-40px; right:-40px;
-  width:180px; height:180px;
-  background:radial-gradient(circle,rgba(255,90,0,.18) 0%,transparent 70%);
-  pointer-events:none;
-}
-
-/* FF avatar ring */
-.ff-av-spin {
-  width:92px; height:92px; border-radius:50%;
-  background:conic-gradient(#ff4500 0%,#ffd700 25%,#ff8c00 50%,#ff2200 75%,#ff4500 100%);
-  padding:3px; animation:ff-spin 5s linear infinite; flex-shrink:0;
-}
-@keyframes ff-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.ff-av-inner {
-  width:100%; height:100%; border-radius:50%; overflow:hidden;
-  background:#1a0800; border:2.5px solid #030712;
-}
-.ff-av-inner img { width:100%; height:100%; object-fit:cover; display:block; }
-.ff-av-online {
-  position:absolute; bottom:4px; right:3px;
-  width:15px; height:15px; border-radius:50%;
-  background:#00ff88; border:2px solid #030712;
-  box-shadow:0 0 8px #00ff88;
-  animation:ff-blink 2s ease-in-out infinite;
-}
-@keyframes ff-blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
-
-/* =========================================
-   FF LIGHTBOX (Tap to Zoom)
-   ========================================= */
-#ff-lightbox {
-  display:none; position:fixed; inset:0; z-index:999999;
-  background:rgba(0,0,0,.92); backdrop-filter:blur(12px);
-  align-items:center; justify-content:center; cursor:zoom-out;
-}
-#ff-lightbox.open { display:flex; animation:lbIn .25s ease; }
-@keyframes lbIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
-#ff-lightbox img {
-  max-width:90vw; max-height:85vh; border-radius:50%;
-  border:4px solid #ff4500; box-shadow:0 0 60px #ff4500, 0 0 120px rgba(255,140,0,.4);
-  object-fit:cover; width:340px; height:340px;
-  animation:lbSpin .5s ease;
-}
-@keyframes lbSpin { from{transform:scale(.6) rotate(-8deg)} to{transform:scale(1) rotate(0)} }
-#ff-lightbox .lb-close {
-  position:absolute; top:18px; right:22px; color:#ff4500; font-size:2.2rem;
-  font-family:var(--fd); cursor:pointer; line-height:1;
-  text-shadow:0 0 10px #ff4500; transition:.2s;
-}
-#ff-lightbox .lb-close:hover { transform:scale(1.2); }
-#ff-lightbox .lb-name {
-  position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
-  font-family:var(--fd); font-size:1.1rem; font-weight:900; letter-spacing:.15em;
-  background:linear-gradient(135deg,#ffd700,#ff4500); -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent; white-space:nowrap;
-}
-.ff-av-spin { cursor:zoom-in; }
-
-/* FF identity */
-.ff-pname {
-  font-family:'Orbitron',monospace; font-size:1.6rem; font-weight:900; line-height:1;
-  background:linear-gradient(135deg,#ffffff 35%,#ffd700);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:4px;
-}
-.ff-uid-row { display:flex; align-items:center; gap:6px; margin-bottom:6px; flex-wrap:wrap; }
-.ff-uid-lbl { font-family:var(--fm); font-size:.55rem; color:#5a3820; letter-spacing:.14em; text-transform:uppercase; }
-.ff-uid-val { font-family:var(--fd); font-size:.78rem; color:#00d4ff; letter-spacing:.07em; }
-.ff-uid-copy {
-  background:rgba(0,200,255,.1); border:1px solid rgba(0,200,255,.25);
-  color:#00d4ff; border-radius:5px; padding:1px 7px;
-  font-family:var(--fm); font-size:.5rem; font-weight:700; cursor:pointer; transition:.2s;
-}
-.ff-uid-copy:hover { background:rgba(0,200,255,.22); }
-.ff-badges { display:flex; flex-wrap:wrap; gap:5px; }
-.ff-badge { font-size:.54rem; font-weight:700; letter-spacing:.09em; padding:2px 9px; border-radius:100px; text-transform:uppercase; }
-.ff-b-gm { background:rgba(255,210,0,.14); border:1px solid rgba(255,210,0,.4); color:#ffd700; }
-.ff-b-in { background:rgba(0,180,255,.1); border:1px solid rgba(0,180,255,.3); color:#00c8ff; }
-.ff-b-ok { background:rgba(0,255,136,.07); border:1px solid rgba(0,255,136,.28); color:#00ff88; }
-
-/* Veteran banner */
-.ff-vet-banner {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  background:linear-gradient(135deg,rgba(220,20,40,.12),rgba(255,69,0,.1),rgba(255,200,0,.08));
-  border:1px solid rgba(255,180,0,.28); border-radius:13px; padding:10px 14px;
-  margin:12px 0; position:relative; overflow:hidden;
-}
-.ff-vet-banner::before {
-  content:''; position:absolute; inset:0;
-  background:repeating-linear-gradient(50deg,transparent,transparent 9px,rgba(255,180,0,.025) 9px,rgba(255,180,0,.025) 18px);
-}
-.ff-vet-icon { font-size:1.4rem; animation:ff-medal 2.4s ease-in-out infinite; }
-@keyframes ff-medal{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-4px) rotate(5deg)}}
-.ff-vet-center { text-align:center; position:relative; }
-.ff-yr-num {
-  font-family:'Orbitron',monospace; font-size:1.8rem; font-weight:900;
-  background:linear-gradient(135deg,#ffd700,#ff4500 50%,#ffd700);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1;
-}
-.ff-yr-sub { font-size:.6rem; font-weight:700; color:#6a4020; letter-spacing:.15em; text-transform:uppercase; margin-top:2px; font-family:var(--fm); }
-
-/* GF row */
-.ff-gf-row {
-  display:flex; align-items:center; gap:10px;
-  background:rgba(220,20,60,.07); border:1px solid rgba(220,20,60,.22);
-  border-radius:12px; padding:9px 12px;
-}
-.ff-gf-av { width:42px; height:42px; border-radius:50%; overflow:hidden; flex-shrink:0; border:2px solid rgba(220,20,60,.55); box-shadow:0 0 10px rgba(220,20,60,.3); }
-.ff-gf-av img { width:100%; height:100%; object-fit:cover; display:block; }
-.ff-gf-info { flex:1; }
-.ff-gf-lbl { font-family:var(--fm); font-size:.52rem; color:#5a2030; letter-spacing:.12em; text-transform:uppercase; margin-bottom:2px; }
-.ff-gf-name { font-family:var(--fd); font-size:.9rem; color:#ff6b9d; }
-.ff-heart { font-size:1.4rem; animation:ff-hb 1.4s ease-in-out infinite; }
-@keyframes ff-hb{0%,100%{transform:scale(1)}14%{transform:scale(1.3)}28%{transform:scale(1)}42%{transform:scale(1.18)}70%{transform:scale(1)}}
-
-/* FF sec title */
-.ff-sec-t {
-  font-family:var(--fd); font-size:.85rem; color:#ff8c00;
-  text-transform:uppercase; margin-bottom:10px;
-  display:flex; align-items:center; gap:8px;
-}
-.ff-sec-t::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(255,90,0,.25),transparent); }
-
-/* Stats grid */
-.ff-stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; }
-.ff-s-box {
-  background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
-  border:1px solid rgba(255,90,0,.18); border-radius:11px; padding:9px 6px; text-align:center;
-  position:relative; overflow:hidden; transition:border-color .25s,transform .2s;
-}
-.ff-s-box:hover { border-color:rgba(255,140,0,.45); transform:translateY(-2px); }
-.ff-s-box::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,140,0,.25),transparent); }
-.ff-s-val {
-  font-family:var(--fd); font-size:1.45rem; font-weight:900;
-  background:linear-gradient(135deg,#fff,#ffaa40);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1;
-}
-.ff-s-val.fire { background:linear-gradient(135deg,#ffd700,#ff4500); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.ff-s-lbl { font-family:var(--fm); font-size:.5rem; color:#5a3820; letter-spacing:.1em; text-transform:uppercase; margin-top:3px; }
-
-/* Progress bars */
-.ff-prog-item { margin-bottom:8px; }
-.ff-prog-head { display:flex; justify-content:space-between; margin-bottom:3px; font-family:var(--fm); font-size:.58rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
-.ff-prog-head span:first-child { color:#5a3820; }
-.ff-prog-head span:last-child { color:#ff8c00; }
-.ff-prog-track { height:4px; background:rgba(255,255,255,.05); border-radius:99px; overflow:hidden; }
-.ff-prog-fill { height:100%; border-radius:99px; background:linear-gradient(90deg,#dc143c,#ff4500,#ffd700); box-shadow:0 0 6px rgba(255,69,0,.5); width:0; transition:width 1.8s cubic-bezier(.4,0,.2,1); }
-
-/* Loadout */
-.ff-loadout-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-.ff-l-box { background:rgba(0,0,0,.3); border:1px solid rgba(255,90,0,.15); border-radius:10px; padding:7px 10px; }
-.ff-l-lbl { font-family:var(--fm); font-size:.5rem; color:#5a3820; letter-spacing:.12em; text-transform:uppercase; margin-bottom:2px; }
-.ff-l-val { font-family:var(--fd); font-size:.85rem; color:#ff8c00; }
-
-/* FF canvas sparks inside section */
-#ff-sparks { position:absolute; inset:0; pointer-events:none; z-index:0; opacity:.5; border-radius:20px; }
-.ff-content { position:relative; z-index:1; }
 </style>
 </head>
 <body class="th-blue">
@@ -572,12 +394,14 @@ footer a { color:var(--p); text-decoration:none; }
   <div class="n-logo">HARRY.DEV</div>
   <ul class="n-links" id="n-links">
     <li><a href="#hero">HOME</a></li>
+    <li><a href="#about">ABOUT</a></li>
     <li><a href="#projects">PROJECTS</a></li>
     <li><a href="#skills">SKILLS</a></li>
+    <li><a href="#education">EDUCATION</a></li>
     <li><a href="#contact">CONTACT</a></li>
     <li><a href="#tools">TOOLS</a></li>
-    <li><a href="#ff-section" style="color:#ff6400!important;font-weight:700;letter-spacing:.06em;">🔥 FF</a></li>
   </ul>
+  <button onclick="openGamingWorld()" style="background:linear-gradient(135deg,#ff4500,#ffaa00);border:none;border-radius:100px;padding:.45rem 1.15rem;font-family:var(--fm);font-size:.63rem;font-weight:700;color:#fff;cursor:pointer;letter-spacing:.07em;box-shadow:0 0 18px rgba(255,100,0,.55);transition:.25s;white-space:nowrap;flex-shrink:0;" onmouseover="this.style.transform='translateY(-2px) scale(1.06)';this.style.boxShadow='0 0 28px rgba(255,100,0,.8)'" onmouseout="this.style.transform='';this.style.boxShadow='0 0 18px rgba(255,100,0,.55)'">&#x1F3AE; Gaming World</button>
   <div class="n-right">
     <div class="t-dots">
       <div class="t-dot c1 on" data-th="th-blue" title="Blue Theme"></div>
@@ -604,7 +428,7 @@ footer a { color:var(--p); text-decoration:none; }
   
   <div class="av-fb">S</div>
   </div>
-  <div class="h-greet">// WELCOME TO MY UNIVERSE</div>
+  <div class="h-greet"> WELCOME TO MY UNIVERSE</div>
   <h1 class="h-name">SIDHI</h1>
   <div class="h-typed"><span id="typed"></span><span class="typed-cur">|</span></div>
   <p class="h-bio">Developer · Mathematics Educator · Full-Stack Builder<br>Creating educational tools & web applications that make a difference. 🧮</p>
@@ -641,8 +465,104 @@ footer a { color:var(--p); text-decoration:none; }
       <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#26A5E4" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
       <span>SANATANI_BACHA</span>
     </a>
+    <!-- MY PROMPT PREMIUM BUTTON -->
+    <a href="http://harryprompt.online/" target="_blank" class="s-btn" style="background:linear-gradient(135deg,#ff2d78,#7b2fff);border:none;color:#fff;font-weight:700;box-shadow:0 0 18px rgba(255,45,120,.45);position:relative;overflow:hidden;">
+      <span style="position:absolute;top:4px;right:8px;font-size:.45rem;font-family:var(--fd);letter-spacing:.08em;background:linear-gradient(90deg,#ffd700,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900;">HARRY</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>My Prompt</span>
+    </a>
   </div>
 </section>
+
+<!-- ==================== ABOUT ME ==================== -->
+<section id="about" class="rv">
+  <div class="st">About Me</div>
+  <div class="ss"> WHO I AM</div>
+  <div class="gc" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+    <div>
+      <p style="font-size:.92rem;color:var(--mt);line-height:1.85;font-family:var(--fb);margin-bottom:1rem;">
+        Hey! I'm <strong style="color:var(--tx);">Sidhi</strong> — a passionate Full-Stack Web Developer and Mathematics Educator from India.
+        I hold a <strong style="color:var(--p);">B.Ed degree</strong> and specialize in building interactive educational tools and web applications
+        that bridge the gap between technology and learning.
+      </p>
+      <p style="font-size:.92rem;color:var(--mt);line-height:1.85;font-family:var(--fb);margin-bottom:1.4rem;">
+        My journey blends <strong style="color:var(--s);">scientific math problem solving</strong> with modern web development.
+        I love creating tools that make complex topics simple, accessible, and fun for students.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+        <span style="padding:.3rem .8rem;border-radius:100px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);font-family:var(--fm);font-size:.62rem;color:var(--p);">📍 India</span>
+        <span style="padding:.3rem .8rem;border-radius:100px;background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.3);font-family:var(--fm);font-size:.62rem;color:var(--s);">🎓 B.Ed Graduate</span>
+        <span style="padding:.3rem .8rem;border-radius:100px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25);font-family:var(--fm);font-size:.62rem;color:#00ff88);">💻 Open to Work</span>
+        <span style="padding:.3rem .8rem;border-radius:100px;background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.3);font-family:var(--fm);font-size:.62rem;color:var(--a);">🧮 Math Educator</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.8rem;">
+      <div class="gc" style="padding:1rem 1.2rem;">
+        <div style="font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">🎯 Current Focus</div>
+        <div style="font-size:.85rem;color:var(--tx);font-family:var(--fb);">Full-Stack Web Development + Educational Tools</div>
+      </div>
+      <div class="gc" style="padding:1rem 1.2rem;">
+        <div style="font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">💡 Interests</div>
+        <div style="font-size:.85rem;color:var(--tx);font-family:var(--fb);">EdTech · Open Source · UI/UX · Math Problem Solving</div>
+      </div>
+      <div class="gc" style="padding:1rem 1.2rem;">
+        <div style="font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;">🌐 Languages</div>
+        <div style="font-size:.85rem;color:var(--tx);font-family:var(--fb);">Hindi · English</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EDUCATION & EXPERIENCE ==================== -->
+<section id="education" class="rv">
+  <div class="st">Education & Experience</div>
+  <div class="ss">// MY JOURNEY</div>
+  <div style="display:flex;flex-direction:column;gap:1.2rem;position:relative;">
+    <!-- Timeline line -->
+    <div style="position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--p),var(--s),transparent);opacity:.4;"></div>
+
+    <!-- Item 1 -->
+    <div class="gc rv" style="margin-left:52px;position:relative;">
+      <div style="position:absolute;left:-42px;top:1.2rem;width:16px;height:16px;border-radius:50%;background:var(--p);box-shadow:0 0 12px var(--glow);border:2px solid var(--bg);"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;">
+        <div>
+          <div style="font-family:var(--fd);font-size:.92rem;color:var(--tx);font-weight:700;">B.Ed — Bachelor of Education</div>
+          <div style="font-family:var(--fm);font-size:.65rem;color:var(--p);margin-top:.2rem;">Mathematics Education Specialization</div>
+        </div>
+        <span style="padding:.25rem .75rem;border-radius:100px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);font-family:var(--fm);font-size:.6rem;color:var(--p);white-space:nowrap;">2022 – 2024</span>
+      </div>
+      <p style="font-size:.8rem;color:var(--mt);line-height:1.7;font-family:var(--fb);">Completed B.Ed with focus on Mathematics pedagogy, scientific problem-solving methods, and educational technology integration.</p>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="gc rv" style="margin-left:52px;position:relative;">
+      <div style="position:absolute;left:-42px;top:1.2rem;width:16px;height:16px;border-radius:50%;background:var(--s);box-shadow:0 0 12px rgba(123,47,255,.5);border:2px solid var(--bg);"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;">
+        <div>
+          <div style="font-family:var(--fd);font-size:.92rem;color:var(--tx);font-weight:700;">Full-Stack Web Development</div>
+          <div style="font-family:var(--fm);font-size:.65rem;color:var(--s);margin-top:.2rem;">Self-taught · Open Source Projects</div>
+        </div>
+        <span style="padding:.25rem .75rem;border-radius:100px;background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.2);font-family:var(--fm);font-size:.6rem;color:var(--s);white-space:nowrap;">2023 – Present</span>
+      </div>
+      <p style="font-size:.8rem;color:var(--mt);line-height:1.7;font-family:var(--fb);">Building educational web tools, portfolio projects, and math-solving applications. Active on GitHub — contributing to open source.</p>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="gc rv" style="margin-left:52px;position:relative;">
+      <div style="position:absolute;left:-42px;top:1.2rem;width:16px;height:16px;border-radius:50%;background:var(--a);box-shadow:0 0 12px rgba(255,45,120,.4);border:2px solid var(--bg);"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;">
+        <div>
+          <div style="font-family:var(--fd);font-size:.92rem;color:var(--tx);font-weight:700;">Mathematics Educator</div>
+          <div style="font-family:var(--fm);font-size:.65rem;color:var(--a);margin-top:.2rem;">Teaching · Tutoring · Content Creation</div>
+        </div>
+        <span style="padding:.25rem .75rem;border-radius:100px;background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.2);font-family:var(--fm);font-size:.6rem;color:var(--a);white-space:nowrap;">2024 – Present</span>
+      </div>
+      <p style="font-size:.8rem;color:var(--mt);line-height:1.7;font-family:var(--fb);">Teaching mathematics to students, creating digital study materials, and building interactive math tools to simplify complex concepts.</p>
+    </div>
+
+  </div>
+</section>
+
 
 <!-- ==================== GITHUB REPOS ==================== -->
 <section id="projects" class="rv">
@@ -1282,165 +1202,8 @@ footer a { color:var(--p); text-decoration:none; }
   </div>
 
 </section>
-<!-- FF LIGHTBOX MODAL -->
-<div id="ff-lightbox" onclick="closeFfLightbox()">
-  <span class="lb-close" onclick="closeFfLightbox()">✕</span>
-  <img id="ff-lb-img" src="ff.jpg" alt="HARRY FF"
-    onerror="this.src='';this.style.background='linear-gradient(135deg,#2a0d00,#ff4500)';this.style.display='flex';this.alt='🎮'">
-  <div class="lb-name">🔥 HARRY — Free Fire 🔥</div>
-</div>
 </main>
 
-<!-- ==================== FREE FIRE PROFILE ==================== -->
-<section id="ff-section" class="rv" style="padding:5rem 1.5rem;max-width:1200px;margin:0 auto;position:relative;">
-
-  <!-- Ambient fire sparks canvas -->
-  <canvas id="ff-sparks" style="position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.35;border-radius:24px;"></canvas>
-
-  <div style="position:relative;z-index:1;">
-    <div class="st" style="background:linear-gradient(135deg,#ff4500,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Free Fire Profile</div>
-    <div class="ss">// MY GAMING ZONE — INDIA SERVER</div>
-
-    <div class="ff-section-wrap">
-
-      <!-- LEFT COLUMN: Profile + Veteran + GF -->
-      <div>
-
-        <!-- MAIN PROFILE CARD -->
-        <div class="ffc">
-          <div class="ffc-stripe"></div>
-          <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;">
-            <div style="position:relative;flex-shrink:0;">
-              <div class="ff-av-spin" onclick="openFfLightbox()" title="Tap to zoom 🔍">
-                <div class="ff-av-inner">
-                  <!-- ff.jpg = apni FF photo (same folder mein rakhna) -->
-                  <img src="ff.jpg" alt="ᴅꫝʀᴋ_Ᏼʟꫝʓє"
-                    onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2a0d00,#ff4500)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:86px;font-size:2.5rem\'>🎮</div>'">
-                </div>
-              </div>
-              <div class="ff-av-online"></div>
-            </div>
-            <div class="identity" style="flex:1;padding-top:3px;">
-              <!-- ✏️ Naam badlo -->
-              <div class="ff-pname">ᴅꫝʀᴋ_Ᏼʟꫝʓє</div>
-              <div class="ff-uid-row">
-                <span class="ff-uid-lbl">UID</span>
-                <!-- ✏️ UID badlo -->
-                <span class="ff-uid-val" id="ff-uid-val">605458977</span>
-                <button class="ff-uid-copy" onclick="ffCopyUID()">📋 Copy</button>
-              </div>
-              <div class="ff-badges">
-                <!-- ✏️ Rank badlo -->
-                <span class="ff-badge ff-b-gm">🏆 Master</span>
-                <span class="ff-badge ff-b-in">🌏 India</span>
-                <span class="ff-badge ff-b-ok">✔ Verified</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 7 YEAR VETERAN — Real FF style -->
-          <div class="ff-vet-banner">
-            <div class="ff-vet-icon">🎖️</div>
-            <div class="ff-vet-center">
-              <!-- ✏️ Number badlo — "7" ko apna karo -->
-              <div><span class="ff-yr-num">7 YEAR OLD</span></div>
-              <div class="ff-yr-sub">Veteran Player · Free Fire Legacy</div>
-            </div>
-            <div class="ff-vet-icon">🎖️</div>
-          </div>
-
-          <!-- GF ROW -->
-          <div class="ff-gf-row">
-            <div class="ff-gf-av">
-              <!-- gf.jpg = GF ki photo -->
-              <img src="gf.jpg" alt="GF"
-                onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:1.4rem\'>💕</div>'">
-            </div>
-            <div class="ff-gf-info">
-              <div class="ff-gf-lbl">In-Game Partner ❤️</div>
-              <!-- ✏️ GF naam badlo -->
-              <div class="ff-gf-name">Woong 💕</div>
-            </div>
-            <div class="ff-heart">❤️</div>
-          </div>
-        </div>
-
-        <!-- LOADOUT CARD -->
-        <div class="ffc">
-          <div class="ffc-stripe"></div>
-          <div class="ff-sec-t">🎮 My Loadout</div>
-          <div class="ff-loadout-grid">
-            <!-- ✏️ Loadout badlo -->
-            <div class="ff-l-box"><div class="ff-l-lbl">Character</div><div class="ff-l-val">Kelly 💠</div></div>
-            <div class="ff-l-box"><div class="ff-l-lbl">Weapon</div><div class="ff-l-val">M1887 🔫</div></div>
-            <div class="ff-l-box"><div class="ff-l-lbl">Pet</div><div class="ff-l-val">Falco 🦅</div></div>
-            <div class="ff-l-box"><div class="ff-l-lbl">Mode</div><div class="ff-l-val">BR Ranked 🏆</div></div>
-            <div class="ff-l-box"><div class="ff-l-lbl">Map</div><div class="ff-l-val">Bermuda 🗺️</div></div>
-            <div class="ff-l-box"><div class="ff-l-lbl">Play Style</div><div class="ff-l-val">Aggressive ⚡</div></div>
-          </div>
-        </div>
-
-      </div><!-- /left column -->
-
-      <!-- RIGHT COLUMN: Stats + Progress -->
-      <div>
-
-        <!-- BATTLE STATS CARD -->
-        <div class="ffc">
-          <div class="ffc-stripe"></div>
-          <div class="ff-sec-t">⚔️ Battle Stats</div>
-
-          <div class="ff-stats-grid">
-            <!-- ✏️ Numbers badlo — sirf value change karo -->
-            <div class="ff-s-box"><div class="ff-s-val fire">4.2</div><div class="ff-s-lbl">K/D Ratio</div></div>
-            <div class="ff-s-box"><div class="ff-s-val fire">28%</div><div class="ff-s-lbl">Win Rate</div></div>
-            <div class="ff-s-box"><div class="ff-s-val">72</div><div class="ff-s-lbl">Level</div></div>
-            <div class="ff-s-box"><div class="ff-s-val">1,247</div><div class="ff-s-lbl">Matches</div></div>
-            <div class="ff-s-box"><div class="ff-s-val">5,238</div><div class="ff-s-lbl">Total Kills</div></div>
-            <div class="ff-s-box"><div class="ff-s-val fire">61%</div><div class="ff-s-lbl">Headshots</div></div>
-            <div class="ff-s-box"><div class="ff-s-val fire">348</div><div class="ff-s-lbl">Booyahs 🏆</div></div>
-            <div class="ff-s-box"><div class="ff-s-val">3.18L</div><div class="ff-s-lbl">Damage</div></div>
-            <div class="ff-s-box"><div class="ff-s-val fire">3,850</div><div class="ff-s-lbl">Rank Points</div></div>
-          </div>
-
-          <!-- PROGRESS BARS -->
-          <div class="ff-sec-t">📊 Season Progress</div>
-
-          <!-- ✏️ data-pct = bar % (0-100) -->
-          <div class="ff-prog-item">
-            <div class="ff-prog-head"><span>Win Rate</span><span>28%</span></div>
-            <div class="ff-prog-track"><div class="ff-prog-fill" data-pct="28"></div></div>
-          </div>
-          <div class="ff-prog-item">
-            <div class="ff-prog-head"><span>Headshot %</span><span>61%</span></div>
-            <div class="ff-prog-track"><div class="ff-prog-fill" data-pct="61"></div></div>
-          </div>
-          <div class="ff-prog-item">
-            <div class="ff-prog-head"><span>Level</span><span>Lv 72 / 100</span></div>
-            <div class="ff-prog-track"><div class="ff-prog-fill" data-pct="72"></div></div>
-          </div>
-          <div class="ff-prog-item">
-            <div class="ff-prog-head"><span>Rank Journey (GM)</span><span>3850 / 5000 RP</span></div>
-            <div class="ff-prog-track"><div class="ff-prog-fill" data-pct="77"></div></div>
-          </div>
-        </div>
-
-        <!-- PRO TIPS CARD -->
-        <div class="ffc">
-          <div class="ffc-stripe"></div>
-          <div class="ff-sec-t">💡 Pro Tips</div>
-          <div style="display:flex;flex-direction:column;gap:.4rem;">
-            <div style="background:rgba(255,69,0,.06);border-left:3px solid #ff6400;border-radius:0 8px 8px 0;padding:.5rem .8rem;font-family:var(--fm);font-size:.65rem;color:var(--mt);">🔴 Bermuda Clock Tower — early game avoid karo</div>
-            <div style="background:rgba(255,69,0,.06);border-left:3px solid #ffd700;border-radius:0 8px 8px 0;padding:.5rem .8rem;font-family:var(--fm);font-size:.65rem;color:var(--mt);">🎯 Headshot practice — Training mode daily 10 min</div>
-            <div style="background:rgba(255,69,0,.06);border-left:3px solid #ff6400;border-radius:0 8px 8px 0;padding:.5rem .8rem;font-family:var(--fm);font-size:.65rem;color:var(--mt);">🏃 Always pre-aim before peeking — saves 0.3 sec</div>
-            <div style="background:rgba(255,69,0,.06);border-left:3px solid #ffd700;border-radius:0 8px 8px 0;padding:.5rem .8rem;font-family:var(--fm);font-size:.65rem;color:var(--mt);">🔥 M1887 + Gloo Wall = Grandmaster combo 🏆</div>
-          </div>
-        </div>
-
-      </div><!-- /right column -->
-    </div><!-- /ff-section-wrap -->
-  </div>
-</section>
 
 <!-- ==================== GITHUB STATS ==================== -->
 <section id="gh-stats" class="rv">
@@ -1490,13 +1253,20 @@ footer a { color:var(--p); text-decoration:none; }
           <div class="contact-val" style="color:var(--p);">ashukr3384@gmail.com ↗</div>
         </div>
       </a>
-      <div class="contact-item">
+      <a href="https://t.me/SANATANI_BACHA" target="_blank" class="contact-item" style="text-decoration:none;cursor:pointer;">
         <div class="contact-icon">💬</div>
         <div>
-          <div class="contact-label">TELEGRAM</div>
-          <div class="contact-val">@SANATANI_BACHA</div>
+          <div class="contact-label">TELEGRAM — Tap to open</div>
+          <div class="contact-val">@SANATANI_BACHA ↗</div>
         </div>
-      </div>
+      </a>
+      <a href="https://instagram.com/harryashu_" target="_blank" class="contact-item" style="text-decoration:none;cursor:pointer;">
+        <div class="contact-icon">📸</div>
+        <div>
+          <div class="contact-label">INSTAGRAM — Tap to follow</div>
+          <div class="contact-val" style="color:#d6249f;">@harryashu_ ↗</div>
+        </div>
+      </a>
       <div class="contact-item">
         <div class="contact-icon">📍</div>
         <div>
@@ -2170,87 +1940,346 @@ function geoTri(){const a=parseFloat(document.getElementById('g-ta').value),b=pa
 function geoRect(){const l=parseFloat(document.getElementById('g-rl').value),w=parseFloat(document.getElementById('g-rw').value);if(isNaN(l)||isNaN(w))return;document.getElementById('g-ra').textContent=Math.round(l*w*100)/100;document.getElementById('g-rp').textContent=2*(l+w);document.getElementById('g-rd').textContent=Math.round(Math.sqrt(l*l+w*w)*100)/100;document.getElementById('g-rs').textContent=l===w?'Yes ✅':'No';document.getElementById('g-rect-res').style.display='grid';}
 function geoSphere(){const r=parseFloat(document.getElementById('g-sr').value);if(isNaN(r)||r<=0)return;const fmt=v=>Math.round(v*100)/100;document.getElementById('g-sv').textContent=fmt(4/3*Math.PI*r**3);document.getElementById('g-ssa').textContent=fmt(4*Math.PI*r**2);document.getElementById('g-sphere-res').style.display='grid';}
 
-// ================================================================
-//  FREE FIRE SECTION — SPARKS + UID COPY + PROGRESS BARS
-// ================================================================
-
-// FF Sparks canvas
-(function(){
-  const c = document.getElementById('ff-sparks');
-  if(!c) return;
-  const x = c.getContext('2d');
-  let W, H, P = [];
-  function resize(){
-    const rect = c.parentElement.getBoundingClientRect();
-    W = c.width = rect.width || 800;
-    H = c.height = rect.height || 600;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-  const COLS = ['#ff4500','#ff7700','#ffd700','#ff2200','#ffaa00'];
-  const rnd = (a,b) => a + Math.random()*(b-a);
-  function mk(){
-    return { x:rnd(0,W), y:H+5, vx:rnd(-.5,.5), vy:rnd(-1.2,-.3),
-             r:rnd(.7,2.5), life:0, max:rnd(60,140), col:COLS[Math.floor(Math.random()*5)] };
-  }
-  for(let i=0;i<30;i++){const p=mk();p.y=rnd(0,H);p.life=rnd(0,p.max);P.push(p);}
-  function loop(){
-    x.clearRect(0,0,W,H);
-    if(Math.random()<.25) P.push(mk());
-    if(P.length>90) P.splice(0,1);
-    P.forEach(p=>{
-      const a = Math.sin(p.life/p.max*Math.PI)*.6;
-      x.beginPath(); x.arc(p.x,p.y,p.r,0,Math.PI*2);
-      x.fillStyle = p.col; x.globalAlpha = a; x.fill(); x.globalAlpha = 1;
-      p.x += p.vx; p.y += p.vy; p.life++;
-      if(p.life >= p.max) Object.assign(p, mk());
-    });
-    requestAnimationFrame(loop);
-  }
-  loop();
-})();
-
-// FF UID Copy
-function ffCopyUID(){
-  const uid = document.getElementById('ff-uid-val').textContent;
-  navigator.clipboard.writeText(uid)
-    .then(()=>showToast('📋 FF UID Copied: '+uid+' ✅'))
-    .catch(()=>showToast('UID: '+uid));
-}
-
-// FF Progress bars — animate when section scrolls into view
-(function(){
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.ff-prog-fill').forEach(bar=>{
-          bar.style.width = bar.dataset.pct + '%';
-        });
-        observer.unobserve(e.target);
-      }
-    });
-  }, {threshold:0.2});
-  const sec = document.getElementById('ff-section');
-  if(sec) observer.observe(sec);
-})();
-
-// ================================================================
-//  FF LIGHTBOX — Tap to Zoom Profile Pic
-// ================================================================
-function openFfLightbox(){
-  const lb = document.getElementById('ff-lightbox');
-  // sync src from the card image
-  const cardImg = document.querySelector('.ff-av-inner img');
-  if(cardImg && cardImg.src) document.getElementById('ff-lb-img').src = cardImg.src;
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeFfLightbox(){
-  document.getElementById('ff-lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-// ESC key to close
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeFfLightbox(); });
 
 </script>
+
+
+<!-- ============================================================
+     🎮  GAMING WORLD — FREE FIRE PAGE
+     ============================================================ -->
+<style>
+/* Overlay wrapper */
+#gw-overlay{
+  display:none;position:fixed;inset:0;z-index:999998;
+  background:#07000e;overflow-y:auto;
+}
+#gw-overlay.open{display:block;animation:gwSlide .45s cubic-bezier(.4,0,.2,1);}
+@keyframes gwSlide{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+/* Animated fire-particle bg */
+#gw-overlay::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 10% 90%,rgba(255,60,0,.22) 0%,transparent 50%),
+    radial-gradient(ellipse at 90% 10%,rgba(255,150,0,.18) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(120,0,200,.1) 0%,transparent 65%);
+  background-color:#07000e;
+}
+#gw-overlay::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%,rgba(255,140,0,.7),transparent),
+    radial-gradient(1px 1px at 30% 60%,rgba(255,60,0,.6),transparent),
+    radial-gradient(1px 1px at 60% 30%,rgba(255,200,0,.5),transparent),
+    radial-gradient(1px 1px at 80% 75%,rgba(255,80,0,.6),transparent),
+    radial-gradient(1px 1px at 50% 85%,rgba(255,170,0,.4),transparent);
+  background-size:280px 280px;
+  animation:ffStars 30s linear infinite;opacity:.6;
+}
+@keyframes ffStars{from{background-position:0 0}to{background-position:0 900px}}
+
+/* Close btn */
+#gw-close{
+  position:fixed;top:16px;right:18px;z-index:9999999;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(0,0,0,.75);border:1.5px solid rgba(255,80,0,.7);
+  color:#ff4500;font-size:1.35rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:.25s;backdrop-filter:blur(10px);
+  box-shadow:0 0 16px rgba(255,60,0,.5);
+}
+#gw-close:hover{transform:rotate(90deg) scale(1.15);}
+
+/* Page content */
+.gw-wrap{
+  position:relative;z-index:1;
+  max-width:700px;margin:0 auto;
+  padding:72px 18px 60px;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* Top label */
+.ff-pg-label{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(.6rem,1.5vw,.78rem);
+  letter-spacing:.45em;color:#ff8c00;
+  text-transform:uppercase;margin-bottom:1.6rem;
+  text-shadow:0 0 16px rgba(255,140,0,.7);
+  opacity:.9;
+}
+
+/* ── BIG RECTANGULAR PICTURE ── */
+.ff-rect-wrap{
+  width:100%;max-width:640px;
+  position:relative;margin-bottom:2rem;
+  border-radius:20px;overflow:hidden;
+  /* glowing border via box-shadow */
+  box-shadow:
+    0 0 0 3px #ff4500,
+    0 0 40px rgba(255,80,0,.7),
+    0 0 90px rgba(255,140,0,.35),
+    0 0 150px rgba(255,60,0,.15);
+  animation:ffFloat 5s ease-in-out infinite;
+}
+@keyframes ffFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* top fire stripe */
+.ff-rect-wrap::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:2;
+  background:linear-gradient(90deg,transparent,#ff4500 20%,#ffd700 50%,#ff4500 80%,transparent);
+  animation:ffStripe 3s ease-in-out infinite;
+}
+@keyframes ffStripe{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* bottom fire stripe */
+.ff-rect-wrap::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;z-index:2;
+  background:linear-gradient(90deg,transparent,#ff4500 20%,#ffd700 50%,#ff4500 80%,transparent);
+}
+
+.ff-big-img{
+  width:100%;
+  /* shows full image without crop */
+  display:block;
+  object-fit:contain;
+  background:#0d0005;
+  max-height:70vh;
+  transition:.4s;
+}
+.ff-big-img:hover{transform:scale(1.02);}
+
+/* Fallback when no image */
+.ff-img-fallback{
+  width:100%;height:280px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#1c0500,#0d0005);
+  font-size:4rem;gap:.5rem;
+}
+.ff-img-fallback span{font-family:'Orbitron',monospace;font-size:.75rem;color:#5a3820;letter-spacing:.2em;}
+
+/* Player name row */
+.ff-pname-row{
+  display:flex;flex-direction:column;align-items:center;
+  margin-bottom:1.6rem;text-align:center;
+}
+.ff-pname{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(1.8rem,6vw,2.8rem);
+  font-weight:900;line-height:1.1;
+  background:linear-gradient(135deg,#fff 20%,#ffd700 55%,#ff4500 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 22px rgba(255,140,0,.6));
+  margin-bottom:.3rem;
+}
+.ff-uid-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:.6rem;}
+.ff-uid-lbl{font-family:'Space Mono',monospace;font-size:.55rem;color:#5a3820;letter-spacing:.14em;text-transform:uppercase;}
+.ff-uid{font-family:'Orbitron',monospace;font-size:.8rem;color:#00d4ff;letter-spacing:.07em;}
+.ff-uid-copy{
+  background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.3);
+  color:#00d4ff;border-radius:5px;padding:2px 9px;
+  font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;cursor:pointer;transition:.2s;
+}
+.ff-uid-copy:hover{background:rgba(0,200,255,.22);}
+.ff-badges-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.ff-badge{font-size:.55rem;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:100px;text-transform:uppercase;}
+.ff-b-gm{background:rgba(255,210,0,.14);border:1px solid rgba(255,210,0,.4);color:#ffd700;}
+.ff-b-in{background:rgba(0,180,255,.1);border:1px solid rgba(0,180,255,.3);color:#00c8ff;}
+.ff-b-ok{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);color:#00ff88;}
+.ff-b-fire{background:rgba(255,69,0,.14);border:1px solid rgba(255,100,0,.4);color:#ff6a00;}
+
+/* ── STATS GRID ── */
+.ff-stats-title{
+  font-family:'Orbitron',monospace;font-size:.7rem;color:#ff6a00;
+  text-transform:uppercase;letter-spacing:.25em;
+  margin-bottom:1rem;align-self:flex-start;
+  display:flex;align-items:center;gap:10px;width:100%;max-width:640px;
+}
+.ff-stats-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,90,0,.35),transparent);}
+
+.ff-stats-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;
+  width:100%;max-width:640px;margin-bottom:1.8rem;
+}
+@media(max-width:480px){.ff-stats-grid{grid-template-columns:repeat(2,1fr);}}
+
+.ff-stat{
+  background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  border:1px solid rgba(255,90,0,.2);border-radius:14px;
+  padding:1rem .7rem;text-align:center;position:relative;overflow:hidden;transition:.3s;
+}
+.ff-stat::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,150,0,.3),transparent);
+}
+.ff-stat:hover{border-color:rgba(255,200,0,.5);transform:translateY(-5px);box-shadow:0 14px 28px rgba(255,60,0,.2);}
+.ff-stat-icon{font-size:1.4rem;margin-bottom:.4rem;}
+.ff-stat-val{
+  font-family:'Orbitron',monospace;font-size:1.35rem;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,#fff,#ffaa40);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.3rem;
+}
+.ff-stat-val.fire{background:linear-gradient(135deg,#ffd700,#ff4500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ff-stat-lbl{font-family:'Space Mono',monospace;font-size:.52rem;color:#5a3820;letter-spacing:.1em;text-transform:uppercase;}
+
+/* ── SKILL BARS ── */
+.ff-bars-wrap{width:100%;max-width:640px;margin-bottom:1.8rem;}
+.ff-bar-item{margin-bottom:.9rem;}
+.ff-bar-head{
+  display:flex;justify-content:space-between;margin-bottom:4px;
+  font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.ff-bar-head span:first-child{color:#5a3820;}
+.ff-bar-head span:last-child{color:#ff8c00;}
+.ff-bar-track{height:5px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden;}
+.ff-bar-fill{height:100%;border-radius:99px;width:0;
+  background:linear-gradient(90deg,#dc143c,#ff4500,#ffd700);
+  box-shadow:0 0 8px rgba(255,80,0,.6);
+  transition:width 1.8s cubic-bezier(.4,0,.2,1);}
+
+/* ── LOADOUT ── */
+.ff-loadout-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;
+  width:100%;max-width:640px;margin-bottom:1.8rem;
+}
+@media(min-width:480px){.ff-loadout-grid{grid-template-columns:repeat(4,1fr);}}
+.ff-lbox{
+  background:rgba(0,0,0,.35);border:1px solid rgba(255,90,0,.18);
+  border-radius:12px;padding:.8rem .7rem;text-align:center;transition:.25s;
+}
+.ff-lbox:hover{border-color:rgba(255,160,0,.4);transform:translateY(-3px);}
+.ff-lbox-icon{font-size:1.5rem;margin-bottom:.35rem;}
+.ff-lbox-lbl{font-family:'Space Mono',monospace;font-size:.5rem;color:#5a3820;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.2rem;}
+.ff-lbox-val{font-family:'Orbitron',monospace;font-size:.78rem;color:#ff8c00;font-weight:700;}
+</style>
+
+<!-- Overlay -->
+<div id="gw-overlay">
+  <button id="gw-close" onclick="closeGamingWorld()">&#x2715;</button>
+
+  <div class="gw-wrap">
+
+    <div class="ff-pg-label">&#x1F525; &nbsp; Free Fire — My Gaming World &nbsp; &#x1F525;</div>
+
+    <!-- ── BIG RECTANGULAR PIC ── -->
+    <div class="ff-rect-wrap">
+      <img class="ff-big-img" src="ff.jpg" alt="FF Profile"
+        onerror="this.style.display='none';document.getElementById('ff-img-fb').style.display='flex'">
+      <div class="ff-img-fallback" id="ff-img-fb" style="display:none;">
+        &#x1F3AE;
+        <span>ff.jpg yahan rakho</span>
+      </div>
+    </div>
+
+    <!-- ── PLAYER NAME + UID ── -->
+    <div class="ff-pname-row">
+      <div class="ff-pname">HARRY</div>
+      <div class="ff-uid-row">
+        <span class="ff-uid-lbl">UID</span>
+        <span class="ff-uid" id="ff-uid-val">123456789</span>
+        <button class="ff-uid-copy" onclick="ffCopyUID()">&#x1F4CB; Copy</button>
+      </div>
+      <div class="ff-badges-row">
+        <span class="ff-badge ff-b-gm">&#x1F451; Grandmaster</span>
+        <span class="ff-badge ff-b-in">&#x1F1EE;&#x1F1F3; India</span>
+        <span class="ff-badge ff-b-ok">&#x2705; Active</span>
+        <span class="ff-badge ff-b-fire">&#x1F525; Veteran</span>
+      </div>
+    </div>
+
+    <!-- ── STATS ── -->
+    <div class="ff-stats-title">&#x1F4CA; Battle Stats</div>
+    <div class="ff-stats-grid" id="ff-stats-grid">
+      <div class="ff-stat">
+        <div class="ff-stat-icon">&#x1F947;</div>
+        <div class="ff-stat-val fire">2,847</div>
+        <div class="ff-stat-lbl">Total Kills</div>
+      </div>
+      <div class="ff-stat">
+        <div class="ff-stat-icon">&#x1F3C6;</div>
+        <div class="ff-stat-val">342</div>
+        <div class="ff-stat-lbl">Booyahs</div>
+      </div>
+      <div class="ff-stat">
+        <div class="ff-stat-icon">&#x1F4AF;</div>
+        <div class="ff-stat-val">68.4%</div>
+        <div class="ff-stat-lbl">Win Rate</div>
+      </div>
+      <div class="ff-stat">
+        <div class="ff-stat-icon">&#x2694;&#xFE0F;</div>
+        <div class="ff-stat-val fire">8.31</div>
+        <div class="ff-stat-lbl">K/D Ratio</div>
+      </div>
+      <div class="ff-stat">
+        <div class="ff-stat-icon">&#x1F4A5;</div>
+        <div class="ff-stat-val">1,248</div>
+        <div class="ff-stat-lbl">Headshots</div>
+      </div>
+      <div class="ff-stat">
+        <div class="ff-stat-icon">&#x1F4C5;</div>
+        <div class="ff-stat-val">3+ yr</div>
+        <div class="ff-stat-lbl">Veteran</div>
+      </div>
+    </div>
+
+    <!-- ── SKILL BARS ── -->
+    <div class="ff-stats-title">&#x1F3AF; Skill Level</div>
+    <div class="ff-bars-wrap" id="ff-bars-wrap">
+      <div class="ff-bar-item">
+        <div class="ff-bar-head"><span>Aim Accuracy</span><span>92%</span></div>
+        <div class="ff-bar-track"><div class="ff-bar-fill" data-w="92"></div></div>
+      </div>
+      <div class="ff-bar-item">
+        <div class="ff-bar-head"><span>Game Sense</span><span>88%</span></div>
+        <div class="ff-bar-track"><div class="ff-bar-fill" data-w="88"></div></div>
+      </div>
+      <div class="ff-bar-item">
+        <div class="ff-bar-head"><span>Rush Play</span><span>95%</span></div>
+        <div class="ff-bar-track"><div class="ff-bar-fill" data-w="95"></div></div>
+      </div>
+      <div class="ff-bar-item">
+        <div class="ff-bar-head"><span>Survival</span><span>78%</span></div>
+        <div class="ff-bar-track"><div class="ff-bar-fill" data-w="78"></div></div>
+      </div>
+    </div>
+
+    <!-- ── LOADOUT ── -->
+    <div class="ff-stats-title">&#x1F52B; Favourite Loadout</div>
+    <div class="ff-loadout-grid">
+      <div class="ff-lbox"><div class="ff-lbox-icon">&#x1F52B;</div><div class="ff-lbox-lbl">Main Gun</div><div class="ff-lbox-val">M1887</div></div>
+      <div class="ff-lbox"><div class="ff-lbox-icon">&#x1F9E4;</div><div class="ff-lbox-lbl">Character</div><div class="ff-lbox-val">Alok</div></div>
+      <div class="ff-lbox"><div class="ff-lbox-icon">&#x1F9B8;</div><div class="ff-lbox-lbl">Pet</div><div class="ff-lbox-val">Falcon</div></div>
+      <div class="ff-lbox"><div class="ff-lbox-icon">&#x1F3C5;</div><div class="ff-lbox-lbl">Rank</div><div class="ff-lbox-val">Grand Master</div></div>
+    </div>
+
+  </div><!-- /gw-wrap -->
+</div><!-- /gw-overlay -->
+
+<script>
+function openGamingWorld(){
+  document.getElementById('gw-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  // animate skill bars
+  setTimeout(function(){
+    document.querySelectorAll('.ff-bar-fill').forEach(function(b){
+      b.style.width=b.dataset.w+'%';
+    });
+  }, 300);
+}
+function closeGamingWorld(){
+  document.getElementById('gw-overlay').classList.remove('open');
+  document.body.style.overflow='';
+  // reset bars for next open
+  document.querySelectorAll('.ff-bar-fill').forEach(function(b){b.style.width='0';});
+}
+function ffCopyUID(){
+  var uid=document.getElementById('ff-uid-val').textContent;
+  navigator.clipboard.writeText(uid)
+    .then(function(){showToast('FF UID Copied: '+uid+' \u2705');})
+    .catch(function(){showToast('UID: '+uid);});
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGamingWorld();});
+</script>
+
 </html>
