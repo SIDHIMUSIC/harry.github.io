@@ -50,21 +50,28 @@ button, a.cta-btn, a.s-btn, a.r-btn, a.f-si, .gw-btn {
   100% { transform: scale(1); }
 }
 
-/* 1 Hire Me — liquid gradient + shine */
+/* 1 Hire Me — 3D + idle shine (style.css) + liquid fallback */
 .cta-primary {
   background: linear-gradient(120deg, var(--p), var(--s), var(--p));
-  background-size: 200% 200%;
-  animation: uv-grad 4s ease infinite;
+  background-size: 220% 220%;
+  animation: uv-grad 3.6s ease infinite;
 }
 @keyframes uv-grad { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-.cta-primary:hover { letter-spacing: .08em; }
+.cta-primary:hover { letter-spacing: .09em; }
 
-/* 2 Resume — conic ring already in style.css; extra inner glow */
-.cta-secondary { text-shadow: 0 0 12px var(--glow); }
+/* 2 Resume — full rainbow spin (style.css) */
+.cta-secondary { text-shadow: 0 0 14px var(--glow); }
 .cta-secondary:hover { letter-spacing: .07em; }
 
-/* 3 Contact — running neon lines already; extra glass lift */
-.cta-ghost { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--p) 18%, transparent); }
+/* 3 Contact — always-on neon chase */
+.cta-ghost {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--p) 35%, transparent), 0 0 16px var(--glow);
+  animation: uv-ghost-pulse 2.2s ease-in-out infinite;
+}
+@keyframes uv-ghost-pulse {
+  0%,100% { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--p) 30%, transparent), 0 0 10px var(--glow); }
+  50% { box-shadow: inset 0 0 0 1px var(--p), 0 0 22px var(--glow); }
+}
 
 /* Social pills — glass + icon hop */
 .s-btn { box-shadow: 0 0 0 1px color-mix(in srgb, var(--p) 12%, transparent); }
@@ -281,8 +288,12 @@ button, a.cta-btn, a.s-btn, a.r-btn, a.f-si, .gw-btn {
 .t-dot.on { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--p), 0 0 14px var(--glow); }
 
 /* Tools action buttons — extra glow on hover */
-.t-btn { box-shadow: 0 0 0 0 transparent; }
-.t-btn:hover { letter-spacing: .04em; }
+.t-btn { box-shadow: 0 0 0 0 transparent; animation: uv-btn-idle 2.8s ease-in-out infinite; }
+.t-btn:hover { letter-spacing: .04em; animation: none; }
+@keyframes uv-btn-idle {
+  0%,100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 14px var(--glow); }
+}
 
 /* Loader */
 #ldr { gap: 1.1rem; }
@@ -351,7 +362,7 @@ button, a.cta-btn, a.s-btn, a.r-btn, a.f-si, .gw-btn {
 
 @media (prefers-reduced-motion: reduce) {
   .ldr-orbit span, .ldr-core, .ldr-dots i, .ldr-fill::after, .ldr-logo,
-  .cta-primary, #music-btn::before, .ripple { animation: none !important; }
+  .cta-primary, #music-btn::before, .ripple, .cta-ghost, .t-btn { animation: none !important; }
   .cta-btn:active, .s-btn:active, .t-btn:active, .t-tab:active,
   .pm-btn:active, .hd-btn:active, .r-btn:active, .cf-submit:active, .gw-btn:active {
     transform: none !important;

@@ -59,7 +59,7 @@ body.ch #cur-r { width:56px; height:56px; opacity:.15; }
 /* =========================================
    BG CANVAS + PARTICLE CANVAS
    ========================================= */
-#bgc { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; opacity:.35; pointer-events:none; }
+#bgc { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; opacity:.72; pointer-events:none; }
 #ptc { position:fixed; inset:0; pointer-events:none; z-index:9990; }
 
 /* =========================================
@@ -103,7 +103,7 @@ section { padding:5rem 1.5rem; max-width:1200px; margin:0 auto; }
 /* =========================================
    HERO
    ========================================= */
-#hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-top:6.5rem; max-width:100%; }
+#hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-top:6.5rem; max-width:100%; overflow-x:clip; padding-left:1rem; padding-right:1rem; }
 .av { position:relative; width:150px; height:150px; margin-bottom:1.8rem; animation:fl 4s ease-in-out infinite; }
 @keyframes fl { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
 .av-img { width:150px; height:150px; border-radius:50%; object-fit:cover; border:3px solid var(--p); box-shadow:0 0 30px var(--glow),0 0 60px var(--glow); }
@@ -112,7 +112,7 @@ section { padding:5rem 1.5rem; max-width:1200px; margin:0 auto; }
 .av-r2 { position:absolute; inset:-20px; border-radius:50%; border:1px solid var(--p); opacity:.2; animation:sp 12s linear infinite reverse; }
 @keyframes sp { from{transform:rotate(0)} to{transform:rotate(360deg)} }
 .h-greet { font-family:var(--fb); font-size:.8rem; color:var(--p); letter-spacing:.18em; text-transform:uppercase; margin-bottom:.8rem; opacity:.9; }
-.h-name { font-family:var(--fd); font-size:clamp(3rem,10vw,6.2rem); font-weight:800; line-height:.9; letter-spacing:-.06em; background:linear-gradient(180deg,#fff 20%,#cfd8e8 70%,var(--p)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:.9rem; }
+.h-name { font-family:var(--fd); font-size:clamp(2.05rem, 11.2vw, 6.2rem); font-weight:800; line-height:.92; letter-spacing:-.045em; background:linear-gradient(180deg,#fff 18%,#cfd8e8 62%,var(--p)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:.9rem; width:100%; max-width:100%; padding:0 .15rem; word-break:keep-all; }
 .h-typed { font-family:var(--fm); font-size:clamp(.9rem,2.5vw,1.3rem); color:var(--s); min-height:2em; margin-bottom:1.2rem; }
 .typed-cur { border-right:2px solid var(--p); animation:bk .7s step-end infinite; }
 @keyframes bk { 0%,100%{opacity:1} 50%{opacity:0} }
@@ -306,18 +306,24 @@ footer a { color:var(--p); text-decoration:none; }
    RESPONSIVE
    ========================================= */
 @media(max-width:768px){
-  nav { top:10px; width:calc(100% - 16px); padding:.55rem .75rem .55rem 1rem; border-radius:20px; }
+  nav { top:10px; width:calc(100% - 16px); padding:.5rem .7rem .5rem .9rem; border-radius:20px; gap:.45rem; }
+  .n-logo { font-size:.92rem; }
   .n-links { display:none; position:fixed; top:68px; left:8px; right:8px; background:rgba(8,8,14,.96); flex-direction:column; align-items:center; padding:1.2rem; gap:1rem; border:1px solid var(--border); border-radius:18px; }
   .n-links.op { display:flex; }
   .hbg { display:flex; }
+  .gw-btn { padding:.4rem .7rem; font-size:.58rem; }
+  .gw-txt { display:none; }
   .f-grid,.r-grid { grid-template-columns:1fr; }
   section { padding:4rem 1.1rem; }
+  .cta-row { width:100%; }
+  .cta-btn { min-width:min(100%, 230px); }
 }
 
 /* =========================================
    CTA BUTTONS — Uiverse mast interactions
    ========================================= */
-.cta-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.6rem; border-radius:100px; font-family:var(--fm); font-size:.75rem; font-weight:700; text-decoration:none; transition:var(--tr); position:relative; overflow:hidden; letter-spacing:.05em; isolation:isolate; }
+.cta-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.85rem 1.7rem; border-radius:100px; font-family:var(--fm); font-size:.78rem; font-weight:800; text-decoration:none; transition:var(--tr); position:relative; overflow:hidden; letter-spacing:.06em; isolation:isolate; min-height:48px; }
+.cta-row { display:flex; flex-wrap:wrap; gap:.85rem; justify-content:center; margin-bottom:1.5rem; width:min(560px,100%); }
 .cta-btn svg, .cta-btn span:not(.uv-line) { position:relative; z-index:2; }
 .cta-btn:focus-visible, .s-btn:focus-visible { outline:2px solid var(--p); outline-offset:3px; }
 .cta-btn:active, .s-btn:active { transform:scale(.93) translateY(2px) !important; filter:brightness(1.15); }
@@ -326,16 +332,16 @@ footer a { color:var(--p); text-decoration:none; }
 
 
 /* 1) Hire Me — gradient + shine sweep */
-.cta-primary { background:linear-gradient(135deg,var(--p),var(--s)); color:var(--bg); box-shadow:0 0 24px var(--glow); border:none; }
-.cta-primary::after { content:''; position:absolute; top:0; left:-130%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-20deg); transition:left .65s ease; z-index:1; pointer-events:none; }
-.cta-primary:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 8px 30px var(--glow); }
-.cta-primary:hover::after { left:140%; }
+.cta-primary { background:linear-gradient(135deg,var(--p),var(--s)); color:var(--bg); box-shadow:0 0 28px var(--glow), 0 6px 0 color-mix(in srgb, var(--s) 70%, #000); border:none; }
+.cta-primary::after { content:''; position:absolute; top:0; left:-130%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent); transform:skewX(-20deg); animation:uv-idle-shine 2.4s ease-in-out infinite; z-index:1; pointer-events:none; }
+.cta-primary:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 10px 34px var(--glow), 0 7px 0 color-mix(in srgb, var(--s) 70%, #000); }
+@keyframes uv-idle-shine { 0%{left:-130%} 60%,100%{left:140%} }
 
 /* 2) Download Resume — rotating conic neon ring */
-.cta-secondary { background:var(--bg); color:var(--p); border:1px solid transparent; z-index:0; }
-.cta-secondary::before { content:''; position:absolute; inset:-2px; border-radius:inherit; background:conic-gradient(from 0deg, transparent 0 58%, var(--p), var(--s), var(--a), var(--p), transparent 78%); animation:uv-spin 2.4s linear infinite; z-index:-2; }
+.cta-secondary { background:var(--bg); color:var(--p); border:1px solid transparent; z-index:0; box-shadow:0 0 18px var(--glow); }
+.cta-secondary::before { content:''; position:absolute; inset:-3px; border-radius:inherit; background:conic-gradient(from 0deg, var(--p), var(--s), var(--a), #fff, var(--p)); animation:uv-spin 1.6s linear infinite; z-index:-2; }
 .cta-secondary::after { content:''; position:absolute; inset:2px; border-radius:inherit; background:var(--bg); z-index:-1; }
-.cta-secondary:hover { transform:translateY(-3px); color:var(--tx); box-shadow:0 0 22px var(--glow); }
+.cta-secondary:hover { transform:translateY(-3px); color:var(--tx); box-shadow:0 0 26px var(--glow); }
 @keyframes uv-spin { to { transform:rotate(360deg); } }
 
 /* 3) Contact Me — 4-side running neon lines */
@@ -353,7 +359,7 @@ footer a { color:var(--p); text-decoration:none; }
 @keyframes uv-run-y-rev { 0%{bottom:-100%} 50%,100%{bottom:100%} }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta-secondary::before, .cta-ghost .uv-line, .s-btn::after, .cta-primary::after { animation:none !important; transition:none !important; }
+  .cta-secondary::before, .cta-ghost .uv-line, .s-btn::after, .cta-primary::after, .cta-primary { animation:none !important; transition:none !important; }
   .cta-secondary::before { background:linear-gradient(135deg,var(--p),var(--s)); opacity:.85; }
 }
 
