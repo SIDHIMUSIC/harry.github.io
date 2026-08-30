@@ -75,6 +75,7 @@ button, a.cta-btn, a.s-btn, a.r-btn, a.f-si, .gw-btn {
 
 /* Social pills — glass + icon hop */
 .s-btn { box-shadow: 0 0 0 1px color-mix(in srgb, var(--p) 12%, transparent); }
+.s-btn::after { animation: uv-idle-shine 3.2s ease-in-out infinite; }
 .s-btn:hover svg { transform: translateY(-2px) rotate(-6deg); filter: drop-shadow(0 0 6px var(--p)); }
 .btn-gh:hover { border-color: #e6edf3; box-shadow: 0 8px 24px rgba(255,255,255,.12); }
 .btn-ig:hover { border-color: #d6249f; box-shadow: 0 8px 24px rgba(214,36,159,.28); }

@@ -6,6 +6,36 @@ let lv2=0;
 const lvi=setInterval(()=>{lv2=Math.min(lv2+Math.random()*14,99);lpct.textContent=Math.floor(lv2)+'%';if(lv2>=99)clearInterval(lvi);},110);
 setTimeout(()=>{lpct.textContent='100%';ldr.classList.add('out');},2400);
 
+// ================================================================
+//  IST FLIP CLOCK
+// ================================================================
+(()=>{
+  const root=document.getElementById('flip-clock');
+  const dateEl=document.getElementById('flip-date');
+  if(!root)return;
+  const keys=['h0','h1','m0','m1','s0','s1'];
+  root.innerHTML=keys.map((k,i)=>{
+    const colon=(i===1||i===3)?'<span class="flip-colon">:</span>':'';
+    return `<div class="flip-digit" data-k="${k}"><div class="flip-card"><div class="flip-up"><span>0</span></div><div class="flip-dn"><span>0</span></div></div></div>${colon}`;
+  }).join('');
+  const fmt=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,weekday:'short',day:'2-digit',month:'short'});
+  function paint(){
+    const parts=fmt.formatToParts(new Date());
+    const g=t=> (parts.find(p=>p.type===t)||{}).value||'00';
+    const h=g('hour').padStart(2,'0'), m=g('minute').padStart(2,'0'), s=g('second').padStart(2,'0');
+    const map={h0:h[0],h1:h[1],m0:m[0],m1:m[1],s0:s[0],s1:s[1]};
+    Object.keys(map).forEach(k=>{
+      const d=root.querySelector('[data-k="'+k+'"]'); if(!d)return;
+      if(d.dataset.v===map[k])return;
+      d.dataset.v=map[k];
+      d.querySelectorAll('span').forEach(sp=>sp.textContent=map[k]);
+      d.classList.remove('play'); void d.offsetWidth; d.classList.add('play');
+    });
+    if(dateEl) dateEl.textContent=(g('weekday')+' · '+g('day')+' '+g('month')).toUpperCase();
+  }
+  paint(); setInterval(paint,250);
+})();
+
 // Cursor removed — using default browser cursor
 
 // ================================================================

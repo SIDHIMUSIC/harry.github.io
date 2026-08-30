@@ -8,8 +8,8 @@
 <meta name="keywords" content="SIDHI, Web Developer, Mathematics Educator, Full-Stack Developer, B.Ed, Scientific Math Solver, Educational Tools, India Developer">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="uiverse.css">
+<link rel="stylesheet" href="style.css?v=5">
+<link rel="stylesheet" href="uiverse.css?v=5">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
@@ -40,6 +40,7 @@
 
 <!-- THREE.JS BG -->
 <canvas id="bgc"></canvas>
+<div id="float-layer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <!-- NAVIGATION -->
 <nav>
@@ -68,6 +69,10 @@
 
 <!-- ==================== HERO ==================== -->
 <section id="hero">
+  <div class="flip-wrap">
+    <div class="flip-clock" id="flip-clock" aria-label="India Standard Time"></div>
+    <div class="flip-meta"><span id="flip-date">IST</span><span class="flip-dot"></span><span>INDIA</span></div>
+  </div>
   <div class="av">
   <div class="av-r2"></div>
   <div class="av-r1"></div>
@@ -1151,7 +1156,7 @@
 
 
 
-<script src="app.js" defer></script>
+<script src="app.js?v=5" defer></script>
 </body>
 </html>
 
