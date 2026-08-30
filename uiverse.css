@@ -1,69 +1,99 @@
-/* Uiverse-inspired neon layer — uses existing tokens so themes still work */
-/* Loader: orbit rings + bouncing dots + glow text */
-#ldr { gap: 1.1rem; }
-.ldr-orbit {
-  position: relative;
-  width: 86px;
-  height: 86px;
-  margin-bottom: .2rem;
+/* Uiverse layer — each button family looks different + tap/press on all */
+/* Tokens: var(--p) var(--s) var(--a) so theme switch still works */
+
+.cta-btn:active,
+.s-btn:active,
+.t-btn:active,
+.t-tab:active,
+.pm-btn:active,
+.hd-btn:active,
+.r-btn:active,
+.cf-submit:active,
+.f-si:active {
+  transform: scale(.93) translateY(2px) !important;
+  filter: brightness(1.18);
+  transition-duration: .08s !important;
 }
-.ldr-orbit span {
+
+.cta-primary:active { box-shadow: 0 0 10px var(--glow) !important; }
+.cta-secondary:active::before { animation-duration: .4s; }
+.cta-ghost:active { box-shadow: 0 0 12px var(--glow) !important; }
+.s-btn:active svg { transform: scale(1.15) rotate(-8deg); }
+.t-btn:active { box-shadow: inset 0 2px 8px rgba(0,0,0,.35), 0 0 10px var(--glow) !important; }
+
+.t-tab::after {
+  content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
+  left: 18%;
+  right: 18%;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--p);
+  transform: scaleX(0);
+  transition: transform .28s ease;
+  box-shadow: 0 0 8px var(--p);
+}
+.t-tab.on::after, .t-tab:hover::after { transform: scaleX(1); }
+
+.pm-btn {
+  border-radius: 999px !important;
+  border-style: dashed !important;
+  letter-spacing: .04em;
+}
+.pm-btn.on, .pm-btn:hover { border-style: solid !important; }
+
+.hd-btn { border-radius: 7px !important; }
+.hd-btn:active { box-shadow: inset 0 2px 6px rgba(0,0,0,.45) !important; }
+
+.r-btn { border-radius: 6px !important; letter-spacing: .04em; }
+.r-btn::before {
+  transform-origin: bottom center !important;
+  transform: scaleY(0) !important;
+  background: linear-gradient(180deg, var(--s), var(--p)) !important;
+}
+.r-btn:hover::before { transform: scaleY(1) !important; }
+
+.cf-submit:active {
+  transform: scale(.9) !important;
+  box-shadow: 0 0 8px var(--glow) !important;
+}
+
+#ldr { gap: 1.1rem; }
+.ldr-orbit { position: relative; width: 86px; height: 86px; margin-bottom: .2rem; }
+.ldr-orbit span {
+  position: absolute; inset: 0; border-radius: 50%;
   border: 2px solid transparent;
-  border-top-color: var(--p);
-  border-right-color: var(--s);
+  border-top-color: var(--p); border-right-color: var(--s);
   box-shadow: 0 0 16px var(--glow);
   animation: uv-orbit 1.1s linear infinite;
 }
 .ldr-orbit span:nth-child(2) {
-  inset: 10px;
-  border-top-color: var(--s);
-  border-right-color: var(--a);
-  animation-duration: 1.6s;
-  animation-direction: reverse;
+  inset: 10px; border-top-color: var(--s); border-right-color: var(--a);
+  animation-duration: 1.6s; animation-direction: reverse;
 }
 .ldr-orbit span:nth-child(3) {
-  inset: 20px;
-  border-top-color: var(--a);
-  border-right-color: var(--p);
+  inset: 20px; border-top-color: var(--a); border-right-color: var(--p);
   animation-duration: .8s;
 }
 .ldr-core {
-  position: absolute;
-  inset: 28px;
-  border-radius: 50%;
+  position: absolute; inset: 28px; border-radius: 50%;
   background: radial-gradient(circle, var(--p), transparent 70%);
   animation: uv-pulse 1.2s ease-in-out infinite;
 }
 .ldr-dots { display: flex; gap: 8px; margin-top: .2rem; }
 .ldr-dots i {
   width: 8px; height: 8px; border-radius: 50%;
-  background: var(--p);
-  box-shadow: 0 0 10px var(--p);
+  background: var(--p); box-shadow: 0 0 10px var(--p);
   animation: uv-bounce .9s ease-in-out infinite;
 }
 .ldr-dots i:nth-child(2) { background: var(--s); box-shadow: 0 0 10px var(--s); animation-delay: .15s; }
 .ldr-dots i:nth-child(3) { background: var(--a); box-shadow: 0 0 10px var(--a); animation-delay: .3s; }
-.ldr-logo {
-  text-shadow: 0 0 24px var(--glow);
-  letter-spacing: .18em;
-}
-.ldr-bar {
-  height: 4px !important;
-  background: rgba(255,255,255,.07) !important;
-  box-shadow: 0 0 12px var(--glow) inset;
-}
-.ldr-fill {
-  box-shadow: 0 0 14px var(--p);
-  position: relative;
-  overflow: hidden;
-}
+.ldr-logo { text-shadow: 0 0 24px var(--glow); letter-spacing: .18em; }
+.ldr-bar { height: 4px !important; background: rgba(255,255,255,.07) !important; box-shadow: 0 0 12px var(--glow) inset; }
+.ldr-fill { box-shadow: 0 0 14px var(--p); position: relative; overflow: hidden; }
 .ldr-fill::after {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
   animation: uv-barshine 1.1s linear infinite;
 }
@@ -73,10 +103,6 @@
 @keyframes uv-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes uv-barshine { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
 
-/* Repo / tool / skill / contact cards — glass lift + neon edge */
-.r-card, .gh-stat-card, .contact-item, .sk-item, .t-panel, .t-head {
-  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s;
-}
 .r-card:hover, .gh-stat-card:hover {
   border-color: color-mix(in srgb, var(--p) 55%, var(--border));
   box-shadow: 0 12px 32px var(--glow), inset 0 0 0 1px color-mix(in srgb, var(--p) 25%, transparent);
@@ -84,23 +110,16 @@
 }
 .sk-bar { height: 6px !important; background: rgba(255,255,255,.07) !important; }
 .sk-fill { box-shadow: 0 0 10px var(--p); }
-
-/* Tools inputs — neon focus ring */
-.t-inp {
-  position: relative;
-}
 .t-inp:focus {
   border-color: var(--p) !important;
   box-shadow: 0 0 0 3px var(--glow), 0 0 18px var(--glow) !important;
 }
-.t-inp:focus-visible { outline: 2px solid var(--p); outline-offset: 2px; }
-
-/* Prompt / period mini buttons */
-.pm-btn, .hd-btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
+.t-inp:focus-visible, .pm-btn:focus-visible, .hd-btn:focus-visible, .r-btn:focus-visible, .cf-submit:focus-visible {
+  outline: 2px solid var(--p);
+  outline-offset: 2px;
 }
+
+.pm-btn, .hd-btn, .r-btn { position: relative; overflow: hidden; isolation: isolate; }
 .pm-btn::before, .hd-btn::before {
   content: '';
   position: absolute;
@@ -118,38 +137,17 @@
   border-color: var(--p);
   box-shadow: 0 0 12px var(--glow);
 }
-.pm-btn:focus-visible, .hd-btn:focus-visible {
-  outline: 2px solid var(--p);
-  outline-offset: 2px;
-}
 
-/* Repo action chips */
-.r-btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
 .r-btn::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--p);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .3s ease;
   z-index: -1;
+  transition: transform .3s ease;
 }
-.r-btn:hover::before { transform: scaleX(1); }
 .r-btn:hover { color: var(--bg); box-shadow: 0 0 12px var(--glow); }
-.r-btn:focus-visible { outline: 2px solid var(--p); outline-offset: 2px; }
 
-/* Contact submit — shine + glow */
-.cf-submit {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  box-shadow: 0 0 18px var(--glow);
-}
+.cf-submit { position: relative; overflow: hidden; isolation: isolate; box-shadow: 0 0 18px var(--glow); }
 .cf-submit::after {
   content: '';
   position: absolute;
@@ -161,21 +159,14 @@
   pointer-events: none;
 }
 .cf-submit:hover::after { left: 140%; }
-.cf-submit:focus-visible { outline: 2px solid var(--p); outline-offset: 3px; }
 
-/* Repo fetch loader text */
-.r-loading {
-  font-family: var(--fm);
-  color: var(--p);
-  letter-spacing: .08em;
-  text-shadow: 0 0 12px var(--glow);
-}
-
-/* Toast extra glow */
+.r-loading { font-family: var(--fm); color: var(--p); letter-spacing: .08em; text-shadow: 0 0 12px var(--glow); }
 #toast { box-shadow: 0 0 24px var(--glow), 0 0 0 1px var(--p) !important; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ldr-orbit span, .ldr-core, .ldr-dots i, .ldr-fill::after, .ldr-logo {
-    animation: none !important;
+  .ldr-orbit span, .ldr-core, .ldr-dots i, .ldr-fill::after, .ldr-logo { animation: none !important; }
+  .cta-btn:active, .s-btn:active, .t-btn:active, .t-tab:active,
+  .pm-btn:active, .hd-btn:active, .r-btn:active, .cf-submit:active {
+    transform: none !important;
   }
 }
