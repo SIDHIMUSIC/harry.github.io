@@ -1,5 +1,10 @@
-/* Uiverse layer — each button family looks different + tap/press on all */
+/* Uiverse premium layer — every family looks different + tap/ripple */
 /* Tokens: var(--p) var(--s) var(--a) so theme switch still works */
+
+button, a.cta-btn, a.s-btn, a.r-btn, a.f-si, .gw-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 
 .cta-btn:active,
 .s-btn:active,
@@ -9,9 +14,11 @@
 .hd-btn:active,
 .r-btn:active,
 .cf-submit:active,
-.f-si:active {
-  transform: scale(.93) translateY(2px) !important;
-  filter: brightness(1.18);
+.f-si:active,
+.gw-btn:active,
+#music-btn:active {
+  transform: scale(.92) translateY(2px) !important;
+  filter: brightness(1.2);
   transition-duration: .08s !important;
 }
 
@@ -21,6 +28,108 @@
 .s-btn:active svg { transform: scale(1.15) rotate(-8deg); }
 .t-btn:active { box-shadow: inset 0 2px 8px rgba(0,0,0,.35), 0 0 10px var(--glow) !important; }
 
+/* Ripple ink */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.45) 0%, rgba(255,255,255,.08) 60%, transparent 70%);
+  transform: scale(0);
+  animation: uv-ripple .62s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+  z-index: 6;
+  mix-blend-mode: overlay;
+}
+@keyframes uv-ripple { to { transform: scale(4.4); opacity: 0; } }
+
+.btn-ok {
+  animation: uv-ok .55s ease !important;
+}
+@keyframes uv-ok {
+  0% { transform: scale(.92); filter: brightness(1.4); }
+  50% { transform: scale(1.06); box-shadow: 0 0 22px var(--glow); }
+  100% { transform: scale(1); }
+}
+
+/* 1 Hire Me — liquid gradient + shine */
+.cta-primary {
+  background: linear-gradient(120deg, var(--p), var(--s), var(--p));
+  background-size: 200% 200%;
+  animation: uv-grad 4s ease infinite;
+}
+@keyframes uv-grad { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+.cta-primary:hover { letter-spacing: .08em; }
+
+/* 2 Resume — conic ring already in style.css; extra inner glow */
+.cta-secondary { text-shadow: 0 0 12px var(--glow); }
+.cta-secondary:hover { letter-spacing: .07em; }
+
+/* 3 Contact — running neon lines already; extra glass lift */
+.cta-ghost { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--p) 18%, transparent); }
+
+/* Social pills — glass + icon hop */
+.s-btn { box-shadow: 0 0 0 1px color-mix(in srgb, var(--p) 12%, transparent); }
+.s-btn:hover svg { transform: translateY(-2px) rotate(-6deg); filter: drop-shadow(0 0 6px var(--p)); }
+.btn-gh:hover { border-color: #e6edf3; box-shadow: 0 8px 24px rgba(255,255,255,.12); }
+.btn-ig:hover { border-color: #d6249f; box-shadow: 0 8px 24px rgba(214,36,159,.28); }
+.btn-tg:hover { border-color: #26A5E4; box-shadow: 0 8px 24px rgba(38,165,228,.28); }
+.btn-prompt {
+  background: linear-gradient(135deg, #ff2d78, #7b2fff) !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(255,45,120,.45);
+  overflow: hidden;
+}
+.btn-prompt:hover { box-shadow: 0 0 28px rgba(255,45,120,.7); transform: translateY(-3px) scale(1.04); }
+.btn-prompt .hp-tag {
+  position: absolute;
+  top: 4px; right: 8px;
+  font-size: .45rem;
+  font-family: var(--fd);
+  letter-spacing: .08em;
+  background: linear-gradient(90deg, #ffd700, #ffaa00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  z-index: 3;
+}
+
+/* Gaming World — fire 3D press */
+.gw-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff4500, #ffaa00);
+  border: none;
+  border-radius: 100px;
+  padding: .45rem 1.15rem;
+  font-family: var(--fm);
+  font-size: .63rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: .07em;
+  box-shadow: 0 0 18px rgba(255,100,0,.55), 0 4px 0 #c43a00;
+  transition: .22s cubic-bezier(.22,1,.36,1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.gw-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -130%;
+  width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+  transform: skewX(-22deg);
+  transition: left .5s ease;
+  pointer-events: none;
+}
+.gw-btn:hover { transform: translateY(-2px) scale(1.06); box-shadow: 0 0 28px rgba(255,100,0,.85), 0 5px 0 #c43a00; }
+.gw-btn:hover::after { left: 140%; }
+.gw-btn:active { transform: translateY(3px) scale(.96) !important; box-shadow: 0 0 12px rgba(255,100,0,.7), 0 0 0 #c43a00 !important; }
+
+/* Tools tabs — neon underline */
+.t-tab { overflow: hidden; }
 .t-tab::after {
   content: '';
   position: absolute;
@@ -36,29 +145,146 @@
 }
 .t-tab.on::after, .t-tab:hover::after { transform: scaleX(1); }
 
+/* Presets — dashed pill fill */
 .pm-btn {
   border-radius: 999px !important;
   border-style: dashed !important;
   letter-spacing: .04em;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 .pm-btn.on, .pm-btn:hover { border-style: solid !important; }
+.pm-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--p), var(--s));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+  z-index: -1;
+}
+.pm-btn:hover::before, .pm-btn.on::before { transform: scaleX(1); }
+.pm-btn:hover, .pm-btn.on {
+  color: var(--bg);
+  border-color: var(--p);
+  box-shadow: 0 0 12px var(--glow);
+}
 
-.hd-btn { border-radius: 7px !important; }
+/* Habit day chips — inset press */
+.hd-btn {
+  border-radius: 7px !important;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hd-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--p), var(--s));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+  z-index: -1;
+}
+.hd-btn:hover::before, .hd-btn.on::before { transform: scaleX(1); }
+.hd-btn:hover, .hd-btn.on { color: var(--bg); border-color: var(--p); box-shadow: 0 0 12px var(--glow); }
 .hd-btn:active { box-shadow: inset 0 2px 6px rgba(0,0,0,.45) !important; }
 
-.r-btn { border-radius: 6px !important; letter-spacing: .04em; }
-.r-btn::before {
-  transform-origin: bottom center !important;
-  transform: scaleY(0) !important;
-  background: linear-gradient(180deg, var(--s), var(--p)) !important;
+/* Project live/code — bottom fill */
+.r-btn {
+  border-radius: 6px !important;
+  letter-spacing: .04em;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-.r-btn:hover::before { transform: scaleY(1) !important; }
+.r-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  background: linear-gradient(180deg, var(--s), var(--p));
+  transition: transform .3s ease;
+}
+.r-btn:hover::before { transform: scaleY(1); }
+.r-btn:hover { color: var(--bg); box-shadow: 0 0 12px var(--glow); }
 
+/* Contact send — shine + glow */
+.cf-submit { position: relative; overflow: hidden; isolation: isolate; box-shadow: 0 0 18px var(--glow); }
+.cf-submit::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -130%;
+  width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+  transform: skewX(-20deg);
+  transition: left .55s ease;
+  pointer-events: none;
+}
+.cf-submit:hover::after { left: 140%; }
 .cf-submit:active {
   transform: scale(.9) !important;
   box-shadow: 0 0 8px var(--glow) !important;
 }
 
+/* Footer icons — 3D pop */
+.f-si { position: relative; overflow: hidden; }
+.f-si:hover { transform: translateY(-5px) scale(1.12) rotate(-6deg); }
+.f-si svg { transition: transform .25s ease; }
+.f-si:hover svg { transform: scale(1.12); }
+
+/* Music FAB — orbit ring */
+#music-btn {
+  position: relative;
+  overflow: visible;
+}
+#music-btn::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--p);
+  border-right-color: var(--s);
+  animation: uv-orbit 1.4s linear infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+#music-btn.ply::before, #music-btn:hover::before { opacity: 1; }
+
+/* Nav links — sliding underline */
+.n-links a {
+  position: relative;
+}
+.n-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--p), var(--s));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .28s ease;
+  box-shadow: 0 0 8px var(--p);
+}
+.n-links a:hover::after, .n-links a:focus-visible::after { transform: scaleX(1); }
+
+/* Theme dots */
+.t-dot { cursor: pointer; transition: transform .2s ease, box-shadow .2s; }
+.t-dot:hover { transform: scale(1.25); }
+.t-dot.on { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--p), 0 0 14px var(--glow); }
+
+/* Tools action buttons — extra glow on hover */
+.t-btn { box-shadow: 0 0 0 0 transparent; }
+.t-btn:hover { letter-spacing: .04em; }
+
+/* Loader */
 #ldr { gap: 1.1rem; }
 .ldr-orbit { position: relative; width: 86px; height: 86px; margin-bottom: .2rem; }
 .ldr-orbit span {
@@ -114,59 +340,20 @@
   border-color: var(--p) !important;
   box-shadow: 0 0 0 3px var(--glow), 0 0 18px var(--glow) !important;
 }
-.t-inp:focus-visible, .pm-btn:focus-visible, .hd-btn:focus-visible, .r-btn:focus-visible, .cf-submit:focus-visible {
+.t-inp:focus-visible, .pm-btn:focus-visible, .hd-btn:focus-visible,
+.r-btn:focus-visible, .cf-submit:focus-visible, .gw-btn:focus-visible {
   outline: 2px solid var(--p);
   outline-offset: 2px;
 }
-
-.pm-btn, .hd-btn, .r-btn { position: relative; overflow: hidden; isolation: isolate; }
-.pm-btn::before, .hd-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, var(--p), var(--s));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .3s ease;
-  z-index: -1;
-}
-.pm-btn:hover::before, .pm-btn.on::before,
-.hd-btn:hover::before, .hd-btn.on::before { transform: scaleX(1); }
-.pm-btn:hover, .pm-btn.on, .hd-btn:hover, .hd-btn.on {
-  color: var(--bg);
-  border-color: var(--p);
-  box-shadow: 0 0 12px var(--glow);
-}
-
-.r-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  transition: transform .3s ease;
-}
-.r-btn:hover { color: var(--bg); box-shadow: 0 0 12px var(--glow); }
-
-.cf-submit { position: relative; overflow: hidden; isolation: isolate; box-shadow: 0 0 18px var(--glow); }
-.cf-submit::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -130%;
-  width: 55%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
-  transform: skewX(-20deg);
-  transition: left .55s ease;
-  pointer-events: none;
-}
-.cf-submit:hover::after { left: 140%; }
 
 .r-loading { font-family: var(--fm); color: var(--p); letter-spacing: .08em; text-shadow: 0 0 12px var(--glow); }
 #toast { box-shadow: 0 0 24px var(--glow), 0 0 0 1px var(--p) !important; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ldr-orbit span, .ldr-core, .ldr-dots i, .ldr-fill::after, .ldr-logo { animation: none !important; }
+  .ldr-orbit span, .ldr-core, .ldr-dots i, .ldr-fill::after, .ldr-logo,
+  .cta-primary, #music-btn::before, .ripple { animation: none !important; }
   .cta-btn:active, .s-btn:active, .t-btn:active, .t-tab:active,
-  .pm-btn:active, .hd-btn:active, .r-btn:active, .cf-submit:active {
+  .pm-btn:active, .hd-btn:active, .r-btn:active, .cf-submit:active, .gw-btn:active {
     transform: none !important;
   }
 }

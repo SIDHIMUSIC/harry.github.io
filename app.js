@@ -12,7 +12,19 @@ setTimeout(()=>{lpct.textContent='100%';ldr.classList.add('out');},2400);
 //  SCROLL BAR + RIPPLE
 // ================================================================
 window.addEventListener('scroll',()=>{const sc=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('sb').style.width=(window.scrollY/sc*100)+'%';});
-document.addEventListener('click',e=>{const btn=e.target.closest('.s-btn,.t-btn,.cta-btn,.t-tab,.pm-btn,.hd-btn,.r-btn,.cf-submit');if(btn){const r=document.createElement('span');r.className='ripple';const rect=btn.getBoundingClientRect(),size=Math.max(rect.width,rect.height);r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px;position:absolute;pointer-events:none;';btn.appendChild(r);setTimeout(()=>r.remove(),600);}});
+document.addEventListener('click',e=>{const btn=e.target.closest('.s-btn,.t-btn,.cta-btn,.t-tab,.pm-btn,.hd-btn,.r-btn,.cf-submit,.gw-btn,.f-si,#music-btn');if(btn){const cs=getComputedStyle(btn);if(cs.position==='static')btn.style.position='relative';const r=document.createElement('span');r.className='ripple';const rect=btn.getBoundingClientRect(),size=Math.max(rect.width,rect.height);r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px;';btn.appendChild(r);setTimeout(()=>r.remove(),620);}});
+
+function pulseBtn(el){if(!el)return;el.classList.add('btn-ok');setTimeout(()=>el.classList.remove('btn-ok'),560);}
+document.addEventListener('pointermove',e=>{
+  const b=e.target.closest('.cta-btn,.gw-btn,.cf-submit');
+  if(!b||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const r=b.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  b.style.transform='translate('+(x*6)+'px,'+(y*5-2)+'px) scale(1.03)';
+},{passive:true});
+document.addEventListener('pointerleave',e=>{
+  const b=e.target.closest('.cta-btn,.gw-btn,.cf-submit');
+  if(b)b.style.transform='';
+},true);
 
 // ================================================================
 //  THREE.JS BACKGROUND
@@ -333,7 +345,7 @@ const brIns=document.getElementById('br-ins');if(brIns)brIns.textContent=BM[bMod
 
 // ── PASSWORD ──
 function genPass(){const len=parseInt(document.getElementById('ps-sl').value),U=document.getElementById('ps-u').checked,L=document.getElementById('ps-l').checked,N=document.getElementById('ps-n').checked,S=document.getElementById('ps-s').checked;let ch='';if(U)ch+='ABCDEFGHIJKLMNOPQRSTUVWXYZ';if(L)ch+='abcdefghijklmnopqrstuvwxyz';if(N)ch+='0123456789';if(S)ch+='!@#$%^&*()_+-=[]{}|;:,.<>?';if(!ch){showToast('Select at least one option!');return;}let pass='';for(let i=0;i<len;i++)pass+=ch[Math.floor(Math.random()*ch.length)];document.getElementById('ps-out').textContent=pass;let sc=0;if(U&&/[A-Z]/.test(pass))sc++;if(L&&/[a-z]/.test(pass))sc++;if(N&&/[0-9]/.test(pass))sc++;if(S&&/[^A-Za-z0-9]/.test(pass))sc++;if(len>=16)sc++;const f=document.getElementById('ps-fill'),lb=document.getElementById('ps-lbl');const lvs=[{w:'20%',c:'#ef4444',t:'Weak 😟'},{w:'40%',c:'#f97316',t:'Fair 😐'},{w:'60%',c:'#eab308',t:'Good 🙂'},{w:'80%',c:'#22c55e',t:'Strong 💪'},{w:'100%',c:'#00d4ff',t:'Very Strong 🔥'}];const lv=lvs[Math.min(sc-1,4)]||lvs[0];f.style.width=lv.w;f.style.background=lv.c;lb.textContent=lv.t;}
-function cpyPass(){const p=document.getElementById('ps-out').textContent;if(p==='Click generate 👇'){showToast('Pehle generate karo! 🔐');return;}navigator.clipboard.writeText(p).then(()=>showToast('Password copied! ✅'));}
+function cpyPass(){const p=document.getElementById('ps-out').textContent;if(p==='Click generate 👇'){showToast('Pehle generate karo! 🔐');return;}navigator.clipboard.writeText(p).then(()=>{showToast('Password copied! ✅');pulseBtn(document.querySelector('#t-pass [onclick="cpyPass()"]'));});}
 genPass();
 
 // ── QR CODE ──
@@ -355,7 +367,7 @@ async function genRoast(){const info=document.getElementById('r-info').value.tri
 let sSty='Simple Hindi mein';
 function setSS(btn,val){document.querySelectorAll('#s-stls .pm-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');sSty=val;}
 async function genStudy(){const topic=document.getElementById('s-topic').value.trim();if(!topic){showToast('Topic toh likho! 📚');return;}const btn=document.getElementById('s-btn'),out=document.getElementById('s-out'),cpb=document.getElementById('s-cpb');btn.textContent='⏳ AI padha raha hai...';btn.disabled=true;out.style.display='none';cpb.style.display='none';try{const p=encodeURIComponent('Explain "'+topic+'" in '+sSty+'. Easy, engaging, memorable. Include examples and key points.');const res=await fetch('https://text.pollinations.ai/'+p+'?model=openai&seed='+Math.floor(Math.random()*999999),{signal:AbortSignal.timeout(14000)});out.textContent=res.ok?await res.text():'⚠️ Try again!';out.style.display='block';if(res.ok)cpb.style.display='block';}catch(e){out.textContent='⚠️ AI se response nahi aaya. Dobara try karo! 📖';out.style.display='block';}btn.textContent='🧠 Explain Karo AI!';btn.disabled=false;}
-function cpyAI(oid,bid){navigator.clipboard.writeText(document.getElementById(oid).textContent).then(()=>{const b=document.getElementById(bid),o=b.textContent;b.textContent='✅ Copied!';setTimeout(()=>b.textContent=o,2000);showToast('Copied! ✅');});}
+function cpyAI(oid,bid){navigator.clipboard.writeText(document.getElementById(oid).textContent).then(()=>{const b=document.getElementById(bid),o=b.textContent;b.textContent='✅ Copied!';pulseBtn(b);setTimeout(()=>b.textContent=o,2000);showToast('Copied! ✅');});}
 
 // ── BGMI ──
 let bgSess=JSON.parse(localStorage.getItem('bgmi')||'[]');
