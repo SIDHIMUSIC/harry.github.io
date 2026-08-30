@@ -226,9 +226,11 @@ section { padding:5rem 1.5rem; max-width:1200px; margin:0 auto; }
 
 #tool-bar { display:none; }
 body.tool-open { overflow:hidden; }
+body.tool-open #float-layer { z-index:4990; opacity:.9; }
+body.tool-open #bgc { z-index:4988; opacity:.5; }
 body.tool-open nav, body.tool-open footer, body.tool-open #music-btn { display:none !important; }
 body.tool-open main > :not(#tools) { display:none !important; }
-body.tool-open #tools { position:fixed; inset:0; z-index:5000; max-width:none; width:100%; margin:0; padding:0; overflow:auto; background:var(--bg); }
+body.tool-open #tools { position:fixed; inset:0; z-index:5000; max-width:none; width:100%; margin:0; padding:0; overflow:auto; background:rgba(7,7,12,.55); }
 body.tool-open #tools .st,
 body.tool-open #tools .ss,
 body.tool-open #tools .tools-note,
@@ -267,6 +269,39 @@ select.t-inp { cursor:pointer; }
 .pm-btn.on, .pm-btn:hover { background:var(--p); color:var(--bg); border-color:var(--p); }
 .c-sub { display:none; }
 .c-sub.on { display:block; }
+
+.tm-stage { display:flex; flex-direction:column; align-items:center; gap:12px; margin:8px 0 4px; }
+.tm-ring { width:150px; height:150px; filter:drop-shadow(0 0 12px var(--glow)); }
+#t-ring { transition:stroke-dashoffset 1s linear, stroke .4s ease; }
+.tm-flip { display:flex; align-items:stretch; gap:8px; }
+
+.calc-screen {
+  min-height:76px; margin-bottom:12px; padding:16px 16px 12px; border-radius:16px;
+  background:linear-gradient(180deg,#101018,#07070c);
+  border:1px solid color-mix(in srgb,var(--p) 35%, transparent);
+  box-shadow:inset 0 0 24px rgba(0,0,0,.45), 0 0 16px var(--glow);
+  font-family:var(--fd); font-size:2rem; font-weight:800; letter-spacing:.04em;
+  text-align:right; color:#fff; text-shadow:0 0 12px var(--glow);
+  overflow:hidden; word-break:break-all; line-height:1.15;
+}
+.calc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.ck {
+  min-height:56px; border:none; border-radius:14px; cursor:pointer;
+  font-family:var(--fd); font-size:1.25rem; font-weight:800; color:#fff;
+  background:linear-gradient(180deg,#1c1c28,#12121a);
+  box-shadow:0 4px 0 #07070c, 0 8px 16px rgba(0,0,0,.35);
+  transition:.12s ease;
+}
+.ck:active { transform:translateY(3px); box-shadow:0 1px 0 #07070c; }
+.ck-op { background:linear-gradient(180deg,var(--s), color-mix(in srgb,var(--s) 55%, #000)); color:#fff; }
+.ck-mute { background:linear-gradient(180deg,#2a2a38,#1a1a24); color:var(--mt); font-size:1.05rem; }
+.ck-eq { background:linear-gradient(180deg,var(--p),var(--s)); color:var(--bg); grid-row:span 1; }
+.ck-zero { grid-column:span 2; }
+
+@media (max-width:380px){
+  .ck { min-height:50px; font-size:1.12rem; }
+  .calc-screen { font-size:1.65rem; min-height:64px; }
+}
 
 /* BMI */
 .bmi-box { padding:10px 12px; border-radius:10px; background:rgba(15,23,42,.8); border:1px solid var(--border); }

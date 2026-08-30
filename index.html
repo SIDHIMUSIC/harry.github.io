@@ -8,8 +8,8 @@
 <meta name="keywords" content="SIDHI, Web Developer, Mathematics Educator, Full-Stack Developer, B.Ed, Scientific Math Solver, Educational Tools, India Developer">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="style.css?v=6">
-<link rel="stylesheet" href="uiverse.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="uiverse.css?v=7">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
@@ -315,15 +315,19 @@
       <input type="number" id="c-sec" min="0" max="59" value="0" style="flex:1;padding:7px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.4);color:var(--p);font-size:1.1rem;font-weight:900;font-family:var(--fd);outline:none;text-align:center;" oninput="applyCustom()">
       <button onclick="applyCustom()" style="padding:7px 11px;border-radius:8px;border:1px solid var(--p);background:transparent;color:var(--p);font-weight:800;cursor:pointer;font-size:.65rem;">✅</button>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;margin:12px 0 8px;">
-      <svg viewBox="0 0 120 120" style="width:160px;height:160px;">
+    <div class="tm-stage">
+      <svg viewBox="0 0 120 120" class="tm-ring">
         <defs><linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:var(--p)"/><stop offset="100%" style="stop-color:var(--s)"/></linearGradient></defs>
-        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="10"/>
-        <circle id="t-ring" cx="60" cy="60" r="52" fill="none" stroke="url(#rg1)" stroke-width="10" stroke-dasharray="327" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px var(--p));transition:stroke-dashoffset 1s linear,stroke 1s ease;"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="8"/>
+        <circle id="t-ring" cx="60" cy="60" r="52" fill="none" stroke="url(#rg1)" stroke-width="8" stroke-dasharray="327" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 60 60)"/>
       </svg>
-      <div id="t-time" style="font-family:var(--fd);font-size:2.4rem;font-weight:900;color:var(--p);letter-spacing:3px;margin-top:-125px;text-shadow:0 0 20px var(--glow);">25:00</div>
-      <div id="t-lbl" style="font-family:var(--fm);font-size:.7rem;color:var(--mt);margin-top:78px;">Focus Mode 🧠</div>
+      <div class="tm-flip" id="t-time">
+        <div class="led-block" data-tm="m"><span>25</span><small>MIN</small></div>
+        <span class="led-sep">:</span>
+        <div class="led-block" data-tm="s"><span>00</span><small>SEC</small></div>
+      </div>
     </div>
+    <div id="t-lbl" style="font-family:var(--fm);font-size:.7rem;color:var(--mt);text-align:center;margin:.4rem 0 .8rem;">Focus Mode 🧠</div>
     <div style="height:4px;background:rgba(255,255,255,.05);border-radius:99px;margin-bottom:11px;overflow:hidden;"><div id="t-bar" style="height:100%;width:100%;background:linear-gradient(90deg,var(--p),var(--s));border-radius:99px;transition:width 1s linear;"></div></div>
     <div style="display:flex;gap:8px;">
       <button class="t-btn" style="flex:1;font-size:1.2rem;" onclick="pStart()">▶</button>
@@ -356,12 +360,36 @@
   <div class="t-panel gc" id="t-calc">
     <div class="t-head">🧮 Smart Calculator</div>
     <div class="pm">
-      <button class="pm-btn on" onclick="showCS('cs-pct',this)">% Marks</button>
+      <button class="pm-btn on" onclick="showCS('cs-pad',this)">Keypad</button>
+      <button class="pm-btn" onclick="showCS('cs-pct',this)">% Marks</button>
       <button class="pm-btn" onclick="showCS('cs-disc',this)">Discount</button>
       <button class="pm-btn" onclick="showCS('cs-cgpa',this)">CGPA</button>
-      <button class="pm-btn" onclick="showCS('cs-expr',this)">Basic Math</button>
     </div>
-    <div id="cs-pct" class="c-sub on">
+    <div id="cs-pad" class="c-sub on">
+      <div class="calc-screen" id="calc-screen">0</div>
+      <div class="calc-grid">
+        <button type="button" class="ck ck-mute" onclick="padKey('C')">C</button>
+        <button type="button" class="ck ck-mute" onclick="padKey('⌫')">⌫</button>
+        <button type="button" class="ck ck-op" onclick="padKey('%')">%</button>
+        <button type="button" class="ck ck-op" onclick="padKey('/')">÷</button>
+        <button type="button" class="ck" onclick="padKey('7')">7</button>
+        <button type="button" class="ck" onclick="padKey('8')">8</button>
+        <button type="button" class="ck" onclick="padKey('9')">9</button>
+        <button type="button" class="ck ck-op" onclick="padKey('*')">×</button>
+        <button type="button" class="ck" onclick="padKey('4')">4</button>
+        <button type="button" class="ck" onclick="padKey('5')">5</button>
+        <button type="button" class="ck" onclick="padKey('6')">6</button>
+        <button type="button" class="ck ck-op" onclick="padKey('-')">−</button>
+        <button type="button" class="ck" onclick="padKey('1')">1</button>
+        <button type="button" class="ck" onclick="padKey('2')">2</button>
+        <button type="button" class="ck" onclick="padKey('3')">3</button>
+        <button type="button" class="ck ck-op" onclick="padKey('+')">+</button>
+        <button type="button" class="ck ck-zero" onclick="padKey('0')">0</button>
+        <button type="button" class="ck" onclick="padKey('.')">.</button>
+        <button type="button" class="ck ck-eq" onclick="padKey('=')">=</button>
+      </div>
+    </div>
+    <div id="cs-pct" class="c-sub">
       <div class="t-lbl">Obtained Marks</div><input class="t-inp" id="c-obt" type="number" placeholder="e.g. 450">
       <div class="t-lbl">Total Marks</div><input class="t-inp" id="c-tot" type="number" placeholder="e.g. 500">
       <button class="t-btn fw" onclick="calcPct()">Calculate %</button>
@@ -1166,7 +1194,7 @@
 
 
 
-<script src="app.js?v=6" defer></script>
+<script src="app.js?v=7" defer></script>
 </body>
 </html>
 

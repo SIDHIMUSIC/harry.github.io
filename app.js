@@ -150,25 +150,25 @@ setTimeout(typeLoop,2600);
 //  VISITOR COUNTER — persistent, realistic
 // ================================================================
 (()=>{
-  const BASE=2847; // real starting base
+  const el=document.getElementById('vcnt'); if(!el)return;
+  const START=Date.UTC(2025,5,1);
+  const floor=2847+Math.floor((Date.now()-START)/42000);
   const KEY='sidhi_visitors';
-  let stored=parseInt(localStorage.getItem(KEY)||'0');
-  // First visit or old data
-  if(stored<BASE){stored=BASE;}
-  stored++; // count this visit
-  localStorage.setItem(KEY,stored);
-  let vn=stored, cv=0;
-  const viv=setInterval(()=>{
-    cv+=Math.ceil((vn-cv)/8);
-    document.getElementById('vcnt').textContent=cv.toLocaleString('en-IN');
-    if(cv>=vn)clearInterval(viv);
-  },40);
-  // Simulate small random growth every 30s (other "visitors")
-  setInterval(()=>{
-    const delta=Math.floor(Math.random()*3)+1;
-    vn+=delta;
-    document.getElementById('vcnt').textContent=vn.toLocaleString('en-IN');
-  },30000);
+  let local=parseInt(localStorage.getItem(KEY)||'0',10)||0;
+  local++; localStorage.setItem(KEY,String(local));
+  function paint(n){
+    let cv=parseInt((el.textContent||'0').replace(/\D/g,''),10)||0;
+    const target=Math.max(n,floor,local+2800);
+    const step=()=>{ cv+=Math.max(1,Math.ceil((target-cv)/7)); el.textContent=Math.min(cv,target).toLocaleString('en-IN'); if(cv<target) requestAnimationFrame(step); };
+    step();
+  }
+  paint(floor);
+  fetch('https://api.counterapi.dev/v1/harryashu.online/visits/up').then(r=>r.json()).then(d=>{
+    const n=d.count||d.value; if(n) paint(n);
+  }).catch(()=>{
+    fetch('https://abacus.jasoncameron.dev/hit/harryashu/visits').then(r=>r.json()).then(d=>{ if(d.value) paint(d.value); }).catch(()=>{});
+  });
+  setInterval(()=>{ const n=parseInt(el.textContent.replace(/\D/g,''),10)||0; el.textContent=(n+1).toLocaleString('en-IN'); },45000);
 })();
 
 
@@ -176,15 +176,30 @@ setTimeout(typeLoop,2600);
 //  INSTAGRAM FOLLOWERS COUNTER
 // ================================================================
 (()=>{
-  const target=990;
-  let c=0;
-  const el=document.getElementById('ig-count');
-  if(!el)return;
-  const iv=setInterval(()=>{
-    c+=Math.ceil((target-c)/10);
-    el.textContent=c>=target?target:c;
-    if(c>=target){el.textContent=target;clearInterval(iv);}
-  },50);
+  const el=document.getElementById('ig-count'); if(!el)return;
+  const CACHE='ig_harryashu';
+  const cached=parseInt(localStorage.getItem(CACHE)||'990',10)||990;
+  function setN(n){ if(!n||n<100)return; localStorage.setItem(CACHE,String(n)); let c=0; const iv=setInterval(()=>{ c+=Math.ceil((n-c)/8); el.textContent=(c>=n?n:c).toLocaleString('en-IN'); if(c>=n)clearInterval(iv); },40); }
+  setN(cached);
+  const url='https://www.instagram.com/api/v1/users/web_profile_info/?username=harryashu_';
+  const proxies=[
+    'https://api.allorigins.win/raw?url='+encodeURIComponent(url),
+    'https://corsproxy.io/?'+encodeURIComponent('https://www.instagram.com/harryashu_/')
+  ];
+  (async()=>{
+    for(const p of proxies){
+      try{
+        const txt=await (await fetch(p,{signal:AbortSignal.timeout(8000)})).text();
+        let n=0;
+        try{ const j=JSON.parse(txt); n=j.data?.user?.edge_followed_by?.count||j.graphql?.user?.edge_followed_by?.count||0; }catch(_){}
+        if(!n){
+          const m=txt.match(/"edge_followed_by"\s*:\s*\{\s*"count"\s*:\s*(\d+)/)||txt.match(/"follower_count"\s*:\s*(\d+)/)||txt.match(/([\d,.]+)\s*Followers/i);
+          if(m) n=parseInt(String(m[1]).replace(/[^\d]/g,''),10);
+        }
+        if(n>cached*0.5){ setN(n); return; }
+      }catch(e){}
+    }
+  })();
 })();
 
 // ================================================================
@@ -295,7 +310,20 @@ let pInt=null,pSec=1500,pTot=1500,pRun=false,pCnt=0;
 const tQs=['Ek baar shuru karo, motivation khud aa jaayega 🔥','Padhai mein dard hai, results mein khushi hai 💪','Phone rakh, timer chala — future ka winner ⚡','5 saal ki padhai = 50 saal ki freedom 🏆','Hard work beats talent when talent doesnt work hard 🎯'];
 function lerpC(c1,c2,t){const[r1,g1,b1]=[parseInt(c1.slice(1,3),16),parseInt(c1.slice(3,5),16),parseInt(c1.slice(5,7),16)];const[r2,g2,b2]=[parseInt(c2.slice(1,3),16),parseInt(c2.slice(3,5),16),parseInt(c2.slice(5,7),16)];return '#'+(Math.round(r1+(r2-r1)*t)).toString(16).padStart(2,'0')+(Math.round(g1+(g2-g1)*t)).toString(16).padStart(2,'0')+(Math.round(b1+(b2-b1)*t)).toString(16).padStart(2,'0');}
 function tColor(f){return f>.5?lerpC('#fbbf24','#3b82f6',(f-.5)/.5):lerpC('#ef4444','#fbbf24',f/.5);}
-function updP(){const m=Math.floor(pSec/60).toString().padStart(2,'0'),s=(pSec%60).toString().padStart(2,'0');const te=document.getElementById('t-time');if(te)te.textContent=m+':'+s;const prog=document.getElementById('t-ring');if(prog){const f=pSec/pTot;prog.style.strokeDashoffset=327*(1-f);const col=tColor(f);prog.setAttribute('stroke',col);prog.style.filter='drop-shadow(0 0 10px '+col+')';if(te)te.style.color=col;}const bar=document.getElementById('t-bar');if(bar)bar.style.width=(pSec/pTot*100)+'%';}
+function updP(){
+  const m=Math.floor(pSec/60).toString().padStart(2,'0'), s=(pSec%60).toString().padStart(2,'0');
+  const box=document.getElementById('t-time');
+  if(box){
+    [['m',m],['s',s]].forEach(([k,v])=>{
+      const b=box.querySelector('[data-tm="'+k+'"]'); if(!b)return;
+      const sp=b.querySelector('span');
+      if(sp && sp.textContent!==v){ sp.textContent=v; b.classList.remove('tick'); void b.offsetWidth; b.classList.add('tick'); }
+    });
+  }
+  const prog=document.getElementById('t-ring');
+  if(prog){const f=pTot?pSec/pTot:0;prog.style.strokeDashoffset=327*(1-f);const col=tColor(f);prog.setAttribute('stroke',col);prog.style.filter='drop-shadow(0 0 10px '+col+')';}
+  const bar=document.getElementById('t-bar'); if(bar)bar.style.width=(pTot?pSec/pTot*100:0)+'%';
+}
 function setPreset(m,lbl,btn){document.querySelectorAll('#t-presets .pm-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');pReset();pSec=m*60;pTot=m*60;document.getElementById('t-lbl').textContent=lbl;document.getElementById('c-min').value=m;document.getElementById('c-sec').value=0;updP();}
 function applyCustom(){const m=parseInt(document.getElementById('c-min').value)||0,s=parseInt(document.getElementById('c-sec').value)||0,tot=m*60+s;if(tot<1)return;pReset();pSec=tot;pTot=tot;document.querySelectorAll('#t-presets .pm-btn').forEach(b=>b.classList.remove('on'));document.getElementById('t-lbl').textContent='Custom '+m+'m '+s+'s ⚡';updP();showToast('Timer set: '+m+'m '+s+'s ✅');}
 function pStart(){if(pRun)return;pRun=true;const q=tQs[Math.floor(Math.random()*tQs.length)];const qe=document.getElementById('t-quote');if(qe)qe.textContent='"'+q+'"';pInt=setInterval(()=>{pSec--;updP();if(pSec<=0){clearInterval(pInt);pRun=false;pCnt++;document.getElementById('p-sess').textContent=pCnt;const st=document.getElementById('p-strk');if(st)st.textContent=pCnt>=4?'🏆 Superstar!':pCnt>=2?'🔥 On fire!':'';showToast('⏰ Done! '+pCnt+' sessions 🔥');try{const ac=new(AudioContext||webkitAudioContext)();[0,.15,.3].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=880;g.gain.setValueAtTime(.3,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+.12);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.13);});}catch(e){}}},1000);}
@@ -315,7 +343,28 @@ function showCS(id,btn){document.querySelectorAll('#t-calc .c-sub').forEach(p=>p
 function calcPct(){const o=parseFloat(document.getElementById('c-obt').value),t=parseFloat(document.getElementById('c-tot').value),r=document.getElementById('r-pct');if(isNaN(o)||isNaN(t)||t===0){r.style.display='block';r.textContent='⚠️ Dono values daalo!';return;}const p=(o/t*100).toFixed(2);r.style.display='block';r.innerHTML=p+'% | Grade: '+(p>=90?'A+ 🌟':p>=80?'A 😎':p>=70?'B+ 👍':p>=60?'B 😊':p>=50?'C 🙂':'Fail 😢');}
 function calcDisc(){const pr=parseFloat(document.getElementById('c-pr').value),dc=parseFloat(document.getElementById('c-dc').value),r=document.getElementById('r-disc');if(!pr||!dc){r.style.display='block';r.textContent='⚠️ Fill both!';return;}r.style.display='block';r.innerHTML='₹'+(pr-pr*dc/100).toFixed(0)+' pay | Save ₹'+(pr*dc/100).toFixed(0)+' 🎉';}
 function calcCGPA(){const ms=document.getElementById('c-mks').value,mx=parseFloat(document.getElementById('c-max').value)||100,r=document.getElementById('r-cgpa');if(!ms.trim()){r.style.display='block';r.textContent='⚠️ Marks daalo!';return;}const marks=ms.split(',').map(m=>parseFloat(m.trim())).filter(m=>!isNaN(m));if(!marks.length){r.style.display='block';r.textContent='⚠️ Format galat!';return;}const avg=marks.reduce((a,b)=>a+b,0)/marks.length,pct=(avg/mx*100).toFixed(1);r.style.display='block';r.innerHTML='Avg: '+avg.toFixed(1)+' | '+pct+'% | CGPA: '+(pct/9.5).toFixed(2);}
-function calcExpr(){let ex=document.getElementById('c-ex').value,r=document.getElementById('r-expr');try{ex=ex.replace(/(\d+\.?\d*)\s*%\s*of\s*(\d+\.?\d*)/gi,'($2*$1/100)').replace(/sqrt\(([^)]+)\)/gi,'Math.sqrt($1)').replace(/(\d+\.?\d*)%/g,'($1/100)');if(!/^[0-9+\-*/().,\sMathsqrt]+$/.test(ex.replace(/Math\.sqrt/g,'Mathsqrt'))){r.style.display='block';r.textContent='Invalid expression';return;}r.style.display='block';r.textContent='= '+Function('"use strict";return('+ex+')')();}catch(e){r.style.display='block';r.textContent='Invalid expression';}}
+function calcExpr(){let ex=document.getElementById('c-ex')?document.getElementById('c-ex').value:'';const r=document.getElementById('r-expr');if(!r)return;try{ex=ex.replace(/(\d+\.?\d*)\s*%\s*of\s*(\d+\.?\d*)/gi,'($2*$1/100)').replace(/sqrt\(([^)]+)\)/gi,'Math.sqrt($1)').replace(/(\d+\.?\d*)%/g,'($1/100)');if(!/^[0-9+\-*/().,\sMathsqrt]+$/.test(ex.replace(/Math\.sqrt/g,'Mathsqrt'))){r.style.display='block';r.textContent='Invalid expression';return;}r.style.display='block';r.textContent='= '+Function('"use strict";return('+ex+')')();}catch(e){r.style.display='block';r.textContent='Invalid expression';}}
+
+let padVal='0', padFresh=true;
+function padRender(){const el=document.getElementById('calc-screen'); if(el) el.textContent=padVal;}
+function padKey(k){
+  if(k==='C'){padVal='0';padFresh=true;}
+  else if(k==='⌫'){padVal=padVal.length<=1?'0':padVal.slice(0,-1);}
+  else if(k==='='){
+    try{
+      let ex=padVal.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');
+      if(!/^[\d+\-*/().%\s]+$/.test(ex)) throw 0;
+      ex=ex.replace(/(\d+(?:\.\d+)?)%/g,'($1/100)');
+      const n=Function('"use strict";return('+ex+')')();
+      padVal=String(Number.isFinite(n)?+parseFloat(n.toPrecision(12)): 'Err');
+      padFresh=true;
+    }catch(e){padVal='Err';padFresh=true;}
+  } else {
+    if(padVal==='Err'||padVal==='0'||padFresh){ padVal=(/[0-9.]/.test(k)?k:'0'+k); padFresh=false; }
+    else padVal+=k;
+  }
+  padRender();
+}
 
 // ── UNIT CONVERTER ──
 function showUT(id,btn){document.querySelectorAll('#t-unit .c-sub').forEach(p=>p.classList.remove('on'));document.querySelectorAll('#t-unit .pm-btn').forEach(b=>b.classList.remove('on'));document.getElementById(id).classList.add('on');btn.classList.add('on');}
