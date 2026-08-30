@@ -334,6 +334,10 @@ footer a { color:var(--p); text-decoration:none; }
 .cta-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.6rem; border-radius:100px; font-family:var(--fm); font-size:.75rem; font-weight:700; text-decoration:none; transition:var(--tr); position:relative; overflow:hidden; letter-spacing:.05em; isolation:isolate; }
 .cta-btn svg, .cta-btn span:not(.uv-line) { position:relative; z-index:2; }
 .cta-btn:focus-visible, .s-btn:focus-visible { outline:2px solid var(--p); outline-offset:3px; }
+.cta-btn:active, .s-btn:active { transform:scale(.93) translateY(2px) !important; filter:brightness(1.15); }
+.t-btn:active { transform:scale(.94) translateY(1px); }
+.t-tab:active { transform:scale(.96); }
+
 
 /* 1) Hire Me — gradient + shine sweep */
 .cta-primary { background:linear-gradient(135deg,var(--p),var(--s)); color:var(--bg); box-shadow:0 0 24px var(--glow); border:none; }
@@ -1456,7 +1460,7 @@ setTimeout(()=>{lpct.textContent='100%';ldr.classList.add('out');},2400);
 //  SCROLL BAR + RIPPLE
 // ================================================================
 window.addEventListener('scroll',()=>{const sc=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('sb').style.width=(window.scrollY/sc*100)+'%';});
-document.addEventListener('click',e=>{const btn=e.target.closest('.s-btn,.t-btn');if(btn){const r=document.createElement('span');r.className='ripple';const rect=btn.getBoundingClientRect(),size=Math.max(rect.width,rect.height);r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px;position:absolute;pointer-events:none;';btn.appendChild(r);setTimeout(()=>r.remove(),600);}});
+document.addEventListener('click',e=>{const btn=e.target.closest('.s-btn,.t-btn,.cta-btn,.t-tab,.pm-btn,.hd-btn,.r-btn,.cf-submit');if(btn){const r=document.createElement('span');r.className='ripple';const rect=btn.getBoundingClientRect(),size=Math.max(rect.width,rect.height);r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px;position:absolute;pointer-events:none;';btn.appendChild(r);setTimeout(()=>r.remove(),600);}});
 
 // ================================================================
 //  THREE.JS BACKGROUND
