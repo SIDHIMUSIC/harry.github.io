@@ -136,22 +136,8 @@ button, a.cta-btn, a.s-btn, a.r-btn, a.f-si, .gw-btn {
 .gw-btn:hover::after { left: 140%; }
 .gw-btn:active { transform: translateY(3px) scale(.96) !important; box-shadow: 0 0 12px rgba(255,100,0,.7), 0 0 0 #c43a00 !important; }
 
-/* Tools tabs — neon underline */
+/* Tools tiles */
 .t-tab { overflow: hidden; }
-.t-tab::after {
-  content: '';
-  position: absolute;
-  left: 18%;
-  right: 18%;
-  bottom: 3px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--p);
-  transform: scaleX(0);
-  transition: transform .28s ease;
-  box-shadow: 0 0 8px var(--p);
-}
-.t-tab.on::after, .t-tab:hover::after { transform: scaleX(1); }
 
 /* Presets — dashed pill fill */
 .pm-btn {

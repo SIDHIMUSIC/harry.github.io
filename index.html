@@ -8,8 +8,8 @@
 <meta name="keywords" content="SIDHI, Web Developer, Mathematics Educator, Full-Stack Developer, B.Ed, Scientific Math Solver, Educational Tools, India Developer">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="style.css?v=5">
-<link rel="stylesheet" href="uiverse.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="uiverse.css?v=6">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
@@ -70,7 +70,13 @@
 <!-- ==================== HERO ==================== -->
 <section id="hero">
   <div class="flip-wrap">
-    <div class="flip-clock" id="flip-clock" aria-label="India Standard Time"></div>
+    <div class="flip-clock" id="flip-clock" aria-label="India Standard Time">
+      <div class="led-block" data-k="h"><span>00</span><small>HRS</small></div>
+      <span class="led-sep">:</span>
+      <div class="led-block" data-k="m"><span>00</span><small>MIN</small></div>
+      <span class="led-sep">:</span>
+      <div class="led-block" data-k="s"><span>00</span><small>SEC</small></div>
+    </div>
     <div class="flip-meta"><span id="flip-date">IST</span><span class="flip-dot"></span><span>INDIA</span></div>
   </div>
   <div class="av">
@@ -260,6 +266,10 @@
     <span>These are <b>personal productivity tools</b> — not part of the main portfolio. For my work and projects, scroll up to <a href="#projects" style="color:var(--p)">Projects</a> ↑</span>
   </div>
 
+  <div id="tool-bar">
+    <button type="button" class="tool-back" onclick="closeTool()">← Back</button>
+    <span id="tool-bar-title">Tool</span>
+  </div>
   <div class="t-tabs">
     <button class="t-tab on"  onclick="showT('t-timer',this)">⚡ Study Timer</button>
     <button class="t-tab"     onclick="showT('t-sw',this)">🏁 Stopwatch</button>
@@ -290,7 +300,7 @@
   </div>
 
   <!-- STUDY TIMER -->
-  <div class="t-panel gc on" id="t-timer">
+  <div class="t-panel gc" id="t-timer">
     <div class="t-head">⚡ Study Timer — Custom Focus</div>
     <div class="pm" id="t-presets">
       <button class="pm-btn on" onclick="setPreset(25,'Focus 🧠',this)">25m Focus</button>
@@ -1156,7 +1166,7 @@
 
 
 
-<script src="app.js?v=5" defer></script>
+<script src="app.js?v=6" defer></script>
 </body>
 </html>
 

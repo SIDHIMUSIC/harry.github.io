@@ -13,23 +13,20 @@ setTimeout(()=>{lpct.textContent='100%';ldr.classList.add('out');},2400);
   const root=document.getElementById('flip-clock');
   const dateEl=document.getElementById('flip-date');
   if(!root)return;
-  const keys=['h0','h1','m0','m1','s0','s1'];
-  root.innerHTML=keys.map((k,i)=>{
-    const colon=(i===1||i===3)?'<span class="flip-colon">:</span>':'';
-    return `<div class="flip-digit" data-k="${k}"><div class="flip-card"><div class="flip-up"><span>0</span></div><div class="flip-dn"><span>0</span></div></div></div>${colon}`;
-  }).join('');
   const fmt=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,weekday:'short',day:'2-digit',month:'short'});
+  const prev={h:'',m:'',s:''};
   function paint(){
     const parts=fmt.formatToParts(new Date());
     const g=t=> (parts.find(p=>p.type===t)||{}).value||'00';
-    const h=g('hour').padStart(2,'0'), m=g('minute').padStart(2,'0'), s=g('second').padStart(2,'0');
-    const map={h0:h[0],h1:h[1],m0:m[0],m1:m[1],s0:s[0],s1:s[1]};
-    Object.keys(map).forEach(k=>{
-      const d=root.querySelector('[data-k="'+k+'"]'); if(!d)return;
-      if(d.dataset.v===map[k])return;
-      d.dataset.v=map[k];
-      d.querySelectorAll('span').forEach(sp=>sp.textContent=map[k]);
-      d.classList.remove('play'); void d.offsetWidth; d.classList.add('play');
+    const vals={h:g('hour').padStart(2,'0'), m:g('minute').padStart(2,'0'), s:g('second').padStart(2,'0')};
+    ['h','m','s'].forEach(k=>{
+      const block=root.querySelector('[data-k="'+k+'"]'); if(!block)return;
+      const sp=block.querySelector('span');
+      if(prev[k]!==vals[k]){
+        sp.textContent=vals[k];
+        block.classList.remove('tick'); void block.offsetWidth; block.classList.add('tick');
+        prev[k]=vals[k];
+      }
     });
     if(dateEl) dateEl.textContent=(g('weekday')+' · '+g('day')+' '+g('month')).toUpperCase();
   }
@@ -263,7 +260,35 @@ document.querySelectorAll('.sk-item').forEach(el=>new IntersectionObserver(es=>e
 // ================================================================
 //  TOOLS
 // ================================================================
-function showT(id,btn){document.querySelectorAll('.t-panel').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.t-tab').forEach(t=>t.classList.remove('on'));document.getElementById(id).classList.add('on');btn.classList.add('on');}
+function showT(id,btn,skipHist){
+  const panel=document.getElementById(id); if(!panel)return;
+  document.querySelectorAll('.t-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.t-tab').forEach(t=>t.classList.remove('on'));
+  panel.classList.add('on');
+  if(btn) btn.classList.add('on');
+  const title=document.getElementById('tool-bar-title');
+  if(title) title.textContent=(btn&&btn.textContent||id).replace(/\s+/g,' ').trim();
+  document.body.classList.add('tool-open');
+  window.scrollTo(0,0);
+  if(!skipHist && !(history.state&&history.state.tool===id)) history.pushState({tool:id},'', '#tool/'+id);
+}
+function closeTool(fromPop){
+  document.body.classList.remove('tool-open');
+  document.querySelectorAll('.t-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.t-tab').forEach(t=>t.classList.remove('on'));
+  if(!fromPop && (location.hash||'').startsWith('#tool/')) history.pushState({},'','#tools');
+  const sec=document.getElementById('tools'); if(sec) sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
+window.addEventListener('popstate',()=>{
+  const m=(location.hash||'').match(/^#tool\/([\w-]+)/);
+  if(m){ const btn=[...document.querySelectorAll('.t-tab')].find(b=>(b.getAttribute('onclick')||'').includes("'"+m[1]+"'")); showT(m[1],btn,true); }
+  else if(document.body.classList.contains('tool-open')) closeTool(true);
+});
+if(location.hash.startsWith('#tool/')){
+  const id=location.hash.slice(6);
+  const btn=[...document.querySelectorAll('.t-tab')].find(b=>(b.getAttribute('onclick')||'').includes("'"+id+"'"));
+  setTimeout(()=>showT(id,btn,true),200);
+}
 
 // ── STUDY TIMER ──
 let pInt=null,pSec=1500,pTot=1500,pRun=false,pCnt=0;
