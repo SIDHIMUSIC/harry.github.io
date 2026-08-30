@@ -2,9 +2,12 @@
 //  LOADER
 // ================================================================
 const ldr=document.getElementById('ldr'),lpct=document.getElementById('lpct');
-let lv2=0;
-const lvi=setInterval(()=>{lv2=Math.min(lv2+Math.random()*14,99);lpct.textContent=Math.floor(lv2)+'%';if(lv2>=99)clearInterval(lvi);},110);
-setTimeout(()=>{lpct.textContent='100%';ldr.classList.add('out');},2400);
+if(sessionStorage.getItem('sidhi_booted') && ldr){ ldr.classList.add('out'); }
+else {
+  let lv2=0;
+  const lvi=setInterval(()=>{lv2=Math.min(lv2+Math.random()*14,99);if(lpct)lpct.textContent=Math.floor(lv2)+'%';if(lv2>=99)clearInterval(lvi);},110);
+  setTimeout(()=>{if(lpct)lpct.textContent='100%';if(ldr)ldr.classList.add('out');sessionStorage.setItem('sidhi_booted','1');},1600);
+}
 
 // ================================================================
 //  IST FLIP CLOCK
