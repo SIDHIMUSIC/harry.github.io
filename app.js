@@ -236,13 +236,20 @@ const LC={JavaScript:'#f1e05a',Python:'#3572A5',HTML:'#e34c26',CSS:'#563d7c',Typ
 
 // ================================================================
 //  FEATURED PROJECTS
-// ================================================================
-[{title:'SIDHI Music Hub',desc:'Full-stack music platform with streaming, playlists & real-time sync.',icon:'🎵',tags:['Node.js','React','WebAudio'],gh:'https://github.com/SIDHIMUSIC'},
- {title:'Dev Portfolio v3',desc:'This portfolio — Three.js particles, 22+ tools & raw creativity.',icon:'🚀',tags:['HTML','CSS','Three.js'],gh:'https://github.com/SIDHIMUSIC'},
- {title:'AI Prompt Vault',desc:'Curated AI prompts for creative & developer workflows.',icon:'🤖',tags:['JavaScript','AI','Productivity'],gh:'https://github.com/SIDHIMUSIC'}
-].forEach(p=>{const d=document.createElement('div');d.className='gc rv';d.innerHTML=`<div class="f-icon">${p.icon}</div><div class="f-title">${p.title}</div><div class="f-desc">${p.desc}</div><div class="f-tags">${p.tags.map(t=>`<span class="f-tag">${t}</span>`).join('')}</div><div style="display:flex;gap:.7rem"><a href="${p.gh}" target="_blank" class="r-btn"><i class="fab fa-github"></i> Code</a></div>`;document.getElementById('f-grid').appendChild(d);ro.observe(d);});
-
-// ================================================================
+const featuredProjects = [
+  {title:'SIDHI GYM TRACKER',desc:'Your daily fitness command center: log workouts, track morning runs, monitor body weight, build streaks, and review progress from your phone.',icon:'💪',tags:['Node.js','MongoDB','Vercel','PWA'],gh:'https://github.com/SIDHIMUSIC/sidhi-gym-tracker',demo:'https://sidhi-gym-tracker.vercel.app',gym:true},
+  {title:'SIDHI Music Hub',desc:'Music platform concept for streaming, playlists and a connected listening experience.',icon:'🎵',tags:['Web App','Audio'],gh:'https://github.com/SIDHIMUSIC'},
+  {title:'Developer Portfolio',desc:'Interactive portfolio with animated backgrounds, projects, and productivity tools.',icon:'🚀',tags:['HTML','CSS','Three.js'],gh:'https://github.com/SIDHIMUSIC/harry.github.io'},
+  {title:'AI Prompt Vault',desc:'A curated home for useful AI prompts and creative workflows.',icon:'🤖',tags:['AI','JavaScript','Productivity'],gh:'http://harryprompt.online/',demo:'http://harryprompt.online/'}
+];
+featuredProjects.forEach(p=>{
+  const d=document.createElement('article');
+  d.className='gc rv featured-card'+(p.gym?' gym-featured-card':'');
+  const preview=p.gym?'<div class="gym-preview" aria-label="Fitness dashboard preview"><div class="gym-preview-top"><span class="gym-preview-brand"><span class="gym-preview-mark">S</span> SIDHI <b>GYM</b></span><span class="gym-preview-live"><i></i> TRACKING</span></div><div class="gym-preview-greeting">YOUR FITNESS, <strong>YOUR DATA.</strong></div><div class="gym-preview-stats"><div><small>WEEK STREAK</small><strong>06 <em>DAYS</em></strong></div><div><small>BODY WEIGHT</small><strong>72.0 <em>KG</em></strong></div><div><small>ACTIVITY</small><strong>GYM + RUN</strong></div></div><div class="gym-preview-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><i>WEEKLY PROGRESS</i></div><div class="gym-preview-bottom"><span>◉ WORKOUT LOG</span><span>↗ PROGRESS</span><span>⌁ RUN TRACKER</span></div></div>':'<div class="f-icon">'+p.icon+'</div>';
+  d.innerHTML=preview+'<div class="featured-card-copy"><div class="featured-kicker">'+(p.gym?'✦ FEATURED PROJECT · LIVE APP':'✦ SELECTED PROJECT')+'</div><h3 class="f-title">'+p.title+'</h3><p class="f-desc">'+p.desc+'</p><div class="f-tags">'+p.tags.map(t=>'<span class="f-tag">'+t+'</span>').join('')+'</div><div class="featured-actions"><a href="'+(p.demo||p.gh)+'" target="_blank" rel="noopener noreferrer" class="r-btn featured-demo"><i class="fas fa-external-link-alt"></i> '+(p.gym?'Open Live Tracker':p.demo?'Open Project':'Explore Project')+'</a><a href="'+p.gh+'" target="_blank" rel="noopener noreferrer" class="r-btn"><i class="fab fa-github"></i> Source Code</a></div></div>';
+  document.getElementById('f-grid').appendChild(d);
+  try { ro.observe(d); } catch (e) {}
+});
 //  PROMPTS
 // ================================================================
 // Prompts section — button only
