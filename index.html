@@ -81,9 +81,7 @@
     </div>
     <div class="flip-meta"><span id="flip-date">IST</span><span class="flip-dot"></span><span>INDIA</span></div>
   </div>
-  <script>
-  (function(){try{var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,weekday:'short',day:'2-digit',month:'short'});function g(p,t){for(var i=0;i<p.length;i++)if(p[i].type===t)return p[i].value;return'00';}function tick(){var p=f.formatToParts(new Date());var h=g(p,'hour'),m=g(p,'minute'),s=g(p,'second');var r=document.getElementById('flip-clock');if(!r)return;var H=r.querySelector('[data-k="h"] span'),M=r.querySelector('[data-k="m"] span'),S=r.querySelector('[data-k="s"] span');if(H)H.textContent=h;if(M)M.textContent=m;if(S)S.textContent=s;var d=document.getElementById('flip-date');if(d)d.textContent=(g(p,'weekday')+' · '+g(p,'day')+' '+g(p,'month')).toUpperCase();}tick();})();
-  </script>
+  
   <div class="av">
   <div class="av-r2"></div>
   <div class="av-r1"></div>
@@ -170,12 +168,12 @@
         <div class="custom-div-15">Full-Stack Web Development + Educational Tools</div>
       </div>
       <div class="gc custom-gc-13">
-        <div class="custom-div-14-x">💡 Interests</div>
-        <div class="custom-div-15-x">EdTech · Open Source · UI/UX · Math Problem Solving</div>
+        <div class="custom-div-14">💡 Interests</div>
+        <div class="custom-div-15">EdTech · Open Source · UI/UX · Math Problem Solving</div>
       </div>
-      <div class="gc custom-gc-13-x">
-        <div class="custom-div-14-x-x">🌐 Languages</div>
-        <div class="custom-div-15-x-x">Hindi · English</div>
+      <div class="gc custom-gc-13">
+        <div class="custom-div-14">🌐 Languages</div>
+        <div class="custom-div-15">Hindi · English</div>
       </div>
     </div>
   </div>
@@ -203,29 +201,29 @@
     </div>
 
     <!-- Item 2 -->
-    <div class="gc rv custom-gc-18-x">
+    <div class="gc rv custom-gc-18">
       <div class="custom-div-25"></div>
-      <div class="custom-div-20-x">
+      <div class="custom-div-20">
         <div>
-          <div class="custom-div-21-x">Full-Stack Web Development</div>
+          <div class="custom-div-21">Full-Stack Web Development</div>
           <div class="custom-div-26">Self-taught · Open Source Projects</div>
         </div>
         <span class="custom-span-27">2023 – Present</span>
       </div>
-      <p class="custom-p-24-x">Building educational web tools, portfolio projects, and math-solving applications. Active on GitHub — contributing to open source.</p>
+      <p class="custom-p-24">Building educational web tools, portfolio projects, and math-solving applications. Active on GitHub — contributing to open source.</p>
     </div>
 
     <!-- Item 3 -->
-    <div class="gc rv custom-gc-18-x-x">
+    <div class="gc rv custom-gc-18">
       <div class="custom-div-28"></div>
-      <div class="custom-div-20-x-x">
+      <div class="custom-div-20">
         <div>
-          <div class="custom-div-21-x-x">Mathematics Educator</div>
+          <div class="custom-div-21">Mathematics Educator</div>
           <div class="custom-div-29">Teaching · Tutoring · Content Creation</div>
         </div>
         <span class="custom-span-30">2024 – Present</span>
       </div>
-      <p class="custom-p-24-x-x">Teaching mathematics to students, creating digital study materials, and building interactive math tools to simplify complex concepts.</p>
+      <p class="custom-p-24">Teaching mathematics to students, creating digital study materials, and building interactive math tools to simplify complex concepts.</p>
     </div>
 
   </div>
@@ -335,7 +333,7 @@
     <div class="custom-div-42">
       <button class="t-btn custom-t-btn" onclick="pStart()">▶</button>
       <button class="t-btn custom-t-btn-43" onclick="pPause()">⏸</button>
-      <button class="t-btn custom-t-btn-43-x" onclick="pReset()">↺</button>
+      <button class="t-btn custom-t-btn-43" onclick="pReset()">↺</button>
     </div>
     <div class="custom-div-44">
       <div>🔥 Sessions: <span id="p-sess inline-style-45">0</span></div>
@@ -354,7 +352,7 @@
     <div class="custom-div-50">
       <button class="t-btn custom-sw-sb" onclick="swStart()" id="sw-sb">▶ Start</button>
       <button class="t-btn custom-t-btn-51" onclick="swLap()">🏁 Lap</button>
-      <button class="t-btn custom-t-btn-51-x" onclick="swReset()">↺ Reset</button>
+      <button class="t-btn custom-t-btn-51" onclick="swReset()">↺ Reset</button>
     </div>
     <div id="sw-laps inline-style-52"></div>
   </div>
@@ -454,7 +452,7 @@
         </div>
         <div class="custom-div-65"><span>16</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
       </div>
-      <div class="custom-div-54-x">
+      <div class="custom-div-54">
         <div class="bmi-box"><div class="bmi-bl">Ideal Weight</div><div class="bmi-bv" id="bmi-idl"></div></div>
         <div class="bmi-box"><div class="bmi-bl">To Lose/Gain</div><div class="bmi-bv" id="bmi-dif"></div></div>
         <div class="bmi-box"><div class="bmi-bl">Daily Calories</div><div class="bmi-bv" id="bmi-cal"></div></div>
@@ -497,16 +495,16 @@
       <button class="pm-btn" onclick="showUT('u-tmp',this)">🌡️ Temp</button>
     </div>
     <div id="u-len c-sub on">
-      <div class="custom-div-70"><div class="custom-div-71"><div class="t-lbl">Kilometers</div><input class="t-inp" id="u-km" type="number" placeholder="km" oninput="cvtLen('km')"></div><div class="custom-div-72">⇌</div><div class="custom-div-71-x"><div class="t-lbl">Miles</div><input class="t-inp" id="u-mi" type="number" placeholder="mi" oninput="cvtLen('mi')"></div></div>
-      <div class="custom-div-73"><div class="custom-div-71-x-x"><div class="t-lbl">Meters</div><input class="t-inp" id="u-m" type="number" placeholder="m" oninput="cvtLen('m')"></div><div class="custom-div-72-x">⇌</div><div class="custom-div-71-x-x-x"><div class="t-lbl">Feet</div><input class="t-inp" id="u-ft" type="number" placeholder="ft" oninput="cvtLen('ft')"></div></div>
+      <div class="custom-div-70"><div class="custom-div-71"><div class="t-lbl">Kilometers</div><input class="t-inp" id="u-km" type="number" placeholder="km" oninput="cvtLen('km')"></div><div class="custom-div-72">⇌</div><div class="custom-div-71"><div class="t-lbl">Miles</div><input class="t-inp" id="u-mi" type="number" placeholder="mi" oninput="cvtLen('mi')"></div></div>
+      <div class="custom-div-73"><div class="custom-div-71"><div class="t-lbl">Meters</div><input class="t-inp" id="u-m" type="number" placeholder="m" oninput="cvtLen('m')"></div><div class="custom-div-72">⇌</div><div class="custom-div-71"><div class="t-lbl">Feet</div><input class="t-inp" id="u-ft" type="number" placeholder="ft" oninput="cvtLen('ft')"></div></div>
     </div>
     <div id="u-wgt c-sub">
-      <div class="custom-div-70-x"><div class="custom-div-71-x-x-x-x"><div class="t-lbl">Kilograms</div><input class="t-inp" id="u-kg" type="number" placeholder="kg" oninput="cvtWgt('kg')"></div><div class="custom-div-72-x-x">⇌</div><div class="custom-div-71-x-x-x-x-x"><div class="t-lbl">Pounds</div><input class="t-inp" id="u-lb" type="number" placeholder="lb" oninput="cvtWgt('lb')"></div></div>
-      <div class="custom-div-73-x"><div class="custom-div-71-x-x-x-x-x-x"><div class="t-lbl">Grams</div><input class="t-inp" id="u-g" type="number" placeholder="g" oninput="cvtWgt('g')"></div><div class="custom-div-72-x-x-x">⇌</div><div class="custom-div-71-x-x-x-x-x-x-x"><div class="t-lbl">Ounces</div><input class="t-inp" id="u-oz" type="number" placeholder="oz" oninput="cvtWgt('oz')"></div></div>
+      <div class="custom-div-70"><div class="custom-div-71"><div class="t-lbl">Kilograms</div><input class="t-inp" id="u-kg" type="number" placeholder="kg" oninput="cvtWgt('kg')"></div><div class="custom-div-72">⇌</div><div class="custom-div-71"><div class="t-lbl">Pounds</div><input class="t-inp" id="u-lb" type="number" placeholder="lb" oninput="cvtWgt('lb')"></div></div>
+      <div class="custom-div-73"><div class="custom-div-71"><div class="t-lbl">Grams</div><input class="t-inp" id="u-g" type="number" placeholder="g" oninput="cvtWgt('g')"></div><div class="custom-div-72">⇌</div><div class="custom-div-71"><div class="t-lbl">Ounces</div><input class="t-inp" id="u-oz" type="number" placeholder="oz" oninput="cvtWgt('oz')"></div></div>
     </div>
     <div id="u-tmp c-sub">
-      <div class="custom-div-70-x-x"><div class="custom-div-71-x-x-x-x-x-x-x-x"><div class="t-lbl">Celsius °C</div><input class="t-inp" id="u-c" type="number" placeholder="°C" oninput="cvtTmp('c')"></div><div class="custom-div-72-x-x-x-x">⇌</div><div class="custom-div-71-x-x-x-x-x-x-x-x-x"><div class="t-lbl">Fahrenheit °F</div><input class="t-inp" id="u-f" type="number" placeholder="°F" oninput="cvtTmp('f')"></div></div>
-      <div class="custom-div-73-x-x"><div class="custom-div-71-x-x-x-x-x-x-x-x-x-x"><div class="t-lbl">Kelvin K</div><input class="t-inp" id="u-k" type="number" placeholder="K" oninput="cvtTmp('k')"></div><div class="custom-div-71-x-x-x-x-x-x-x-x-x-x-x"></div></div>
+      <div class="custom-div-70"><div class="custom-div-71"><div class="t-lbl">Celsius °C</div><input class="t-inp" id="u-c" type="number" placeholder="°C" oninput="cvtTmp('c')"></div><div class="custom-div-72">⇌</div><div class="custom-div-71"><div class="t-lbl">Fahrenheit °F</div><input class="t-inp" id="u-f" type="number" placeholder="°F" oninput="cvtTmp('f')"></div></div>
+      <div class="custom-div-73"><div class="custom-div-71"><div class="t-lbl">Kelvin K</div><input class="t-inp" id="u-k" type="number" placeholder="K" oninput="cvtTmp('k')"></div><div class="custom-div-71"></div></div>
     </div>
   </div>
 
@@ -521,7 +519,7 @@
     <div class="t-head">📝 Quick Notes — Auto Saved</div>
     <textarea class="t-inp" id="q-note" placeholder="Type notes here... auto-saved!&#10;• Ideas&#10;• Homework&#10;• Anything! inline-style-74"></textarea>
     <div class="custom-div-75">
-      <button class="t-btn custom-t-btn-51-x-x" onclick="clearNote()">🗑️ Clear</button>
+      <button class="t-btn custom-t-btn-51" onclick="clearNote()">🗑️ Clear</button>
       <button class="t-btn custom-t-btn-76" onclick="dlNote()">⬇️ Save .txt</button>
     </div>
     <div class="custom-n-chars" id="n-chars">0 chars</div>
@@ -561,7 +559,7 @@
   <!-- HABIT TRACKER -->
   <div class="t-panel gc" id="t-habit">
     <div class="t-head">🏆 Habit Tracker</div>
-    <div class="custom-div-78-x">
+    <div class="custom-div-78">
       <input class="t-inp" id="h-inp" type="text" placeholder="e.g. Study 2hr, Exercise... inline-style-79">
       <button onclick="addHabit() inline-style-89">+</button>
     </div>
@@ -585,17 +583,17 @@
     <div class="t-head">📅 Weekly Timetable</div>
     <div class="custom-div-95">Slot pe tap karo → subject likho 📝</div>
     <div class="custom-div-96"><div class="tt-grid" id="tt-grid"></div></div>
-    <div class="custom-div-75-x">
-      <button class="t-btn custom-t-btn-51-x-x-x" onclick="clearTT()">🗑 Clear All</button>
-      <button class="t-btn custom-t-btn-76-x" onclick="dlTT()">⬇ Save PNG</button>
+    <div class="custom-div-75">
+      <button class="t-btn custom-t-btn-51" onclick="clearTT()">🗑 Clear All</button>
+      <button class="t-btn custom-t-btn-76" onclick="dlTT()">⬇ Save PNG</button>
     </div>
     <div class="tt-modal" id="tt-modal">
       <div class="tt-mbox">
         <h4 class="custom-h4">✏️ Subject likho</h4>
         <input class="t-inp" id="tt-mi" type="text" placeholder="Math, Physics, Free...">
-        <div class="custom-div-75-x-x">
-          <button class="t-btn custom-t-btn-51-x-x-x-x" onclick="closeTTM()">Cancel</button>
-          <button class="t-btn custom-t-btn-76-x-x" onclick="saveTTS()">✅ Save</button>
+        <div class="custom-div-75">
+          <button class="t-btn custom-t-btn-51" onclick="closeTTM()">Cancel</button>
+          <button class="t-btn custom-t-btn-76" onclick="saveTTS()">✅ Save</button>
         </div>
       </div>
     </div>
@@ -604,7 +602,7 @@
   <!-- EXAM COUNTDOWN -->
   <div class="t-panel gc" id="t-exam">
     <div class="t-head">⏳ Exam Countdown</div>
-    <div class="custom-div-95-x">Exam ki date set karo — pressure feel karo 😤🔥</div>
+    <div class="custom-div-95">Exam ki date set karo — pressure feel karo 😤🔥</div>
     <div class="t-lbl">Exam Name</div><input class="t-inp" id="ex-n" type="text" placeholder="JEE, NEET, Board Exam...">
     <div class="t-lbl">Exam Date</div><input class="t-inp" id="ex-d" type="date">
     <button class="t-btn fw" onclick="addExam() inline-style-98">⏰ Track Karo!</button>
@@ -629,9 +627,9 @@
       </div>
     </div>
     <div id="br-ins inline-style-106"></div>
-    <div class="custom-div-42-x">
+    <div class="custom-div-42">
       <button class="t-btn custom-br-sbtn" onclick="startB()" id="br-sbtn">🌬️ Start</button>
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x" onclick="stopB()">⏹ Stop</button>
+      <button class="t-btn custom-t-btn-51" onclick="stopB()">⏹ Stop</button>
     </div>
     <div class="custom-div-107">Cycles: <span id="br-cyc inline-style-108">0</span></div>
   </div>
@@ -644,17 +642,17 @@
     <div class="custom-div-110">
       <label class="custom-label"><input type="checkbox" id="ps-u" checked class="custom-ps-u"> A-Z</label>
       <label class="custom-label-111"><input type="checkbox" id="ps-l" checked class="custom-ps-l"> a-z</label>
-      <label class="custom-label-111-x"><input type="checkbox" id="ps-n" checked class="custom-ps-n"> 0-9</label>
-      <label class="custom-label-111-x-x"><input type="checkbox" id="ps-s" checked class="custom-ps-s"> @#!</label>
+      <label class="custom-label-111"><input type="checkbox" id="ps-n" checked class="custom-ps-n"> 0-9</label>
+      <label class="custom-label-111"><input type="checkbox" id="ps-s" checked class="custom-ps-s"> @#!</label>
     </div>
     <div class="custom-div-113">
       <div id="ps-out inline-style-114">Click generate 👇</div>
     </div>
     <div class="ps-bar"><div id="ps-fill"></div></div>
     <div id="ps-lbl inline-style-115">—</div>
-    <div class="custom-div-42-x-x">
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x-x" onclick="genPass()">🔄 Generate</button>
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x" onclick="cpyPass()">📋 Copy</button>
+    <div class="custom-div-42">
+      <button class="t-btn custom-t-btn-51" onclick="genPass()">🔄 Generate</button>
+      <button class="t-btn custom-t-btn-51" onclick="cpyPass()">📋 Copy</button>
     </div>
   </div>
 
@@ -670,9 +668,9 @@
   <div class="t-panel gc" id="t-json">
     <div class="t-head">📋 JSON Formatter</div>
     <textarea class="t-inp" id="j-in" placeholder='{"key":"value","arr":[1,2,3]}' class="custom-style-117"></textarea>
-    <div class="custom-div-42-x-x-x">
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x" onclick="fmtJSON()">Format</button>
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x" onclick="minJSON()">Minify</button>
+    <div class="custom-div-42">
+      <button class="t-btn custom-t-btn-51" onclick="fmtJSON()">Format</button>
+      <button class="t-btn custom-t-btn-51" onclick="minJSON()">Minify</button>
     </div>
     <pre id="j-out inline-style-118"></pre>
   </div>
@@ -685,9 +683,9 @@
       <div><div class="t-lbl">Rate: <span id="tts-rv">1</span></div><input type="range" id="tts-r" min=".5" max="2" step=".1" value="1 inline-style-121" oninput="document.getElementById('tts-rv').textContent=this.value"></div>
       <div><div class="t-lbl">Pitch: <span id="tts-pv">1</span></div><input type="range" id="tts-p" min=".5" max="2" step=".1" value="1 inline-style-121" oninput="document.getElementById('tts-pv').textContent=this.value"></div>
     </div>
-    <div class="custom-div-42-x-x-x-x">
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x" onclick="doTTS()">🔊 Speak</button>
-      <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x-x" onclick="window.speechSynthesis.cancel()">⏹ Stop</button>
+    <div class="custom-div-42">
+      <button class="t-btn custom-t-btn-51" onclick="doTTS()">🔊 Speak</button>
+      <button class="t-btn custom-t-btn-51" onclick="window.speechSynthesis.cancel()">⏹ Stop</button>
     </div>
   </div>
 
@@ -740,9 +738,9 @@
         <div><div class="t-lbl">Total Damage</div><input class="t-inp" id="bg-d" type="number" placeholder="50000" oninput="calcBG()"></div>
       </div>
       <div id="bg-res inline-style-126"></div>
-      <div class="custom-div-75-x-x-x">
-        <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x-x-x" onclick="saveBG()">💾 Save</button>
-        <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x-x-x-x" onclick="clearBG()">↺ Clear</button>
+      <div class="custom-div-75">
+        <button class="t-btn custom-t-btn-51" onclick="saveBG()">💾 Save</button>
+        <button class="t-btn custom-t-btn-51" onclick="clearBG()">↺ Clear</button>
       </div>
       <div id="bg-hist inline-style-127"></div>
     </div>
@@ -769,7 +767,7 @@
   <!-- SCIENTIFIC MATH SOLVER -->
   <div class="t-panel gc" id="t-math">
     <div class="t-head">🧮 Scientific Math Solver</div>
-    <div class="custom-div-100-x">B.Ed Math Educator ka special tool — students ke liye 📐</div>
+    <div class="custom-div-100">B.Ed Math Educator ka special tool — students ke liye 📐</div>
     <div class="pm" id="math-tabs">
       <button class="pm-btn on" onclick="showMT('m-basic',this)">🔢 Arithmetic</button>
       <button class="pm-btn" onclick="showMT('m-alg',this)">📐 Algebra</button>
@@ -802,7 +800,7 @@
     <!-- ALGEBRA -->
     <div id="m-alg c-sub">
       <div class="t-lbl">Quadratic Equation: ax² + bx + c = 0</div>
-      <div class="custom-div-56-x">
+      <div class="custom-div-56">
         <div><div class="t-lbl">a</div><input class="t-inp" id="qa" type="number" placeholder="1"></div>
         <div><div class="t-lbl">b</div><input class="t-inp" id="qb" type="number" placeholder="-5"></div>
         <div><div class="t-lbl">c</div><input class="t-inp" id="qc" type="number" placeholder="6"></div>
@@ -882,7 +880,7 @@
         </div>
       </div>
       <div id="g-rect c-sub">
-        <div class="custom-div-125-x">
+        <div class="custom-div-125">
           <div><div class="t-lbl">Length (l)</div><input class="t-inp" id="g-rl" type="number" placeholder="10" oninput="geoRect()"></div>
           <div><div class="t-lbl">Width (w)</div><input class="t-inp" id="g-rw" type="number" placeholder="5" oninput="geoRect()"></div>
         </div>
@@ -921,9 +919,9 @@
       </div>
       <textarea id="img64-out" readonly class="custom-img64-out"></textarea>
       <div class="custom-div-151">
-        <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x-x-x-x-x" onclick="img64Copy()">📋 Copy Base64</button>
-        <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x" onclick="img64CopyFull()">🔗 Copy with prefix</button>
-        <button class="t-btn custom-t-btn-51-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x" onclick="img64Clear()">🗑️ Clear</button>
+        <button class="t-btn custom-t-btn-51" onclick="img64Copy()">📋 Copy Base64</button>
+        <button class="t-btn custom-t-btn-51" onclick="img64CopyFull()">🔗 Copy with prefix</button>
+        <button class="t-btn custom-t-btn-51" onclick="img64Clear()">🗑️ Clear</button>
       </div>
     </div>
   </div>
@@ -959,9 +957,9 @@
     <textarea id="typing-inp" placeholder="Yahan type karo — test shuru ho jaayega... inline-style-161" oninput="typingCheck()" onkeydown="typingKeyDown(event)"></textarea>
     <div class="custom-div-162">
       <div class="bmi-box custom-bmi-box-163"><div class="bmi-bl">WPM</div><div class="bmi-bv" id="t-wpm inline-style-164">—</div></div>
-      <div class="bmi-box custom-bmi-box-163-x"><div class="bmi-bl">Accuracy</div><div class="bmi-bv" id="t-acc inline-style-165">—</div></div>
-      <div class="bmi-box custom-bmi-box-163-x-x"><div class="bmi-bl">Time</div><div class="bmi-bv" id="t-elapsed inline-style-166">—</div></div>
-      <div class="bmi-box custom-bmi-box-163-x-x-x"><div class="bmi-bl">Errors</div><div class="bmi-bv" id="t-errs inline-style-167">—</div></div>
+      <div class="bmi-box custom-bmi-box-163"><div class="bmi-bl">Accuracy</div><div class="bmi-bv" id="t-acc inline-style-165">—</div></div>
+      <div class="bmi-box custom-bmi-box-163"><div class="bmi-bl">Time</div><div class="bmi-bv" id="t-elapsed inline-style-166">—</div></div>
+      <div class="bmi-box custom-bmi-box-163"><div class="bmi-bl">Errors</div><div class="bmi-bv" id="t-errs inline-style-167">—</div></div>
     </div>
     <div id="typing-result inline-style-168"></div>
     <button class="t-btn fw" onclick="typingReset() inline-style-169">🔄 New Test</button>
